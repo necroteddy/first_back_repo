@@ -1,0 +1,177 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:var(--color-text-primary);--muted:var(--color-text-secondary);--bg:var(--color-background-primary);--bg2:var(--color-background-secondary);--border:var(--color-border-tertiary)}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink)}
+  .blog{max-width:680px;margin:0 auto;padding:2rem 1rem}
+  .site-header{border-bottom:0.5px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem}
+  .site-name{font-family:'Lora',serif;font-size:28px;font-weight:500;letter-spacing:-0.5px}
+  .site-tagline{font-size:14px;color:var(--muted);margin-top:4px}
+  nav{display:flex;gap:1.5rem;margin-top:1rem}
+  nav a{font-size:14px;color:var(--muted);text-decoration:none;cursor:pointer}
+  nav a:hover,nav a.active{color:var(--ink)}
+  .page{display:none}
+  .page.active{display:block}
+  .post-list{display:flex;flex-direction:column;gap:2rem}
+  .post-card{cursor:pointer}
+  .post-card:hover .post-title{text-decoration:underline}
+  .post-meta{font-size:12px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em}
+  .post-title{font-family:'Lora',serif;font-size:22px;font-weight:500;line-height:1.3;margin-bottom:8px}
+  .post-excerpt{font-size:15px;color:var(--muted);line-height:1.7}
+  .post-tag{display:inline-block;font-size:11px;background:var(--bg2);border:0.5px solid var(--border);border-radius:4px;padding:2px 8px;margin-top:10px;color:var(--muted)}
+  .divider{height:0.5px;background:var(--border);margin:2rem 0}
+  .full-post .post-title{font-family:'Lora',serif;font-size:28px;font-weight:500;line-height:1.3;margin-bottom:0.5rem}
+  .full-post .post-meta{font-size:13px;color:var(--muted);margin-bottom:1.5rem}
+  .full-post .body{font-size:16px;line-height:1.8;color:var(--ink)}
+  .full-post .body p{margin-bottom:1rem}
+  .full-post .body em{font-family:'Lora',serif;font-style:italic}
+  .back-btn{font-size:13px;color:var(--muted);cursor:pointer;margin-bottom:1.5rem;display:inline-block}
+  .back-btn:hover{color:var(--ink)}
+  .about-section{max-width:520px}
+  .about-section h2{font-family:'Lora',serif;font-size:22px;font-weight:500;margin-bottom:1rem}
+  .about-section p{font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:1rem}
+  .new-post-form{max-width:520px}
+  .new-post-form label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px;margin-top:1rem}
+  .new-post-form input,.new-post-form textarea,.new-post-form select{width:100%;font-size:15px;font-family:'DM Sans',sans-serif}
+  .new-post-form textarea{height:160px;resize:vertical}
+  .pub-btn{margin-top:1.25rem;background:var(--ink);color:var(--bg);border:none;padding:10px 24px;border-radius:6px;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .pub-btn:hover{opacity:0.85}
+  .empty{font-size:14px;color:var(--muted);font-style:italic}
+  .tag-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+  .tag-btn{font-size:12px;padding:4px 12px;border-radius:20px;border:0.5px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif}
+  .tag-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity 0.3s}
+  .toast.show{opacity:1}
+</style>
+
+<div class="blog">
+  <header class="site-header">
+    <div class="site-name" id="siteName">My Blog</div>
+    <div class="site-tagline" id="siteTagline">Thoughts, stories, and ideas</div>
+    <nav>
+      <a class="active" onclick="showPage('home',this)">Home</a>
+      <a onclick="showPage('write',this)">Write</a>
+      <a onclick="showPage('about',this)">About</a>
+    </nav>
+  </header>
+
+  <div id="home" class="page active">
+    <div class="tag-filter" id="tagFilter"></div>
+    <div class="post-list" id="postList"></div>
+  </div>
+
+  <div id="single" class="page">
+    <span class="back-btn" onclick="showPage('home',null)">← Back to posts</span>
+    <div class="full-post" id="singleContent"></div>
+  </div>
+
+  <div id="write" class="page">
+    <div class="new-post-form">
+      <label>Title</label>
+      <input type="text" id="pTitle" placeholder="Your post title..." />
+      <label>Tag</label>
+      <select id="pTag">
+        <option>Life</option>
+        <option>Recovery</option>
+        <option>Thoughts</option>
+        <option>Health</option>
+        <option>Family</option>
+        <option>Wins</option>
+        <option>Other</option>
+      </select>
+      <label>Your post</label>
+      <textarea id="pBody" placeholder="Write anything you like..."></textarea>
+      <button class="pub-btn" onclick="publishPost()">Publish post</button>
+    </div>
+  </div>
+
+  <div id="about" class="page">
+    <div class="about-section">
+      <h2>About this blog</h2>
+      <p>This is my personal space to write and share my thoughts.</p>
+      <p>I write when I want. No pressure. Just my words.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Post published!</div>
+
+<script>
+const SAMPLE = [
+  {id:1,title:"My first post",date:"Apr 15, 2026",tag:"Life",body:"Welcome to my blog. I made this space for myself. A place to put my words. Some days writing is hard. But I keep trying. Every word is a win."},
+  {id:2,title:"A good day",date:"Apr 10, 2026",tag:"Wins",body:"Today was a good day. I went outside. I saw the sun. I talked to a friend. Small things. But good things.\n\nI am writing this down so I remember it."},
+  {id:3,title:"What I have learned",date:"Apr 3, 2026",tag:"Recovery",body:"Recovery is slow. Some days I go backward. But I also go forward.\n\nI have learned to be patient with myself. That is hard. But I am learning."}
+];
+
+let posts = JSON.parse(localStorage.getItem('blog_posts')||'null') || SAMPLE;
+let activeTag = 'All';
+
+function save(){try{localStorage.setItem('blog_posts',JSON.stringify(posts))}catch(e){}}
+
+function renderPosts(){
+  const list = document.getElementById('postList');
+  const filtered = activeTag==='All' ? posts : posts.filter(p=>p.tag===activeTag);
+  if(!filtered.length){list.innerHTML='<p class="empty">No posts yet.</p>';return;}
+  list.innerHTML = filtered.map(p=>`
+    <div class="post-card" onclick="openPost(${p.id})">
+      <div class="post-meta">${p.date}</div>
+      <div class="post-title">${p.title}</div>
+      <div class="post-excerpt">${p.body.slice(0,120)}${p.body.length>120?'...':''}</div>
+      <span class="post-tag">${p.tag}</span>
+    </div>
+    <div class="divider"></div>
+  `).join('');
+}
+
+function renderTags(){
+  const tags = ['All',...new Set(posts.map(p=>p.tag))];
+  const f = document.getElementById('tagFilter');
+  f.innerHTML = tags.map(t=>`<button class="tag-btn ${t===activeTag?'active':''}" onclick="filterTag('${t}')">${t}</button>`).join('');
+}
+
+function filterTag(t){activeTag=t;renderTags();renderPosts();}
+
+function openPost(id){
+  const p = posts.find(x=>x.id===id);
+  if(!p)return;
+  document.getElementById('singleContent').innerHTML=`
+    <div class="post-title">${p.title}</div>
+    <div class="post-meta">${p.date} · ${p.tag}</div>
+    <div class="body">${p.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('')}</div>
+  `;
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('single').classList.add('active');
+}
+
+function showPage(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(id==='home'){renderTags();renderPosts();}
+}
+
+function publishPost(){
+  const t=document.getElementById('pTitle').value.trim();
+  const b=document.getElementById('pBody').value.trim();
+  const g=document.getElementById('pTag').value;
+  if(!t||!b){alert('Please add a title and some text.');return;}
+  const now=new Date();
+  const d=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  posts.unshift({id:Date.now(),title:t,date:d,tag:g,body:b});
+  save();
+  document.getElementById('pTitle').value='';
+  document.getElementById('pBody').value='';
+  showToast('Post published!');
+  showPage('home',document.querySelector('nav a'));
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+renderTags();renderPosts();
+</script>
