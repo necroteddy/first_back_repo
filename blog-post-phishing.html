@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing Scams — Cyber Security Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --green: #00ff9d;
+    --cyan: #00cfff;
+    --red: #ff4557;
+    --orange: #ff9533;
+    --text: #c8d6e5;
+    --muted: #5a6a7e;
+    --border: #1e2d40;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,255,157,0.01) 2px, rgba(0,255,157,0.01) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* Header */
+  .blog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .blog-logo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--green);
+  }
+  .blog-logo span { color: var(--cyan); }
+
+  .status-dot {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 8px var(--red);
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* Meta */
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .tag-alert {
+    background: var(--orange);
+    color: #000;
+    padding: 0.2em 0.7em;
+    border-radius: 2px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    box-shadow: 0 0 12px rgba(255,149,51,0.4);
+  }
+
+  /* Title */
+  .post-title {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  .post-title .highlight { color: var(--orange); text-shadow: 0 0 20px rgba(255,149,51,0.4); }
+
+  .post-subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  /* Fake email */
+  .fake-email {
+    background: #fff;
+    color: #111;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(255,69,87,0.15);
+    border: 2px solid var(--red);
+  }
+
+  .email-header {
+    background: #f1f3f5;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #dde;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: #333;
+  }
+  .email-header div { margin-bottom: 0.3rem; }
+  .email-header .label { color: #888; display: inline-block; width: 50px; }
+  .email-header .danger { color: var(--red); font-weight: bold; }
+
+  .email-body {
+    padding: 1.5rem 1.25rem;
+    font-family: Arial, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #222;
+  }
+
+  .email-body .greeting { margin-bottom: 1rem; }
+  .email-body .warning-text { color: #cc0000; font-weight: bold; }
+
+  .fake-btn {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 0.7em 1.8em;
+    background: #0064d2;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: default;
+  }
+
+  .red-flags-bar {
+    background: #fff0f0;
+    border-top: 2px dashed var(--red);
+    padding: 0.75rem 1.25rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--red);
+    letter-spacing: 0.05em;
+  }
+
+  .flag { margin-bottom: 0.3rem; }
+
+  /* Body */
+  .post-body p {
+    margin-bottom: 1.6rem;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    margin: 2rem 0;
+    padding: 1.25rem 1.75rem;
+    border-left: 3px solid var(--orange);
+    background: rgba(255,149,51,0.05);
+  }
+  .pull-quote p {
+    font-size: 1.15rem !important;
+    color: #fff !important;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0 !important;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    margin: 1.5rem 0 2rem;
+    padding: 0;
+  }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .check-icon {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--green);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* Tip box */
+  .tip-box {
+    margin: 2rem 0;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--orange);
+    border-radius: 4px;
+    background: rgba(255,149,51,0.04);
+  }
+  .tip-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--orange);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .tip-box p { margin: 0 !important; font-size: 0.95rem !important; }
+
+  /* Tags */
+  .post-tags {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: 'Share Tech Mono', monospace;
+  }
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.3em 0.8em;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+  }
+
+  /* Author */
+  .author-card {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .author-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--orange);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 0 12px rgba(255,149,51,0.15);
+  }
+  .author-name { font-weight: 700; font-size: 0.9rem; color: #fff; }
+  .author-bio { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; font-weight: 400; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="blog-header">
+    <div class="blog-logo">sec<span>//</span>blog</div>
+    <div class="status-dot"><span class="dot"></span> THREAT ALERT</div>
+  </header>
+
+  <div class="post-meta">
+    <span class="tag-alert">🎣 Phishing</span>
+    <span>April 21, 2026</span>
+    <span>·</span>
+    <span>4 min read</span>
+    <span>·</span>
+    <span>Beginner Friendly</span>
+  </div>
+
+  <h1 class="post-title">That Email Looks Real.<br>It Is <span class="highlight">Not.</span></h1>
+  <p class="post-subtitle">Phishing emails trick millions of people every year. Here's how to spot one before it's too late.</p>
+
+  <!-- Fake phishing email example -->
+  <div class="fake-email">
+    <div class="email-header">
+      <div><span class="label">FROM:</span> <span class="danger">security@paypa1.com</span> ← fake domain!</div>
+      <div><span class="label">TO:</span> you@email.com</div>
+      <div><span class="label">SUBJ:</span> ⚠ Urgent: Your account has been suspended</div>
+    </div>
+    <div class="email-body">
+      <div class="greeting">Dear Valued Customer,</div>
+      <p>We have detected <span class="warning-text">suspicious activity</span> on your account. Your account will be permanently closed in <span class="warning-text">24 hours</span> unless you verify your information immediately.</p>
+      <div><a class="fake-btn">Verify My Account Now</a></div>
+      <p style="font-size:0.8rem; color:#888;">PayPal Security Team — Do not reply to this email.</p>
+    </div>
+    <div class="red-flags-bar">
+      <div class="flag">🚩 RED FLAG: "paypa<strong>1</strong>.com" — the L is a number 1</div>
+      <div class="flag">🚩 RED FLAG: Creates panic with "24 hours" deadline</div>
+      <div class="flag">🚩 RED FLAG: Asks you to click a link to "verify"</div>
+    </div>
+  </div>
+
+  <article class="post-body">
+    <p>
+      That email above is a <strong style="color:#fff;">phishing scam</strong>. It looks like it came from PayPal. 
+      It did not. A hacker made it to steal your password. 
+      Millions of people fall for emails like this every day.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Phishing works because it doesn't attack your computer. It attacks your emotions — fear, urgency, trust."</p>
+    </div>
+
+    <p>
+      Hackers send fake emails that look real. They pretend to be your bank, 
+      Amazon, Netflix, or even your boss. The goal is always the same — 
+      get you to <strong style="color:#fff;">click a link</strong> or <strong style="color:#fff;">type your password</strong>.
+    </p>
+
+    <p>Here is how to spot a phishing email:</p>
+
+    <ul class="checklist">
+      <li><span class="check-icon">[01]</span><span><strong style="color:#fff;">Check the sender's email address.</strong> Look carefully. "paypa<strong style="color:var(--red)">1</strong>.com" is not "paypal.com". One wrong letter = fake.</span></li>
+      <li><span class="check-icon">[02]</span><span><strong style="color:#fff;">Watch for urgency.</strong> "Act now!" "24 hours!" "Your account is locked!" — this is pressure to make you panic and not think.</span></li>
+      <li><span class="check-icon">[03]</span><span><strong style="color:#fff;">Hover over links before clicking.</strong> The real URL appears at the bottom of your screen. If it looks strange — do not click.</span></li>
+      <li><span class="check-icon">[04]</span><span><strong style="color:#fff;">Real companies never ask for your password by email.</strong> Ever. If they do — it is fake.</span></li>
+      <li><span class="check-icon">[05]</span><span><strong style="color:#fff;">When in doubt, go directly to the website.</strong> Open a new tab. Type the address yourself. Do not use the link in the email.</span></li>
+    </ul>
+
+    <div class="tip-box">
+      <div class="tip-label">// What to do if you clicked</div>
+      <p>Don't panic. <strong style="color:#fff;">Change your password immediately</strong> on that site. Turn on two-factor authentication. Then check your other accounts — especially if you reuse passwords.</p>
+    </div>
+
+    <p>
+      Phishing is the most common cyber attack in the world. 
+      But now you know what to look for. 
+      <strong style="color:#fff;">Slow down. Read carefully. Trust your gut.</strong> 
+      If something feels wrong — it probably is.
+    </p>
+  </article>
+
+  <div class="post-tags">
+    <span class="tag">#phishing</span>
+    <span class="tag">#email-safety</span>
+    <span class="tag">#cybersecurity</span>
+    <span class="tag">#scams</span>
+    <span class="tag">#beginner</span>
+  </div>
+
+  <div class="author-card">
+    <div class="author-avatar">🎣</div>
+    <div class="author-info">
+      <div class="author-name">Alex Chen</div>
+      <div class="author-bio">Security researcher. Writes about staying safe online — for everyone, not just experts.</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
