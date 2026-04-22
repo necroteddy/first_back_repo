@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside the Hacker's Mind | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0f0e;
+    --ink-muted: #5a5a56;
+    --ink-faint: #9a9991;
+    --paper: #faf9f6;
+    --paper-warm: #f2f0ea;
+    --accent: #c0392b;
+    --accent-light: #fdf0ee;
+    --rule: #e0ddd5;
+    --nav-h: 64px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border: 1px solid var(--rule);
+    padding: 5px 14px;
+    border-radius: 99px;
+  }
+
+  /* HERO */
+  .hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .hero-category::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--ink-faint);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .hero-meta strong { color: var(--ink-muted); font-weight: 500; }
+  .dot { width: 3px; height: 3px; background: var(--rule); border-radius: 50%; }
+
+  /* ARTICLE */
+  article {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    width: 0%;
+    z-index: 99;
+    transition: width 0.1s linear;
+  }
+
+  /* CONTENT */
+  .content { max-width: 640px; }
+  .content p {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 3.5rem 0 1.25rem;
+  }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--rule);
+    line-height: 1;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .section-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--paper-warm);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .callout p {
+    margin: 0;
+    font-size: 16px;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* STAT BOX */
+  .stat-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .stat-label {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #c0bdb5;
+  }
+  .stat-label strong { color: var(--paper); font-weight: 500; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    height: 1px;
+    background: var(--rule);
+    margin: 3rem 0;
+  }
+
+  /* TAKEAWAYS */
+  .takeaways {
+    background: var(--accent-light);
+    border: 1px solid #f0c4be;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+  }
+  .takeaways-title {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .takeaways-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0c4be;
+  }
+  .takeaways ul { list-style: none; padding: 0; }
+  .takeaways li {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f0c4be;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .takeaways li:last-child { border-bottom: none; }
+  .takeaways li::before {
+    content: '→';
+    color: var(--accent);
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: #6b6860;
+    text-align: center;
+    padding: 2.5rem;
+    font-size: 13px;
+  }
+  footer strong { color: #c0bdb5; font-weight: 500; }
+
+  /* ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    .hero, article { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .stat-box { flex-direction: column; gap: 0.75rem; }
+    .stat-num { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <a href="#" class="nav-logo">Cyber<span>Sense</span></a>
+  <span class="nav-tag">Business Security</span>
+</nav>
+
+<header class="hero">
+  <div class="hero-category">Cybersecurity</div>
+  <h1>Inside the hacker's mind: what every business owner needs to know</h1>
+  <p class="hero-lead">Hackers are not random. They think strategically — just like you do. Understanding how they operate is the first step to stopping them.</p>
+  <div class="hero-meta">
+    <strong>CyberSense Editorial</strong>
+    <span class="dot"></span>
+    <span>April 2026</span>
+    <span class="dot"></span>
+    <span>5 min read</span>
+  </div>
+</header>
+
+<article>
+  <div class="content">
+
+    <p>Most business owners imagine hackers as mysterious criminals in dark rooms. The reality is far more ordinary — and more dangerous. Attackers follow a clear, repeatable process. They research, they plan, and they strike where businesses are weakest.</p>
+    <p>The good news: once you understand that process, you can disrupt it at every step.</p>
+
+    <div class="section-head">
+      <span class="step-num">01</span>
+      <h2>They pick a target</h2>
+    </div>
+    <p>Hackers rarely attack randomly. They look for businesses that appear easy — outdated websites, public employee directories, or companies that recently made the news. Your business may be targeted not because you're important, but because you appear vulnerable.</p>
+    <div class="callout">
+      <p>Think of it like a burglar walking down a street. They do not break into every house. They look for the one with the unlocked door.</p>
+    </div>
+
+    <div class="section-head">
+      <span class="step-num">02</span>
+      <h2>They gather information</h2>
+    </div>
+    <p>Before attacking, hackers spend time learning. They study your company's website, social media, and job postings. A job ad that mentions "we use Microsoft Azure" tells them exactly what systems to target. Public LinkedIn profiles reveal employee names, titles, and email formats.</p>
+    <p>This research phase is called <em>reconnaissance</em>. It costs them nothing — and most businesses never notice it happening.</p>
+
+    <div class="section-head">
+      <span class="step-num">03</span>
+      <h2>They find the weakest link</h2>
+    </div>
+    <p>Hackers rarely attack your strongest defenses. They look for the gaps — an employee who has not updated their software, a contractor with access to your systems, or an old server that nobody monitors anymore.</p>
+    <p>In most breaches, the entry point is not a technical failure. It is a human one.</p>
+
+    <div class="stat-box">
+      <div class="stat-num">74%</div>
+      <div class="stat-label">of data breaches involve <strong>the human element</strong> — employees tricked, credentials stolen, or honest mistakes exploited. Source: 2024 industry research.</div>
+    </div>
+
+    <div class="section-head">
+      <span class="step-num">04</span>
+      <h2>They move slowly and quietly</h2>
+    </div>
+    <p>Once inside, hackers do not rush. They explore your systems quietly, often for weeks or months before you notice. They look for financial data, customer records, and anything they can sell or use as leverage.</p>
+    <p>The average time to detect a breach is still measured in months, not days. By the time alerts trigger, damage is often already done.</p>
+
+    <div class="section-head">
+      <span class="step-num">05</span>
+      <h2>They strike — or they wait</h2>
+    </div>
+    <p>Some attackers steal data immediately. Others plant ransomware and wait for the right moment. Some sell access to your systems to other criminals entirely. By the time you know something is wrong, the attack may have started weeks earlier.</p>
+
+    <hr class="divider">
+
+    <h2 style="font-family:'Playfair Display',serif; font-size:28px; margin-bottom:1.25rem; letter-spacing:-0.01em;">What this means for your business</h2>
+    <p>Understanding how hackers think changes how you defend your business. You stop asking "could we be attacked?" and start asking "where are our unlocked doors?"</p>
+
+    <div class="takeaways">
+      <div class="takeaways-title">Key actions for business owners</div>
+      <ul>
+        <li>Audit what information about your business is publicly available online</li>
+        <li>Train your team — most breaches start with a person, not a machine</li>
+        <li>Review who has access to your systems, and remove access no longer needed</li>
+        <li>Assume someone may already be watching — monitor your systems regularly</li>
+        <li>Have a response plan ready before an incident happens</li>
+      </ul>
+    </div>
+
+    <p>Hackers are patient and methodical. The businesses that stay safe are the ones that match that same discipline — not with fear, but with preparation.</p>
+
+  </div>
+</article>
+
+<footer>
+  <strong>CyberSense</strong> — plain-language cybersecurity for business owners<br>
+  <span style="font-size:12px; margin-top:6px; display:block;">© 2026 CyberSense. For informational purposes only.</span>
+</footer>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  });
+</script>
+
+</body>
+</html>
