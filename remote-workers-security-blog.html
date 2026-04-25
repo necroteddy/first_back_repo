@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protecting Remote Workers | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f7fa;
+    --surface: #ffffff;
+    --surface2: #eef1f6;
+    --border: #dde2ec;
+    --text: #141820;
+    --muted: #4a5168;
+    --faint: #9098b0;
+    --accent: #2563eb;
+    --accent2: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --green-bg: #ecfdf5;
+    --green-border: #a7f3d0;
+    --blue-bg: #eff6ff;
+    --blue-border: #bfdbfe;
+    --amber-bg: #fffbeb;
+    --amber-border: #fde68a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lora', serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    width: 0%;
+    z-index: 200;
+    transition: width 0.1s linear;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,247,250,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-pill {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 14px;
+    border-radius: 99px;
+  }
+
+  /* HERO */
+  .hero {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 620px;
+    margin-bottom: 2rem;
+  }
+
+  /* RISK CARDS */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 2rem 0;
+  }
+  .risk-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .risk-icon { font-size: 24px; margin-bottom: 0.6rem; display: block; }
+  .risk-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .risk-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    color: var(--faint);
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border);
+  }
+  .hero-meta strong { color: var(--muted); font-weight: 700; }
+  .dot { width: 3px; height: 3px; background: var(--border); border-radius: 50%; }
+
+  /* ARTICLE */
+  article {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    animation: fadeUp 0.9s ease both;
+  }
+  .content { max-width: 660px; }
+  .content p {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--text);
+    margin-bottom: 1.4rem;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  h2.section-h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+  .section-block { margin: 3.5rem 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--blue-bg);
+    border: 1px solid var(--blue-border);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0 10px 10px 0;
+  }
+  .callout p {
+    margin: 0;
+    font-size: 16px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* WARNING */
+  .warning-box {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .warning-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+  }
+  .warning-box p {
+    font-size: 15px;
+    color: #78350f;
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 2.5rem 0;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+  }
+  .stat-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* TIP CARDS */
+  .tip-list { margin: 2rem 0; display: flex; flex-direction: column; gap: 12px; }
+  .tip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .tip-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--surface);
+    background: var(--accent);
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .tip-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .tip-card p {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  hr.divider {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    margin: 3rem 0;
+  }
+
+  /* TAKEAWAYS */
+  .takeaways {
+    background: var(--green-bg);
+    border: 1px solid var(--green-border);
+    border-radius: 14px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+  }
+  .takeaways-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent2);
+    margin-bottom: 1.25rem;
+  }
+  .takeaways ul { list-style: none; padding: 0; }
+  .takeaways li {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--green-border);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .takeaways li:last-child { border-bottom: none; }
+  .check {
+    color: var(--accent2);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+  }
+
+  footer {
+    background: var(--text);
+    color: #6b6860;
+    text-align: center;
+    padding: 2.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+  }
+  footer strong { color: #c0bdb5; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    .hero, article { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .risk-grid, .stat-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <a href="#" class="nav-logo">Cyber<span>Sense</span></a>
+  <span class="nav-pill">Remote Work</span>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">Business Security</div>
+  <h1>Your remote team is your biggest security risk — here is how to fix that</h1>
+  <p class="hero-lead">Remote work has made businesses more flexible. It has also made them more vulnerable. The good news: protecting a remote team is simpler than most business owners think.</p>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <span class="risk-icon">🏠</span>
+      <h3>Home networks</h3>
+      <p>Unsecured Wi-Fi at home puts company data at risk every day</p>
+    </div>
+    <div class="risk-card">
+      <span class="risk-icon">💻</span>
+      <h3>Personal devices</h3>
+      <p>Staff using personal laptops mix work and personal risk</p>
+    </div>
+    <div class="risk-card">
+      <span class="risk-icon">☁️</span>
+      <h3>Cloud tools</h3>
+      <p>Unsanctioned apps and file sharing create hidden vulnerabilities</p>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <strong>CyberSense Editorial</strong>
+    <span class="dot"></span>
+    <span>April 2026</span>
+    <span class="dot"></span>
+    <span>6 min read</span>
+  </div>
+</header>
+
+<article>
+  <div class="content">
+
+    <p>When your team worked in one office, your IT team could protect one network. Today, your employees work from home, coffee shops, hotels, and co-working spaces — each with their own connection, their own devices, and their own risks.</p>
+    <p>Remote work has expanded your attack surface dramatically. Every home router, every personal laptop, every public Wi-Fi connection is a potential entry point for attackers.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">60%</div>
+        <div class="stat-desc">of data breaches now involve remote workers or remote access points</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3×</div>
+        <div class="stat-desc">more likely — remote workers face three times more cyberattacks than office workers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$1M+</div>
+        <div class="stat-desc">extra cost added to a data breach when remote working is a factor</div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">Risk 01</span>
+      <h2 class="section-h2">Home networks are not business networks</h2>
+      <p>Your office network was likely set up by IT professionals with security in mind. Your employee's home router was set up by a family member following a quick-start guide — and probably has never been updated since.</p>
+      <p>Home networks are shared with smart TVs, gaming consoles, children's tablets, and visiting guests. Any of these can be an entry point that puts your business data at risk.</p>
+      <div class="callout">
+        <p>One compromised device on a home network can expose everything else connected to it — including the laptop your employee uses for work.</p>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">Risk 02</span>
+      <h2 class="section-h2">Personal devices blur the line</h2>
+      <p>When employees use personal laptops or phones for work, they mix business data with personal apps, personal files, and personal browsing habits. You have little visibility into what else is on that device — and little control if something goes wrong.</p>
+      <p>If a personal device is lost, stolen, or infected with malware, your business data goes with it. And unlike company-owned equipment, you may have no legal right to remotely wipe or recover that data.</p>
+
+      <div class="warning-box">
+        <div class="warning-label">⚠ Business risk</div>
+        <p>Personal devices are rarely updated regularly, often lack business-grade security software, and may be used by other household members — dramatically increasing the risk of a breach.</p>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">Risk 03</span>
+      <h2 class="section-h2">Shadow IT — the tools you don't know about</h2>
+      <p>When remote workers cannot easily access the tools they need, they find their own. Personal Dropbox accounts, free file-sharing apps, consumer messaging tools — all used to get work done faster, all completely outside your control.</p>
+      <p>This is called "shadow IT" — and it is one of the most common hidden risks in remote teams. Your data is sitting in systems you did not approve, cannot monitor, and cannot secure.</p>
+    </div>
+
+    <hr class="divider">
+
+    <span class="section-label">The fix</span>
+    <h2 class="section-h2">7 ways to protect your remote team today</h2>
+    <p>You do not need to bring everyone back to the office. You need the right policies, tools, and habits in place — and a team that understands why they matter.</p>
+
+    <div class="tip-list">
+      <div class="tip-card">
+        <div class="tip-num">1</div>
+        <div>
+          <h4>Require a VPN for all work activity</h4>
+          <p>A Virtual Private Network encrypts your team's internet connection, making it much harder for attackers to intercept data — even on unsecured networks.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">2</div>
+        <div>
+          <h4>Issue company devices where possible</h4>
+          <p>Company-owned devices can be configured, monitored, and wiped remotely. This gives you control that personal devices simply cannot offer.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">3</div>
+        <div>
+          <h4>Enable multi-factor authentication on everything</h4>
+          <p>Require a second step — like a phone confirmation — to log into any business system. This stops most account takeover attempts instantly.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">4</div>
+        <div>
+          <h4>Provide approved tools — and enforce their use</h4>
+          <p>Give your team business-grade alternatives to consumer apps. Make clear which tools are approved and which are off-limits for work purposes.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">5</div>
+        <div>
+          <h4>Keep all software updated automatically</h4>
+          <p>Unpatched software is one of the easiest ways attackers get in. Enable automatic updates on all work devices and business applications.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">6</div>
+        <div>
+          <h4>Train your team regularly</h4>
+          <p>Remote workers face more attacks, with less support around them. Regular, short training sessions keep security habits sharp and awareness high.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">7</div>
+        <div>
+          <h4>Create a clear reporting culture</h4>
+          <p>Remote workers are less likely to report something suspicious if they fear blame. Make it easy and safe to flag concerns — early reports prevent major breaches.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <div class="takeaways-title">Remote security checklist</div>
+      <ul>
+        <li><span class="check">✓</span> VPN in use for all remote work activity</li>
+        <li><span class="check">✓</span> Multi-factor authentication enabled on all business accounts</li>
+        <li><span class="check">✓</span> Company devices issued to staff handling sensitive data</li>
+        <li><span class="check">✓</span> Approved tools list shared with all remote employees</li>
+        <li><span class="check">✓</span> Automatic software updates enabled across all devices</li>
+        <li><span class="check">✓</span> Regular security training scheduled for the whole team</li>
+        <li><span class="check">✓</span> Clear process for reporting suspicious activity</li>
+      </ul>
+    </div>
+
+    <p>Remote work is here to stay. The businesses that thrive are those that treat remote security not as an afterthought — but as a core part of how their team operates every single day.</p>
+
+  </div>
+</article>
+
+<footer>
+  <strong>CyberSense</strong> — plain-language cybersecurity for business owners<br>
+  <span style="font-size:12px; margin-top:6px; display:block;">© 2026 CyberSense. For informational purposes only.</span>
+</footer>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = Math.min(100, (window.scrollY / total) * 100) + '%';
+  });
+</script>
+
+</body>
+</html>
