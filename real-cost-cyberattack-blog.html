@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Real Cost of a Cyberattack | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --surface2: #f2f2ec;
+    --border: #e4e4da;
+    --text: #18180f;
+    --muted: #58584a;
+    --faint: #a8a898;
+    --accent: #1a1a10;
+    --green: #166534;
+    --red: #991b1b;
+    --amber: #92400e;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --amber-bg: #fffbeb;
+    --amber-border: #fde68a;
+    --green-bg: #f0fdf4;
+    --green-border: #bbf7d0;
+    --highlight: #dc2626;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Lora', serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px; background: var(--highlight);
+    width: 0%; z-index: 200; transition: width 0.1s linear;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,250,247,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    height: 62px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+    color: var(--text); text-decoration: none; letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--highlight); }
+  .nav-pill {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--highlight); border: 1px solid var(--highlight);
+    padding: 4px 14px; border-radius: 99px;
+  }
+
+  /* HERO */
+  .hero { max-width: 820px; margin: 0 auto; padding: 5rem 2rem 3rem; animation: fadeUp 0.7s ease both; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--highlight); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--highlight); border-radius: 2px; }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5.5vw, 52px); font-weight: 800;
+    line-height: 1.1; letter-spacing: -0.03em;
+    color: var(--text); margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-size: 19px; font-weight: 400; line-height: 1.7;
+    color: var(--muted); font-style: italic;
+    max-width: 620px; margin-bottom: 2rem;
+  }
+
+  /* BIG STAT HERO */
+  .hero-stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin: 2rem 0;
+  }
+  .hero-stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; text-align: center;
+  }
+  .hero-stat-num {
+    font-family: 'Syne', sans-serif; font-size: 38px; font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.4rem;
+    color: var(--highlight);
+  }
+  .hero-stat-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .hero-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-family: 'Syne', sans-serif; font-size: 12px; color: var(--faint);
+    padding-top: 1.75rem; border-top: 1px solid var(--border);
+  }
+  .hero-meta strong { color: var(--muted); font-weight: 700; }
+  .dot { width: 3px; height: 3px; background: var(--border); border-radius: 50%; }
+
+  /* ARTICLE */
+  article { max-width: 820px; margin: 0 auto; padding: 0 2rem 6rem; animation: fadeUp 0.9s ease both; }
+  .content { max-width: 660px; }
+  .content p { font-size: 17px; line-height: 1.85; color: var(--text); margin-bottom: 1.4rem; }
+
+  .section-label {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--highlight); margin-bottom: 0.5rem; display: block;
+  }
+  h2.section-h2 {
+    font-family: 'Syne', sans-serif; font-size: 27px; font-weight: 800;
+    line-height: 1.2; color: var(--text); margin-bottom: 1.25rem; letter-spacing: -0.02em;
+  }
+  .section-block { margin: 3.5rem 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-left: 3px solid var(--text);
+    padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 10px 10px 0;
+  }
+  .callout p { margin: 0; font-size: 16px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  /* COST BREAKDOWN */
+  .cost-list { margin: 2rem 0; display: flex; flex-direction: column; gap: 0; }
+  .cost-item {
+    display: flex; align-items: center; gap: 1.25rem;
+    padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+  }
+  .cost-item:last-child { border-bottom: none; }
+  .cost-bar-wrap { flex: 1; }
+  .cost-label {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    color: var(--text); margin-bottom: 5px;
+  }
+  .cost-bar-bg { background: var(--surface2); border-radius: 99px; height: 8px; overflow: hidden; }
+  .cost-bar { height: 8px; border-radius: 99px; background: var(--highlight); }
+  .cost-amount {
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800;
+    color: var(--highlight); min-width: 80px; text-align: right;
+  }
+
+  /* STORY BOX */
+  .story-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 2rem; margin: 2.5rem 0;
+    position: relative; overflow: hidden;
+  }
+  .story-box::before {
+    content: '"'; font-family: 'Syne', sans-serif;
+    font-size: 120px; font-weight: 800;
+    color: var(--surface2); position: absolute;
+    top: -10px; left: 16px; line-height: 1; z-index: 0;
+  }
+  .story-content { position: relative; z-index: 1; }
+  .story-label {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--faint); margin-bottom: 0.75rem;
+  }
+  .story-box p { font-size: 16px; color: var(--muted); line-height: 1.75; font-style: italic; margin-bottom: 0.75rem; }
+  .story-box p:last-child { margin-bottom: 0; }
+
+  /* WARNING */
+  .warning-box {
+    background: var(--red-bg); border: 1px solid var(--red-border);
+    border-radius: 12px; padding: 1.5rem; margin: 2rem 0;
+  }
+  .warning-label {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.75rem;
+  }
+  .warning-box p { font-size: 15px; color: #7f1d1d; margin: 0; line-height: 1.65; }
+
+  hr.divider { border: none; height: 1px; background: var(--border); margin: 3rem 0; }
+
+  /* PREVENTION CARDS */
+  .prevent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 2rem 0; }
+  .prevent-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+  }
+  .prevent-icon { font-size: 22px; margin-bottom: 0.6rem; display: block; }
+  .prevent-card h4 {
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--text); margin-bottom: 0.35rem;
+  }
+  .prevent-card p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+  /* TAKEAWAYS */
+  .takeaways {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 2rem; margin: 2.5rem 0;
+  }
+  .takeaways-title {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text); margin-bottom: 1.25rem;
+  }
+  .takeaways ul { list-style: none; padding: 0; }
+  .takeaways li {
+    font-size: 15px; line-height: 1.6; color: var(--text);
+    padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .takeaways li:last-child { border-bottom: none; }
+  .check { color: var(--green); font-weight: 700; flex-shrink: 0; font-family: 'Syne', sans-serif; font-size: 14px; }
+
+  footer {
+    background: var(--text); color: #6b6860;
+    text-align: center; padding: 2.5rem;
+    font-family: 'Syne', sans-serif; font-size: 13px;
+  }
+  footer strong { color: #c0bdb5; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    .hero, article { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .hero-stat-row { grid-template-columns: 1fr; }
+    .prevent-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <a href="#" class="nav-logo">Cyber<span>Sense</span></a>
+  <span class="nav-pill">Small Business</span>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">The Real Numbers</div>
+  <h1>The true cost of a cyberattack on a small business — it is bigger than you think</h1>
+  <p class="hero-lead">Most small business owners believe a cyberattack would be an inconvenience. The data tells a very different story. For many small businesses, one attack is all it takes.</p>
+
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <div class="hero-stat-num">60%</div>
+      <div class="hero-stat-desc">of small businesses close within 6 months of a cyberattack</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">$200K</div>
+      <div class="hero-stat-desc">average cost of a cyberattack on a small business</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">43%</div>
+      <div class="hero-stat-desc">of all cyberattacks specifically target small businesses</div>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <strong>CyberSense Editorial</strong>
+    <span class="dot"></span>
+    <span>April 2026</span>
+    <span class="dot"></span>
+    <span>6 min read</span>
+  </div>
+</header>
+
+<article>
+  <div class="content">
+
+    <p>When business owners think about cyberattacks, they imagine it happening to someone else — a large bank, a global retailer, a government agency. The reality is that small businesses are among the most targeted organisations in the world, and the least prepared to survive an attack.</p>
+    <p>The costs go far beyond whatever a hacker steals. They ripple through every part of your business — and they add up fast.</p>
+
+    <div class="section-block">
+      <span class="section-label">The full picture</span>
+      <h2 class="section-h2">Where the money actually goes</h2>
+      <p>Most business owners focus on the obvious cost — what was stolen. But the financial damage of a cyberattack spreads across six distinct categories, and the indirect costs are often far larger than the direct ones.</p>
+
+      <div class="cost-list">
+        <div class="cost-item">
+          <div class="cost-bar-wrap">
+            <div class="cost-label">Incident response and investigation</div>
+            <div class="cost-bar-bg"><div class="cost-bar" style="width:85%"></div></div>
+          </div>
+          <div class="cost-amount">$25–80K</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-bar-wrap">
+            <div class="cost-label">Business downtime and lost revenue</div>
+            <div class="cost-bar-bg"><div class="cost-bar" style="width:95%"></div></div>
+          </div>
+          <div class="cost-amount">$50–100K</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-bar-wrap">
+            <div class="cost-label">Legal fees and regulatory fines</div>
+            <div class="cost-bar-bg"><div class="cost-bar" style="width:70%"></div></div>
+          </div>
+          <div class="cost-amount">$20–75K</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-bar-wrap">
+            <div class="cost-label">Customer notification and support</div>
+            <div class="cost-bar-bg"><div class="cost-bar" style="width:45%"></div></div>
+          </div>
+          <div class="cost-amount">$10–30K</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-bar-wrap">
+            <div class="cost-label">Reputation damage and lost customers</div>
+            <div class="cost-bar-bg"><div class="cost-bar" style="width:100%"></div></div>
+          </div>
+          <div class="cost-amount">Ongoing</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-bar-wrap">
+            <div class="cost-label">System rebuilding and upgrades</div>
+            <div class="cost-bar-bg"><div class="cost-bar" style="width:60%"></div></div>
+          </div>
+          <div class="cost-amount">$15–50K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">The hidden cost</span>
+      <h2 class="section-h2">Downtime is the silent killer</h2>
+      <p>The single largest cost for most small businesses is not data theft or fines. It is downtime — the days or weeks when your systems are offline, your staff cannot work, and your customers cannot reach you.</p>
+      <p>The average small business cyberattack causes 21 days of disruption. For a business turning over £500,000 a year, that is roughly £29,000 in lost revenue — before a single pound is spent on recovery.</p>
+
+      <div class="callout">
+        <p>Every day your systems are down, your competitors are open for business. Customers who cannot reach you do not wait — they find someone else, and many never come back.</p>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">A real example</span>
+      <h2 class="section-h2">What it looks like in practice</h2>
+
+      <div class="story-box">
+        <div class="story-content">
+          <div class="story-label">Case study — Small accounting firm, 12 employees</div>
+          <p>A ransomware attack encrypted every file on the company's server on a Monday morning. Within hours, the entire team was locked out of client records, tax documents, and billing systems.</p>
+          <p>The firm spent three weeks offline — losing £40,000 in billable work. Incident response cost £18,000. Legal advice and client notification added another £12,000. Two long-term clients moved to competitors during the outage and never returned, representing £35,000 in annual recurring revenue.</p>
+          <p>Total first-year impact: over £105,000 — from a single attack that exploited one unpatched software vulnerability.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">The reputation cost</span>
+      <h2 class="section-h2">Trust, once lost, is hard to rebuild</h2>
+      <p>For large corporations, a data breach is a PR crisis. For a small business, it can be an existential one. Customers trust small businesses with their personal information partly because of the personal relationship involved. When that trust is broken, the damage runs deep.</p>
+      <p>Research consistently shows that a significant share of customers will stop doing business with a company after a breach — and that number is even higher for small, local businesses where trust is a central part of the value proposition.</p>
+
+      <div class="warning-box">
+        <div class="warning-label">⚠ The closing statistic</div>
+        <p>60% of small businesses that suffer a significant cyberattack close their doors within six months — not because the attack destroyed them instantly, but because the accumulated costs of recovery, lost revenue, and damaged reputation made recovery impossible.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <span class="section-label">The good news</span>
+    <h2 class="section-h2">Prevention costs a fraction of recovery</h2>
+    <p>The average small business spends less than £1,000 a year on cybersecurity. The average cost of recovering from an attack is over £150,000. The maths are stark — and they make a compelling case for investing in prevention now, before an attack forces the issue.</p>
+    <p>The most effective protections are not expensive or complex. They are consistent, well-maintained basics that close the doors attackers rely on.</p>
+
+    <div class="prevent-grid">
+      <div class="prevent-card">
+        <span class="prevent-icon">🔐</span>
+        <h4>Multi-factor authentication</h4>
+        <p>Stops most account takeover attempts at virtually zero cost. One of the highest-impact steps any business can take.</p>
+      </div>
+      <div class="prevent-card">
+        <span class="prevent-icon">💾</span>
+        <h4>Regular offsite backups</h4>
+        <p>Ransomware loses most of its power when you have clean, recent backups stored separately from your main systems.</p>
+      </div>
+      <div class="prevent-card">
+        <span class="prevent-icon">🔄</span>
+        <h4>Software updates</h4>
+        <p>Most attacks exploit known vulnerabilities in outdated software. Enabling automatic updates closes these doors automatically.</p>
+      </div>
+      <div class="prevent-card">
+        <span class="prevent-icon">🎓</span>
+        <h4>Staff security training</h4>
+        <p>A well-trained team is your best defence. Most successful attacks begin with a human mistake that training can prevent.</p>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <div class="takeaways-title">Key takeaways for small business owners</div>
+      <ul>
+        <li><span class="check">✓</span> Small businesses are targeted just as often as large ones — often more so</li>
+        <li><span class="check">✓</span> The average attack costs over £150,000 when all costs are counted</li>
+        <li><span class="check">✓</span> Downtime is usually the largest single cost — plan to minimise it</li>
+        <li><span class="check">✓</span> 60% of attacked small businesses close within six months</li>
+        <li><span class="check">✓</span> Prevention spending is a fraction of recovery spending</li>
+        <li><span class="check">✓</span> The four basics — MFA, backups, updates, training — prevent most attacks</li>
+      </ul>
+    </div>
+
+    <p>The question is not whether your business could be targeted. It is whether your business could survive it. The good news is that with the right preparations in place, most attacks can be prevented — and those that do occur can be survived.</p>
+
+  </div>
+</article>
+
+<footer>
+  <strong>CyberSense</strong> — plain-language cybersecurity for business owners<br>
+  <span style="font-size:12px; margin-top:6px; display:block;">© 2026 CyberSense. For informational purposes only.</span>
+</footer>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = Math.min(100, (window.scrollY / total) * 100) + '%';
+  });
+</script>
+
+</body>
+</html>
