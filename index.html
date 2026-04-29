@@ -147,6 +147,58 @@ nav a:hover,nav a.active{color:var(--ink)}
 <script>
 const POSTS = [
   {
+    id: 9,
+    title: "Supply chain attacks — the threat hiding inside your trusted software",
+    date: "Apr 29, 2026",
+    tag: "Threat Intelligence",
+    excerpt: "You vetted your software. You trust your vendors. But what if the attacker got in through them — not you? Supply chain attacks are one of the fastest-growing threats facing businesses today.",
+    body: `
+      <p>Most businesses focus their security efforts on their own systems. But modern businesses rely on dozens of third-party tools and service providers. Every single one is a potential entry point. A supply chain attack does not target you directly — it targets someone you already trust.</p>
+
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">742%</div><div class="stat-desc">increase in supply chain attacks over the past three years</div></div>
+        <div class="stat-box"><div class="stat-num">1,000s</div><div class="stat-desc">of businesses affected by a single compromised vendor in major incidents</div></div>
+        <div class="stat-box"><div class="stat-num">6 mo</div><div class="stat-desc">average time attackers sit inside a supply chain before detection</div></div>
+      </div>
+
+      <h2>How it works</h2>
+      <p>A supply chain attack compromises a vendor or software provider — then uses their trusted access to reach their customers. The attack travels through legitimate channels and looks like a normal software update. Your security tools are not looking for threats coming from software you approved and installed yourself.</p>
+      <div class="callout">Supply chain attacks are particularly dangerous because they exploit trust — the one thing most security systems are not designed to question.</div>
+
+      <h2>The SolarWinds case</h2>
+      <p>In 2020, attackers secretly inserted malicious code into a routine software update from SolarWinds — a widely used IT management platform. The infected update was downloaded by over 18,000 organisations, including government agencies and major corporations. None of those organisations did anything wrong. Total remediation costs ran into billions of dollars.</p>
+
+      <h2>Types of supply chain attacks</h2>
+      <ul>
+        <li><strong>Software updates</strong> — malicious code inserted into a legitimate update</li>
+        <li><strong>Open source packages</strong> — attackers publish malicious packages mimicking popular libraries</li>
+        <li><strong>Managed service providers</strong> — IT companies with access to many clients become high-value targets</li>
+        <li><strong>Hardware tampering</strong> — devices pre-loaded with malicious firmware</li>
+        <li><strong>Third-party credentials</strong> — vendor login details stolen and used to access your systems</li>
+      </ul>
+
+      <h2>Questions to ask every vendor</h2>
+      <ul>
+        <li>Do you have a formal security programme or certification (ISO 27001, SOC 2)?</li>
+        <li>How do you handle security in your own software supply chain?</li>
+        <li>What access does your team actually need to our systems?</li>
+        <li>How would you notify us in the event of a breach?</li>
+        <li>Have you experienced a security incident in the past two years?</li>
+      </ul>
+
+      <h2>Supply chain security checklist</h2>
+      <ul class="checklist">
+        <li>Audit which third-party tools and vendors have access to your systems</li>
+        <li>Apply least privilege — vendors get only the access they genuinely need</li>
+        <li>Ask vendors about their security certifications and practices</li>
+        <li>Monitor for unusual activity from third-party connections</li>
+        <li>Keep software updated — but verify updates come from official sources</li>
+        <li>Have a response plan for when a trusted vendor is compromised</li>
+        <li>Review vendor access regularly and remove access no longer needed</li>
+      </ul>
+    `
+  },
+  {
     id: 8,
     title: "The true cost of a cyberattack on a small business",
     date: "Apr 28, 2026",
@@ -513,7 +565,7 @@ function renderPosts() {
   const filtered = activeTag === 'All' ? POSTS : POSTS.filter(p => p.tag === activeTag);
   const list = document.getElementById('postList');
   list.innerHTML = filtered.map((p, i) => `
-    <div class="post-card" onclick="openPost(${p.id})">
+    <div class="post-card" onclick="p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
       <div class="post-meta">${p.date}</div>
       <div class="post-title">${p.title}</div>
       <div class="post-excerpt">${p.excerpt}</div>
