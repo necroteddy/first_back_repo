@@ -147,6 +147,61 @@ nav a:hover,nav a.active{color:var(--ink)}
 <script>
 const POSTS = [
   {
+    id: 10,
+    title: "Your business website is an open door \u2014 here is how to lock it",
+    date: "Apr 30, 2026",
+    tag: "Website Security",
+    excerpt: "Your website is your most public-facing asset. It is also one of your most vulnerable ones. Most small business websites have serious security gaps \u2014 and most owners have no idea.",
+    body: `
+      <p>Most business owners think of their website as a marketing tool. But to a cybercriminal, your website is a publicly accessible computer running software, storing data, and connected to everything else your business does online.</p>
+
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">30K</div><div class="stat-desc">websites hacked every single day \u2014 mostly small businesses</div></div>
+        <div class="stat-box"><div class="stat-num">98%</div><div class="stat-desc">of WordPress vulnerabilities come from outdated plugins and themes</div></div>
+        <div class="stat-box"><div class="stat-num">83%</div><div class="stat-desc">of customers leave a website they do not trust with their data</div></div>
+      </div>
+
+      <h2>Threat 1 \u2014 Outdated software</h2>
+      <p>Outdated plugins and themes are responsible for the vast majority of website compromises. Every unpatched plugin is a potential open door. Enable automatic updates and check weekly for major releases.</p>
+      <div class="callout">Treat website software updates the same way you treat updates on your laptop \u2014 apply them promptly.</div>
+
+      <h2>Threat 2 \u2014 No HTTPS</h2>
+      <p>Without HTTPS, data submitted through your site can be intercepted. Browsers now display "Not Secure" warnings on sites without it. SSL certificates are free via Let's Encrypt \u2014 there is no reason not to have one.</p>
+      <div class="warning"><strong>\u26a0 Check right now</strong>Does your website address start with https:// and show a padlock? If not, your visitors are not protected.</div>
+
+      <h2>Threat 3 \u2014 Weak admin credentials</h2>
+      <p>Automated tools run thousands of password attempts per minute against common usernames like "admin". Change your admin username to something unique, use a strong password, and enable two-factor authentication.</p>
+
+      <h2>Threat 4 \u2014 No backups</h2>
+      <p>Many small businesses discover they have no backups only when they desperately need one. Set up automated daily backups stored separately from your hosting account \u2014 and test them.</p>
+      <div class="callout">A backup you have never tested is not a backup \u2014 it is a hope.</div>
+
+      <h2>8 steps to a more secure website</h2>
+      <ul>
+        <li><strong>Install SSL and enforce HTTPS</strong> \u2014 free via Let's Encrypt</li>
+        <li><strong>Update everything</strong> \u2014 platform, plugins, and themes weekly</li>
+        <li><strong>Change your admin username</strong> \u2014 never use "admin"</li>
+        <li><strong>Enable two-factor authentication</strong> on your website login</li>
+        <li><strong>Delete unused plugins and themes</strong> \u2014 inactive ones are still a risk</li>
+        <li><strong>Set up automated daily backups</strong> stored off-server</li>
+        <li><strong>Install a web application firewall</strong> \u2014 Cloudflare or Wordfence have free tiers</li>
+        <li><strong>Scan for malware monthly</strong> using Sucuri or your host's scanner</li>
+      </ul>
+
+      <h2>Website security checklist</h2>
+      <ul class="checklist">
+        <li>HTTPS enabled with a valid SSL certificate</li>
+        <li>Platform, plugins, and themes all up to date</li>
+        <li>Admin username changed \u2014 strong unique password in use</li>
+        <li>Two-factor authentication enabled on website login</li>
+        <li>Unused plugins and themes deleted</li>
+        <li>Automated daily backups stored off-server</li>
+        <li>Web application firewall installed and active</li>
+        <li>Regular malware scans scheduled</li>
+      </ul>
+    `
+  },
+  {
     id: 9,
     title: "Supply chain attacks — the threat hiding inside your trusted software",
     date: "Apr 29, 2026",
@@ -565,7 +620,7 @@ function renderPosts() {
   const filtered = activeTag === 'All' ? POSTS : POSTS.filter(p => p.tag === activeTag);
   const list = document.getElementById('postList');
   list.innerHTML = filtered.map((p, i) => `
-    <div class="post-card" onclick="p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
+    <div class="post-card" onclick="p.id===10 ? window.location='securing-business-website-blog.html' : p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
       <div class="post-meta">${p.date}</div>
       <div class="post-title">${p.title}</div>
       <div class="post-excerpt">${p.excerpt}</div>

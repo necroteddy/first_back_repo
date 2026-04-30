@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Securing Your Business Website | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f4f7f4;
+    --surface: #ffffff;
+    --surface2: #eaf0ea;
+    --border: #d8e2d8;
+    --text: #141f14;
+    --muted: #4a5e4a;
+    --faint: #90a890;
+    --accent: #166534;
+    --accent2: #15803d;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --green-bg: #f0fdf4;
+    --green-border: #bbf7d0;
+    --blue-bg: #eff6ff;
+    --blue-border: #bfdbfe;
+    --amber-bg: #fffbeb;
+    --amber-border: #fde68a;
+    --amber: #d97706;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Lora', serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px; background: var(--accent);
+    width: 0%; z-index: 200; transition: width 0.1s linear;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(244,247,244,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    height: 62px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+    color: var(--text); text-decoration: none; letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-pill {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 4px 14px; border-radius: 99px;
+  }
+
+  /* HERO */
+  .hero { max-width: 820px; margin: 0 auto; padding: 5rem 2rem 3rem; animation: fadeUp 0.7s ease both; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5.5vw, 52px); font-weight: 800;
+    line-height: 1.1; letter-spacing: -0.03em;
+    color: var(--text); margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-size: 19px; font-weight: 400; line-height: 1.7;
+    color: var(--muted); font-style: italic;
+    max-width: 620px; margin-bottom: 2rem;
+  }
+
+  /* SCORE CARDS */
+  .score-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin: 2rem 0;
+  }
+  .score-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem; text-align: center;
+  }
+  .score-icon { font-size: 26px; margin-bottom: 0.5rem; display: block; }
+  .score-card h3 {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    color: var(--text); margin-bottom: 0.3rem;
+  }
+  .score-card p { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  .hero-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-family: 'Syne', sans-serif; font-size: 12px; color: var(--faint);
+    padding-top: 1.75rem; border-top: 1px solid var(--border);
+  }
+  .hero-meta strong { color: var(--muted); font-weight: 700; }
+  .dot { width: 3px; height: 3px; background: var(--border); border-radius: 50%; }
+
+  /* ARTICLE */
+  article { max-width: 820px; margin: 0 auto; padding: 0 2rem 6rem; animation: fadeUp 0.9s ease both; }
+  .content { max-width: 660px; }
+  .content p { font-size: 17px; line-height: 1.85; color: var(--text); margin-bottom: 1.4rem; }
+
+  .section-label {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5rem; display: block;
+  }
+  h2.section-h2 {
+    font-family: 'Syne', sans-serif; font-size: 27px; font-weight: 800;
+    line-height: 1.2; color: var(--text); margin-bottom: 1.25rem; letter-spacing: -0.02em;
+  }
+  .section-block { margin: 3.5rem 0; }
+
+  .callout {
+    background: var(--green-bg); border: 1px solid var(--green-border);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 10px 10px 0;
+  }
+  .callout p { margin: 0; font-size: 16px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning-box {
+    background: var(--red-bg); border: 1px solid var(--red-border);
+    border-radius: 12px; padding: 1.5rem; margin: 2rem 0;
+  }
+  .warning-label {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.75rem;
+  }
+  .warning-box p { font-size: 15px; color: #7f1d1d; margin: 0; line-height: 1.65; }
+
+  .amber-box {
+    background: var(--amber-bg); border: 1px solid var(--amber-border);
+    border-radius: 12px; padding: 1.5rem; margin: 2rem 0;
+  }
+  .amber-label {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 0.75rem;
+  }
+  .amber-box p { font-size: 15px; color: #78350f; margin: 0; line-height: 1.65; }
+
+  /* STEPS */
+  .steps { margin: 2rem 0; display: flex; flex-direction: column; gap: 12px; }
+  .step-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .step-n {
+    font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800;
+    color: var(--surface); background: var(--accent);
+    min-width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+  .step-card h4 {
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+    color: var(--text); margin-bottom: 0.3rem;
+  }
+  .step-card p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  /* STAT ROW */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin: 2.5rem 0;
+  }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.5rem;
+    color: var(--accent);
+  }
+  .stat-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  hr.divider { border: none; height: 1px; background: var(--border); margin: 3rem 0; }
+
+  .takeaways {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 2rem; margin: 2.5rem 0;
+  }
+  .takeaways-title {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--accent); margin-bottom: 1.25rem;
+  }
+  .takeaways ul { list-style: none; padding: 0; }
+  .takeaways li {
+    font-size: 15px; line-height: 1.6; color: var(--text);
+    padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .takeaways li:last-child { border-bottom: none; }
+  .check { color: var(--accent); font-weight: 700; flex-shrink: 0; font-family: 'Syne', sans-serif; font-size: 14px; }
+
+  footer {
+    background: var(--text); color: #6b6860;
+    text-align: center; padding: 2.5rem;
+    font-family: 'Syne', sans-serif; font-size: 13px;
+  }
+  footer strong { color: #c0bdb5; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    .hero, article { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .score-grid, .stat-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Cyber<span>Sense</span></a>
+  <span class="nav-pill">Website Security</span>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">Website Security</div>
+  <h1>Your business website is an open door — here is how to lock it</h1>
+  <p class="hero-lead">Your website is your most public-facing asset. It is also one of your most vulnerable ones. Most small business websites have serious security gaps — and most owners have no idea.</p>
+
+  <div class="score-grid">
+    <div class="score-card">
+      <span class="score-icon">🔓</span>
+      <h3>Outdated software</h3>
+      <p>Unpatched plugins and CMS platforms are the most common entry point</p>
+    </div>
+    <div class="score-card">
+      <span class="score-icon">🌐</span>
+      <h3>No HTTPS</h3>
+      <p>Unsecured sites expose visitor data and damage customer trust instantly</p>
+    </div>
+    <div class="score-card">
+      <span class="score-icon">👤</span>
+      <h3>Weak admin access</h3>
+      <p>Default usernames and weak passwords leave the back door wide open</p>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <strong>CyberSense Editorial</strong>
+    <span class="dot"></span>
+    <span>April 2026</span>
+    <span class="dot"></span>
+    <span>6 min read</span>
+  </div>
+</header>
+
+<article>
+  <div class="content">
+
+    <p>Most business owners think of their website as a marketing tool — a digital brochure that sits there and does its job. But to a cybercriminal, your website is something else entirely: a publicly accessible computer running software, storing data, and connected to everything else your business does online.</p>
+    <p>A compromised website can steal customer data, spread malware to visitors, damage your search rankings, and destroy the trust you have spent years building. And attacks on small business websites happen every single day.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">30K</div>
+        <div class="stat-desc">websites are hacked every single day — the majority belonging to small businesses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">98%</div>
+        <div class="stat-desc">of WordPress vulnerabilities come from outdated plugins and themes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">83%</div>
+        <div class="stat-desc">of customers will leave a website they do not trust with their personal data</div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">Threat 01</span>
+      <h2 class="section-h2">Outdated software is your biggest vulnerability</h2>
+      <p>If your website runs on WordPress, Joomla, Shopify, or any other platform, it relies on a core system plus plugins and themes. Every one of these has vulnerabilities discovered regularly — and when updates are released, attackers immediately start targeting sites that have not applied them yet.</p>
+      <p>Outdated plugins are responsible for the vast majority of website compromises. A plugin you installed two years ago and never updated could be the unlocked door an attacker walks through today.</p>
+      <div class="callout">
+        <p>Treat software updates on your website the same way you treat them on your laptop — apply them promptly, and enable automatic updates wherever possible.</p>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">Threat 02</span>
+      <h2 class="section-h2">No HTTPS means no trust — and no protection</h2>
+      <p>HTTPS encrypts the connection between your website and your visitors. Without it, any data submitted through your site — contact forms, login details, payment information — can be intercepted in transit.</p>
+      <p>Modern browsers now actively warn visitors when a site lacks HTTPS, displaying "Not Secure" warnings that drive customers away. Google also ranks HTTPS sites higher in search results. There is no good reason not to have it — SSL certificates are free through providers like Let's Encrypt.</p>
+
+      <div class="warning-box">
+        <div class="warning-label">⚠ Check right now</div>
+        <p>Look at your website address bar. Does it start with <strong>https://</strong> and show a padlock? If not, your visitors are not protected — and your site is flagged as insecure by every major browser.</p>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">Threat 03</span>
+      <h2 class="section-h2">Weak admin credentials are an open invitation</h2>
+      <p>The login page of your website's admin panel is publicly accessible to anyone who knows where to look — and attackers do. Automated tools run thousands of password attempts per minute against common usernames like "admin" and common passwords.</p>
+      <p>If your website still uses the default username "admin" or a simple password, it is only a matter of time before it is compromised. Changing these takes five minutes and dramatically reduces your exposure.</p>
+
+      <div class="amber-box">
+        <div class="amber-label">⚠ Quick win</div>
+        <p>Change your admin username from "admin" to something unique. Use a strong, randomly generated password stored in your password manager. Enable two-factor authentication on your website login if your platform supports it.</p>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <span class="section-label">Threat 04</span>
+      <h2 class="section-h2">No backups means no recovery</h2>
+      <p>If your website is compromised, defaced, or deleted, your ability to recover depends entirely on whether you have a recent, clean backup stored somewhere separate from your hosting account. Many small businesses discover they have no backups only when they desperately need one.</p>
+      <p>Your hosting provider may offer backups — but do not assume. Verify that backups are being taken, test that they actually restore correctly, and keep a separate copy outside your hosting environment.</p>
+      <div class="callout">
+        <p>A backup you have never tested is not a backup — it is a hope. Test your website restore process at least once a year.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <span class="section-label">The fix</span>
+    <h2 class="section-h2">8 steps to a more secure business website</h2>
+    <p>You do not need to be a web developer to significantly improve your website's security. Most of these steps take less than an hour and require no technical expertise beyond following a guide.</p>
+
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-n">1</div>
+        <div>
+          <h4>Install an SSL certificate and enforce HTTPS</h4>
+          <p>Free via Let's Encrypt. Most hosting providers offer one-click installation. Redirect all HTTP traffic to HTTPS automatically.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-n">2</div>
+        <div>
+          <h4>Update everything — platform, plugins, themes</h4>
+          <p>Log into your website admin and apply all pending updates. Enable automatic updates for minor releases. Check weekly for major updates.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-n">3</div>
+        <div>
+          <h4>Change your admin username and strengthen your password</h4>
+          <p>Never use "admin" as a username. Use a long, random password generated by your password manager. Enable two-factor authentication.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-n">4</div>
+        <div>
+          <h4>Remove plugins and themes you no longer use</h4>
+          <p>Inactive plugins are still a vulnerability. If you are not using it, delete it — not just deactivate it.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-n">5</div>
+        <div>
+          <h4>Set up automated daily backups</h4>
+          <p>Use a plugin or your hosting provider's backup tool. Store backups in a separate location — not just on the same server.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-n">6</div>
+        <div>
+          <h4>Install a web application firewall</h4>
+          <p>Tools like Cloudflare or Wordfence filter malicious traffic before it reaches your site. Many offer free tiers sufficient for small business websites.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-n">7</div>
+        <div>
+          <h4>Limit login attempts</h4>
+          <p>Install a plugin that blocks IP addresses after a set number of failed login attempts. This stops automated password-guessing attacks cold.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-n">8</div>
+        <div>
+          <h4>Scan your site regularly for malware</h4>
+          <p>Use a tool like Sucuri or your hosting provider's malware scanner. Schedule monthly scans and act immediately on anything flagged.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <div class="takeaways-title">Website security checklist</div>
+      <ul>
+        <li><span class="check">✓</span> HTTPS enabled with a valid SSL certificate</li>
+        <li><span class="check">✓</span> Platform, plugins, and themes all up to date</li>
+        <li><span class="check">✓</span> Admin username changed from default — strong unique password in use</li>
+        <li><span class="check">✓</span> Two-factor authentication enabled on website login</li>
+        <li><span class="check">✓</span> Unused plugins and themes deleted</li>
+        <li><span class="check">✓</span> Automated daily backups stored off-server</li>
+        <li><span class="check">✓</span> Web application firewall installed and active</li>
+        <li><span class="check">✓</span> Login attempt limits in place</li>
+        <li><span class="check">✓</span> Regular malware scans scheduled</li>
+      </ul>
+    </div>
+
+    <p>Your website is often the first thing a customer sees — and the last place you want a security failure. A few hours of attention now can prevent weeks of damage later. Start with the basics, work through the checklist, and your site will be significantly more secure than the vast majority of small business websites online today.</p>
+
+  </div>
+</article>
+
+<footer>
+  <strong>CyberSense</strong> — plain-language cybersecurity for business owners<br>
+  <span style="font-size:12px;margin-top:6px;display:block;">© 2026 CyberSense. For informational purposes only.</span>
+</footer>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = Math.min(100, (window.scrollY / total) * 100) + '%';
+  });
+</script>
+
+</body>
+</html>
