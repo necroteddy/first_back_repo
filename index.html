@@ -147,6 +147,63 @@ nav a:hover,nav a.active{color:var(--ink)}
 <script>
 const POSTS = [
   {
+    id: 11,
+    title: "Ransomware \u2014 what it is, how it works, and how to survive it",
+    date: "May 1, 2026",
+    tag: "Ransomware",
+    excerpt: "Ransomware has shut down hospitals, schools, and thousands of small businesses. Understanding it is the first step to making sure it does not shut down yours.",
+    body: `
+      <p>Ransomware is one of the most damaging types of cyberattack a business can face. It does not just steal your data \u2014 it locks you out of everything, brings your operations to a complete halt, and holds your business hostage until you pay.</p>
+
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">$1.1M</div><div class="stat-desc">average ransom payment made by businesses in 2025</div></div>
+        <div class="stat-box"><div class="stat-num">21</div><div class="stat-desc">average days of downtime caused by a ransomware attack</div></div>
+        <div class="stat-box"><div class="stat-num">46%</div><div class="stat-desc">of businesses that pay the ransom never fully recover their data</div></div>
+      </div>
+
+      <h2>What is ransomware?</h2>
+      <p>Ransomware is malicious software that encrypts your files \u2014 making them completely unreadable without a decryption key. Every file your business depends on is suddenly inaccessible. The criminals demand payment, usually in cryptocurrency, to unlock them.</p>
+      <div class="callout">Many attackers now steal copies of your data before encrypting it \u2014 threatening to publish it publicly if you do not pay. This is called double extortion.</div>
+
+      <h2>How it gets in</h2>
+      <ul>
+        <li><strong>Malicious email attachments</strong> \u2014 a staff member opens an infected file</li>
+        <li><strong>Compromised credentials</strong> \u2014 stolen passwords used to access systems remotely</li>
+        <li><strong>Unpatched software</strong> \u2014 known vulnerabilities in outdated systems</li>
+      </ul>
+      <div class="warning"><strong>\u26a0 The waiting game</strong>Attackers often sit inside a network for weeks before triggering the ransomware \u2014 finding your backups and maximising damage.</div>
+
+      <h2>Should you pay the ransom?</h2>
+      <p>Nearly half of businesses that pay never fully recover their data. Paying also marks your business as one that will pay \u2014 making you a target for repeat attacks. Contact a cybersecurity specialist before making any decisions.</p>
+
+      <h2>Why backups are your most powerful weapon</h2>
+      <p>Ransomware loses most of its power when you have clean backups stored somewhere the attacker cannot reach. Follow the 3-2-1 rule: 3 copies of your data, on 2 different types of storage, with 1 stored completely offsite.</p>
+      <div class="callout">A backup stored on the same network as your main systems will be encrypted along with everything else. Offsite or offline backups are essential.</div>
+
+      <h2>How to protect your business</h2>
+      <ul>
+        <li><strong>3-2-1 backups</strong> \u2014 tested and verified regularly</li>
+        <li><strong>Keep all software updated</strong> \u2014 automatic updates on all devices</li>
+        <li><strong>Multi-factor authentication</strong> \u2014 stops stolen credentials being used remotely</li>
+        <li><strong>Train your team</strong> \u2014 most ransomware still arrives via email</li>
+        <li><strong>Segment your network</strong> \u2014 limits how far ransomware can spread</li>
+        <li><strong>Have a response plan</strong> \u2014 decisions made under panic are rarely good ones</li>
+      </ul>
+
+      <h2>Ransomware protection checklist</h2>
+      <ul class="checklist">
+        <li>3-2-1 backups in place with one copy completely offsite</li>
+        <li>Backups tested and verified to restore correctly</li>
+        <li>All software and systems kept up to date automatically</li>
+        <li>Multi-factor authentication on all accounts and remote access</li>
+        <li>Staff trained to recognise suspicious emails and attachments</li>
+        <li>Network segmentation in place for critical systems</li>
+        <li>Written ransomware response plan ready before it is needed</li>
+        <li>Cyber insurance policy reviewed for ransomware coverage</li>
+      </ul>
+    `
+  },
+  {
     id: 10,
     title: "Your business website is an open door \u2014 here is how to lock it",
     date: "Apr 30, 2026",
@@ -620,7 +677,7 @@ function renderPosts() {
   const filtered = activeTag === 'All' ? POSTS : POSTS.filter(p => p.tag === activeTag);
   const list = document.getElementById('postList');
   list.innerHTML = filtered.map((p, i) => `
-    <div class="post-card" onclick="p.id===10 ? window.location='securing-business-website-blog.html' : p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
+    <div class="post-card" onclick="p.id===11 ? window.location='ransomware-blog.html' : p.id===10 ? window.location='securing-business-website-blog.html' : p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
       <div class="post-meta">${p.date}</div>
       <div class="post-title">${p.title}</div>
       <div class="post-excerpt">${p.excerpt}</div>
