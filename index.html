@@ -4,769 +4,189 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CyberSense — Cybersecurity for Business Owners</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #18180f; --muted: #58584a; --faint: #a8a898;
+    --bg: #fafaf7; --bg2: #f2f2ec; --border: #e4e4da; --accent: #dc2626;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
 
-*{box-sizing:border-box;margin:0;padding:0}
+  header { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2.5rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); margin-bottom: 4px; text-decoration: none; display: block; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav { display: flex; gap: 1.5rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; cursor: pointer; }
+  nav a:hover, nav a.active { color: var(--ink); }
+  nav a.active { border-bottom: 1.5px solid var(--ink); padding-bottom: 1px; }
 
-:root{
-  --ink:#18180f;
-  --muted:#58584a;
-  --faint:#a8a898;
-  --bg:#fafaf7;
-  --bg2:#f2f2ec;
-  --border:#e4e4da;
-  --accent:#dc2626;
-}
+  .post-list { display: flex; flex-direction: column; }
+  .post-card { display: block; padding: 1.5rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; }
+  .post-card:hover .post-title { text-decoration: underline; }
+  .post-card:first-child { border-top: 1px solid var(--border); }
+  .post-meta { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .post-title { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 700; line-height: 1.3; color: var(--ink); margin-bottom: 8px; }
+  .post-excerpt { font-size: 15px; color: var(--muted); line-height: 1.65; margin-bottom: 10px; }
+  .post-tag { display: inline-block; font-size: 11px; color: var(--faint); background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; }
 
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink)}
+  #about { display: none; max-width: 520px; }
+  #about h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 1rem; margin-top: 1.5rem; }
+  #about h2:first-child { margin-top: 0; }
+  #about p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+  #about ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+  #about li { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 0.3rem; }
 
-/* LAYOUT */
-.blog{max-width:680px;margin:0 auto;padding:2rem 1rem}
-
-/* HEADER */
-.site-header{border-bottom:0.5px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem}
-.site-name{font-family:'Lora',serif;font-size:28px;font-weight:500;letter-spacing:-0.5px}
-.site-name span{color:var(--accent)}
-.site-tagline{font-size:14px;color:var(--muted);margin-top:4px}
-nav{display:flex;gap:1.5rem;margin-top:1rem}
-nav a{font-size:14px;color:var(--muted);text-decoration:none;cursor:pointer}
-nav a:hover,nav a.active{color:var(--ink)}
-
-/* PAGES */
-.page{display:none}
-.page.active{display:block}
-
-/* TAG FILTER */
-.tag-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
-.tag-btn{font-size:12px;padding:4px 12px;border-radius:20px;border:0.5px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif}
-.tag-btn:hover{border-color:var(--ink);color:var(--ink)}
-.tag-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-
-/* POST LIST */
-.post-list{display:flex;flex-direction:column;gap:0}
-.post-card{cursor:pointer;padding:1.5rem 0}
-.post-card:hover .post-title{text-decoration:underline}
-.post-meta{font-size:12px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em}
-.post-title{font-family:'Lora',serif;font-size:22px;font-weight:500;line-height:1.3;margin-bottom:8px}
-.post-excerpt{font-size:15px;color:var(--muted);line-height:1.7}
-.post-tag{display:inline-block;font-size:11px;background:var(--bg2);border:0.5px solid var(--border);border-radius:4px;padding:2px 8px;margin-top:10px;color:var(--muted)}
-.divider{height:0.5px;background:var(--border);margin:0}
-
-/* SINGLE POST */
-.back-btn{font-size:13px;color:var(--muted);cursor:pointer;margin-bottom:1.5rem;display:inline-block;padding:0.5rem 0}
-.back-btn:hover{color:var(--ink)}
-.full-post .post-title{font-family:'Lora',serif;font-size:28px;font-weight:500;line-height:1.3;margin-bottom:0.5rem}
-.full-post .post-meta{font-size:13px;color:var(--muted);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid var(--border)}
-.full-post .body{font-size:16px;line-height:1.85;color:var(--ink)}
-.full-post .body p{margin-bottom:1.1rem}
-.full-post .body h2{font-family:'Lora',serif;font-size:20px;font-weight:500;margin:2rem 0 0.75rem;color:var(--ink)}
-.full-post .body ul{padding-left:1.25rem;margin-bottom:1rem}
-.full-post .body li{font-size:15px;line-height:1.75;color:var(--muted);margin-bottom:0.4rem}
-.full-post .body .callout{background:var(--bg2);border-left:3px solid var(--border);padding:1rem 1.25rem;margin:1.5rem 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--muted);font-size:15px}
-.full-post .body .warning{background:#fef2f2;border:0.5px solid #fecaca;border-radius:8px;padding:1rem 1.25rem;margin:1.5rem 0;font-size:15px;color:#7f1d1d}
-.full-post .body .warning strong{color:#991b1b;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:0.4rem}
-.full-post .body .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.5rem 0}
-.full-post .body .stat-box{background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
-.full-post .body .stat-num{font-family:'Lora',serif;font-size:30px;font-weight:500;color:var(--accent);line-height:1;margin-bottom:0.3rem}
-.full-post .body .stat-desc{font-size:12px;color:var(--muted);line-height:1.5}
-.full-post .body .checklist{list-style:none;padding:0;background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:1.25rem}
-.full-post .body .checklist li{padding:0.5rem 0;border-bottom:0.5px solid var(--border);display:flex;gap:10px;font-size:15px;color:var(--ink);line-height:1.6}
-.full-post .body .checklist li:last-child{border-bottom:none}
-.full-post .body .checklist li::before{content:'✓';color:#166534;font-weight:700;flex-shrink:0}
-
-/* ABOUT */
-.about-section{max-width:520px}
-.about-section h2{font-family:'Lora',serif;font-size:22px;font-weight:500;margin-bottom:1rem}
-.about-section p{font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:1rem}
-.about-section ul{padding-left:1.25rem;margin-bottom:1rem}
-.about-section li{font-size:15px;line-height:1.75;color:var(--muted);margin-bottom:0.4rem}
-
-/* FOOTER */
-.site-footer{border-top:0.5px solid var(--border);margin-top:4rem;padding-top:1.5rem;padding-bottom:2rem;font-size:13px;color:var(--faint);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem}
-.site-footer strong{color:var(--muted)}
-
-@media(max-width:500px){
-  .full-post .body .stat-row{grid-template-columns:1fr}
-}
+  footer { border-top: 1px solid var(--border); margin-top: 4rem; padding-top: 1.5rem; padding-bottom: 2rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="blog">
-
-  <header class="site-header">
-    <div class="site-name">Cyber<span>Sense</span></div>
-    <div class="site-tagline">Plain-language cybersecurity for business owners</div>
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
     <nav>
-      <a class="active" onclick="showPage('home',this)">Home</a>
-      <a onclick="showPage('about',this)">About</a>
+      <a class="active" id="nav-home" onclick="showHome(event)">Home</a>
+      <a id="nav-about" onclick="showAbout(event)">About</a>
     </nav>
   </header>
 
-  <!-- HOME -->
-  <div id="home" class="page active">
-    <div class="tag-filter" id="tagFilter"></div>
-    <div class="post-list" id="postList"></div>
-  </div>
+  <main id="home">
+    <div class="post-list">
 
-  <!-- SINGLE POST -->
-  <div id="single" class="page">
-    <span class="back-btn" onclick="showPage('home',null)">← Back to posts</span>
-    <div class="full-post" id="singleContent"></div>
-  </div>
+      <a class="post-card" href="zero-trust-security-blog.html">
+        <div class="post-meta">May 2, 2026 &nbsp;·&nbsp; Zero Trust</div>
+        <div class="post-title">Zero trust — never trust, always verify</div>
+        <div class="post-excerpt">The old way of securing a business assumed everyone inside the network was safe. Zero trust throws that assumption out entirely — and it is changing how smart businesses protect themselves.</div>
+        <span class="post-tag">Zero Trust</span>
+      </a>
 
-  <!-- ABOUT -->
-  <div id="about" class="page">
-    <div class="about-section">
-      <h2>About CyberSense</h2>
-      <p>CyberSense is a plain-language cybersecurity blog written for business owners — not IT specialists.</p>
-      <p>Every article is written to be clear, practical, and free of jargon. The goal is simple: help you understand the threats your business faces and what you can do about them.</p>
-      <h2 style="margin-top:1.5rem">Topics covered</h2>
-      <ul>
-        <li>How hackers think and operate</li>
-        <li>AI and cybersecurity trends</li>
-        <li>Cybersecurity laws and compliance</li>
-        <li>Protecting remote workers</li>
-        <li>What to do after a data breach</li>
-        <li>The real cost of cyberattacks on small businesses</li>
-        <li>Phishing awareness</li>
-        <li>Password safety</li>
-      </ul>
-      <p style="margin-top:1rem">For informational purposes only. Not legal or financial advice.</p>
+      <a class="post-card" href="ransomware-blog.html">
+        <div class="post-meta">May 1, 2026 &nbsp;·&nbsp; Ransomware</div>
+        <div class="post-title">Ransomware — what it is, how it works, and how to survive it</div>
+        <div class="post-excerpt">Ransomware has shut down hospitals, schools, and thousands of small businesses. Understanding it is the first step to making sure it does not shut down yours.</div>
+        <span class="post-tag">Ransomware</span>
+      </a>
+
+      <a class="post-card" href="securing-business-website-blog.html">
+        <div class="post-meta">Apr 30, 2026 &nbsp;·&nbsp; Website Security</div>
+        <div class="post-title">Your business website is an open door — here is how to lock it</div>
+        <div class="post-excerpt">Your website is your most public-facing asset. It is also one of your most vulnerable ones. Most small business websites have serious security gaps — and most owners have no idea.</div>
+        <span class="post-tag">Website Security</span>
+      </a>
+
+      <a class="post-card" href="supply-chain-attacks-blog.html">
+        <div class="post-meta">Apr 29, 2026 &nbsp;·&nbsp; Threat Intelligence</div>
+        <div class="post-title">Supply chain attacks — the threat hiding inside your trusted software</div>
+        <div class="post-excerpt">You vetted your software. You trust your vendors. But what if the attacker got in through them — not you? Supply chain attacks are one of the fastest-growing threats facing businesses today.</div>
+        <span class="post-tag">Threat Intelligence</span>
+      </a>
+
+      <a class="post-card" href="real-cost-cyberattack-blog.html">
+        <div class="post-meta">Apr 28, 2026 &nbsp;·&nbsp; Small Business</div>
+        <div class="post-title">The true cost of a cyberattack on a small business</div>
+        <div class="post-excerpt">Most small business owners believe a cyberattack would be an inconvenience. The data tells a very different story. For many small businesses, one attack is all it takes.</div>
+        <span class="post-tag">Small Business</span>
+      </a>
+
+      <a class="post-card" href="data-breach-response-blog.html">
+        <div class="post-meta">Apr 26, 2026 &nbsp;·&nbsp; Incident Response</div>
+        <div class="post-title">Your business just had a data breach. Now what?</div>
+        <div class="post-excerpt">The first hours after a breach are the most critical. What you do — and what you don't do — will determine how much damage your business actually suffers.</div>
+        <span class="post-tag">Incident Response</span>
+      </a>
+
+      <a class="post-card" href="remote-workers-security-blog.html">
+        <div class="post-meta">Apr 25, 2026 &nbsp;·&nbsp; Remote Work</div>
+        <div class="post-title">Your remote team is your biggest security risk — here is how to fix that</div>
+        <div class="post-excerpt">Remote work has made businesses more flexible. It has also made them more vulnerable. The good news: protecting a remote team is simpler than most business owners think.</div>
+        <span class="post-tag">Remote Work</span>
+      </a>
+
+      <a class="post-card" href="cybersecurity-compliance-blog.html">
+        <div class="post-meta">Apr 24, 2026 &nbsp;·&nbsp; Compliance</div>
+        <div class="post-title">The cybersecurity laws your business must know — and what happens if you don't</div>
+        <div class="post-excerpt">Compliance is no longer optional. Governments worldwide are holding businesses accountable for how they protect customer data. Here is what you need to know.</div>
+        <span class="post-tag">Compliance</span>
+      </a>
+
+      <a class="post-card" href="ai-cybersecurity-blog.html">
+        <div class="post-meta">Apr 23, 2026 &nbsp;·&nbsp; AI &amp; Security</div>
+        <div class="post-title">How AI is changing cybersecurity forever</div>
+        <div class="post-excerpt">AI is the most powerful tool in cybersecurity today. But it works both ways — protecting businesses and helping attackers. Here is what every business owner needs to understand.</div>
+        <span class="post-tag">AI &amp; Security</span>
+      </a>
+
+      <a class="post-card" href="cybersecurity-blog.html">
+        <div class="post-meta">Apr 22, 2026 &nbsp;·&nbsp; Threat Awareness</div>
+        <div class="post-title">Inside the hacker's mind: what every business owner needs to know</div>
+        <div class="post-excerpt">Hackers are not random. They think strategically — just like you do. Understanding how they operate is the first step to stopping them.</div>
+        <span class="post-tag">Threat Awareness</span>
+      </a>
+
+      <a class="post-card" href="blog-post-phishing.html">
+        <div class="post-meta">Apr 18, 2026 &nbsp;·&nbsp; Phishing</div>
+        <div class="post-title">Phishing awareness: how to spot and stop email attacks</div>
+        <div class="post-excerpt">Phishing is the most common way criminals get into business systems. Learning to spot a phishing email is one of the most valuable skills your team can have.</div>
+        <span class="post-tag">Phishing</span>
+      </a>
+
+      <a class="post-card" href="password-safety.html">
+        <div class="post-meta">Apr 15, 2026 &nbsp;·&nbsp; Password Safety</div>
+        <div class="post-title">Password safety: the basics every business needs</div>
+        <div class="post-excerpt">Weak and reused passwords are behind a huge proportion of business data breaches. The good news: fixing this is one of the simplest steps you can take.</div>
+        <span class="post-tag">Password Safety</span>
+      </a>
+
     </div>
+  </main>
+
+  <div id="about">
+    <h2>About CyberSense</h2>
+    <p>CyberSense is a plain-language cybersecurity blog written for business owners — not IT specialists.</p>
+    <p>Every article is written to be clear, practical, and free of jargon. The goal is simple: help you understand the threats your business faces and what you can do about them.</p>
+    <h2>Topics covered</h2>
+    <ul>
+      <li>How hackers think and operate</li>
+      <li>AI and cybersecurity trends</li>
+      <li>Cybersecurity laws and compliance</li>
+      <li>Protecting remote workers</li>
+      <li>What to do after a data breach</li>
+      <li>The real cost of cyberattacks on small businesses</li>
+      <li>Phishing awareness</li>
+      <li>Password safety</li>
+      <li>Supply chain attacks</li>
+      <li>Ransomware</li>
+      <li>Zero trust security</li>
+    </ul>
+    <p>For informational purposes only. Not legal or financial advice.</p>
   </div>
 
-  <footer class="site-footer">
-    <span><strong>CyberSense</strong> — Cybersecurity for Business Owners</span>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
     <span>© 2026</span>
   </footer>
 
 </div>
-
 <script>
-const POSTS = [
-  {
-    id: 12,
-    title: "Zero trust \u2014 never trust, always verify",
-    date: "May 2, 2026",
-    tag: "Zero Trust",
-    excerpt: "The old way of securing a business assumed everyone inside the network was safe. Zero trust throws that assumption out entirely \u2014 and it is changing how smart businesses protect themselves.",
-    body: `
-      <p>For decades, business security was built on one idea: protect the perimeter. Build a strong wall around your network and trust everything inside it. That model is broken. Zero trust is the replacement.</p>
-
-      <div class="stat-row">
-        <div class="stat-box"><div class="stat-num">80%</div><div class="stat-desc">of breaches involve compromised credentials \u2014 the exact threat zero trust is designed to stop</div></div>
-        <div class="stat-box"><div class="stat-num">72%</div><div class="stat-desc">of organisations say zero trust has reduced their number of successful attacks</div></div>
-        <div class="stat-box"><div class="stat-num">$1M</div><div class="stat-desc">less \u2014 average saving on breach costs for organisations with mature zero trust</div></div>
-      </div>
-
-      <h2>Why the old model no longer works</h2>
-      <p>The traditional model trusted everyone inside your network. Today staff work from home, coffee shops, and hotel rooms on personal devices accessing cloud services outside your network entirely. The inside/outside distinction no longer means anything \u2014 and attackers know it.</p>
-      <div class="warning"><strong>\u26a0 The insider problem</strong>Once an attacker compromises a single account, the traditional model gives them free run of your entire network. Zero trust limits the blast radius \u2014 a compromised account can only reach what it is explicitly authorised to access.</div>
-
-      <h2>What zero trust actually means</h2>
-      <p>Zero trust is a philosophy built on one principle: assume breach. Every user, device, and application must continuously prove its identity before accessing any resource \u2014 regardless of where they are or how they connected.</p>
-      <div class="callout">Zero trust does not mean trusting nobody. It means earning trust continuously \u2014 through identity, device health, location, and behaviour \u2014 rather than assuming it once and never checking again.</div>
-
-      <h2>The five pillars</h2>
-      <ul>
-        <li><strong>Verify every identity</strong> \u2014 every user proves who they are, every time</li>
-        <li><strong>Validate every device</strong> \u2014 only known, healthy devices get access</li>
-        <li><strong>Limit access to the minimum needed</strong> \u2014 the principle of least privilege</li>
-        <li><strong>Assume breach</strong> \u2014 design systems as if attackers are already inside</li>
-        <li><strong>Monitor continuously</strong> \u2014 access granted today is re-verified tomorrow</li>
-      </ul>
-
-      <h2>6 steps to get started</h2>
-      <ul>
-        <li><strong>Enable MFA everywhere</strong> \u2014 the single highest-impact step you can take</li>
-        <li><strong>Audit who has access to what</strong> \u2014 most businesses find far too much access</li>
-        <li><strong>Apply least privilege to every role</strong> \u2014 only the access genuinely needed</li>
-        <li><strong>Use single sign-on</strong> \u2014 centralises identity control across all apps</li>
-        <li><strong>Segment your network</strong> \u2014 limits how far a breach can spread</li>
-        <li><strong>Monitor access logs regularly</strong> \u2014 unusual patterns are early warning signs</li>
-      </ul>
-
-      <h2>Zero trust checklist</h2>
-      <ul class="checklist">
-        <li>Multi-factor authentication enabled on all business accounts</li>
-        <li>Access audit completed \u2014 staff have only the access they need</li>
-        <li>Least privilege applied to every role and system</li>
-        <li>Access removed promptly when staff leave or change roles</li>
-        <li>Device health checks required before granting remote access</li>
-        <li>Network segmentation in place for critical systems</li>
-        <li>Access logs monitored regularly for unusual activity</li>
-        <li>Single sign-on used to centralise and control identity</li>
-      </ul>
-    `
-  },
-  {
-    id: 11,
-    title: "Ransomware \u2014 what it is, how it works, and how to survive it",
-    date: "May 1, 2026",
-    tag: "Ransomware",
-    excerpt: "Ransomware has shut down hospitals, schools, and thousands of small businesses. Understanding it is the first step to making sure it does not shut down yours.",
-    body: `
-      <p>Ransomware is one of the most damaging types of cyberattack a business can face. It does not just steal your data \u2014 it locks you out of everything, brings your operations to a complete halt, and holds your business hostage until you pay.</p>
-
-      <div class="stat-row">
-        <div class="stat-box"><div class="stat-num">$1.1M</div><div class="stat-desc">average ransom payment made by businesses in 2025</div></div>
-        <div class="stat-box"><div class="stat-num">21</div><div class="stat-desc">average days of downtime caused by a ransomware attack</div></div>
-        <div class="stat-box"><div class="stat-num">46%</div><div class="stat-desc">of businesses that pay the ransom never fully recover their data</div></div>
-      </div>
-
-      <h2>What is ransomware?</h2>
-      <p>Ransomware is malicious software that encrypts your files \u2014 making them completely unreadable without a decryption key. Every file your business depends on is suddenly inaccessible. The criminals demand payment, usually in cryptocurrency, to unlock them.</p>
-      <div class="callout">Many attackers now steal copies of your data before encrypting it \u2014 threatening to publish it publicly if you do not pay. This is called double extortion.</div>
-
-      <h2>How it gets in</h2>
-      <ul>
-        <li><strong>Malicious email attachments</strong> \u2014 a staff member opens an infected file</li>
-        <li><strong>Compromised credentials</strong> \u2014 stolen passwords used to access systems remotely</li>
-        <li><strong>Unpatched software</strong> \u2014 known vulnerabilities in outdated systems</li>
-      </ul>
-      <div class="warning"><strong>\u26a0 The waiting game</strong>Attackers often sit inside a network for weeks before triggering the ransomware \u2014 finding your backups and maximising damage.</div>
-
-      <h2>Should you pay the ransom?</h2>
-      <p>Nearly half of businesses that pay never fully recover their data. Paying also marks your business as one that will pay \u2014 making you a target for repeat attacks. Contact a cybersecurity specialist before making any decisions.</p>
-
-      <h2>Why backups are your most powerful weapon</h2>
-      <p>Ransomware loses most of its power when you have clean backups stored somewhere the attacker cannot reach. Follow the 3-2-1 rule: 3 copies of your data, on 2 different types of storage, with 1 stored completely offsite.</p>
-      <div class="callout">A backup stored on the same network as your main systems will be encrypted along with everything else. Offsite or offline backups are essential.</div>
-
-      <h2>How to protect your business</h2>
-      <ul>
-        <li><strong>3-2-1 backups</strong> \u2014 tested and verified regularly</li>
-        <li><strong>Keep all software updated</strong> \u2014 automatic updates on all devices</li>
-        <li><strong>Multi-factor authentication</strong> \u2014 stops stolen credentials being used remotely</li>
-        <li><strong>Train your team</strong> \u2014 most ransomware still arrives via email</li>
-        <li><strong>Segment your network</strong> \u2014 limits how far ransomware can spread</li>
-        <li><strong>Have a response plan</strong> \u2014 decisions made under panic are rarely good ones</li>
-      </ul>
-
-      <h2>Ransomware protection checklist</h2>
-      <ul class="checklist">
-        <li>3-2-1 backups in place with one copy completely offsite</li>
-        <li>Backups tested and verified to restore correctly</li>
-        <li>All software and systems kept up to date automatically</li>
-        <li>Multi-factor authentication on all accounts and remote access</li>
-        <li>Staff trained to recognise suspicious emails and attachments</li>
-        <li>Network segmentation in place for critical systems</li>
-        <li>Written ransomware response plan ready before it is needed</li>
-        <li>Cyber insurance policy reviewed for ransomware coverage</li>
-      </ul>
-    `
-  },
-  {
-    id: 10,
-    title: "Your business website is an open door \u2014 here is how to lock it",
-    date: "Apr 30, 2026",
-    tag: "Website Security",
-    excerpt: "Your website is your most public-facing asset. It is also one of your most vulnerable ones. Most small business websites have serious security gaps \u2014 and most owners have no idea.",
-    body: `
-      <p>Most business owners think of their website as a marketing tool. But to a cybercriminal, your website is a publicly accessible computer running software, storing data, and connected to everything else your business does online.</p>
-
-      <div class="stat-row">
-        <div class="stat-box"><div class="stat-num">30K</div><div class="stat-desc">websites hacked every single day \u2014 mostly small businesses</div></div>
-        <div class="stat-box"><div class="stat-num">98%</div><div class="stat-desc">of WordPress vulnerabilities come from outdated plugins and themes</div></div>
-        <div class="stat-box"><div class="stat-num">83%</div><div class="stat-desc">of customers leave a website they do not trust with their data</div></div>
-      </div>
-
-      <h2>Threat 1 \u2014 Outdated software</h2>
-      <p>Outdated plugins and themes are responsible for the vast majority of website compromises. Every unpatched plugin is a potential open door. Enable automatic updates and check weekly for major releases.</p>
-      <div class="callout">Treat website software updates the same way you treat updates on your laptop \u2014 apply them promptly.</div>
-
-      <h2>Threat 2 \u2014 No HTTPS</h2>
-      <p>Without HTTPS, data submitted through your site can be intercepted. Browsers now display "Not Secure" warnings on sites without it. SSL certificates are free via Let's Encrypt \u2014 there is no reason not to have one.</p>
-      <div class="warning"><strong>\u26a0 Check right now</strong>Does your website address start with https:// and show a padlock? If not, your visitors are not protected.</div>
-
-      <h2>Threat 3 \u2014 Weak admin credentials</h2>
-      <p>Automated tools run thousands of password attempts per minute against common usernames like "admin". Change your admin username to something unique, use a strong password, and enable two-factor authentication.</p>
-
-      <h2>Threat 4 \u2014 No backups</h2>
-      <p>Many small businesses discover they have no backups only when they desperately need one. Set up automated daily backups stored separately from your hosting account \u2014 and test them.</p>
-      <div class="callout">A backup you have never tested is not a backup \u2014 it is a hope.</div>
-
-      <h2>8 steps to a more secure website</h2>
-      <ul>
-        <li><strong>Install SSL and enforce HTTPS</strong> \u2014 free via Let's Encrypt</li>
-        <li><strong>Update everything</strong> \u2014 platform, plugins, and themes weekly</li>
-        <li><strong>Change your admin username</strong> \u2014 never use "admin"</li>
-        <li><strong>Enable two-factor authentication</strong> on your website login</li>
-        <li><strong>Delete unused plugins and themes</strong> \u2014 inactive ones are still a risk</li>
-        <li><strong>Set up automated daily backups</strong> stored off-server</li>
-        <li><strong>Install a web application firewall</strong> \u2014 Cloudflare or Wordfence have free tiers</li>
-        <li><strong>Scan for malware monthly</strong> using Sucuri or your host's scanner</li>
-      </ul>
-
-      <h2>Website security checklist</h2>
-      <ul class="checklist">
-        <li>HTTPS enabled with a valid SSL certificate</li>
-        <li>Platform, plugins, and themes all up to date</li>
-        <li>Admin username changed \u2014 strong unique password in use</li>
-        <li>Two-factor authentication enabled on website login</li>
-        <li>Unused plugins and themes deleted</li>
-        <li>Automated daily backups stored off-server</li>
-        <li>Web application firewall installed and active</li>
-        <li>Regular malware scans scheduled</li>
-      </ul>
-    `
-  },
-  {
-    id: 9,
-    title: "Supply chain attacks — the threat hiding inside your trusted software",
-    date: "Apr 29, 2026",
-    tag: "Threat Intelligence",
-    excerpt: "You vetted your software. You trust your vendors. But what if the attacker got in through them — not you? Supply chain attacks are one of the fastest-growing threats facing businesses today.",
-    body: `
-      <p>Most businesses focus their security efforts on their own systems. But modern businesses rely on dozens of third-party tools and service providers. Every single one is a potential entry point. A supply chain attack does not target you directly — it targets someone you already trust.</p>
-
-      <div class="stat-row">
-        <div class="stat-box"><div class="stat-num">742%</div><div class="stat-desc">increase in supply chain attacks over the past three years</div></div>
-        <div class="stat-box"><div class="stat-num">1,000s</div><div class="stat-desc">of businesses affected by a single compromised vendor in major incidents</div></div>
-        <div class="stat-box"><div class="stat-num">6 mo</div><div class="stat-desc">average time attackers sit inside a supply chain before detection</div></div>
-      </div>
-
-      <h2>How it works</h2>
-      <p>A supply chain attack compromises a vendor or software provider — then uses their trusted access to reach their customers. The attack travels through legitimate channels and looks like a normal software update. Your security tools are not looking for threats coming from software you approved and installed yourself.</p>
-      <div class="callout">Supply chain attacks are particularly dangerous because they exploit trust — the one thing most security systems are not designed to question.</div>
-
-      <h2>The SolarWinds case</h2>
-      <p>In 2020, attackers secretly inserted malicious code into a routine software update from SolarWinds — a widely used IT management platform. The infected update was downloaded by over 18,000 organisations, including government agencies and major corporations. None of those organisations did anything wrong. Total remediation costs ran into billions of dollars.</p>
-
-      <h2>Types of supply chain attacks</h2>
-      <ul>
-        <li><strong>Software updates</strong> — malicious code inserted into a legitimate update</li>
-        <li><strong>Open source packages</strong> — attackers publish malicious packages mimicking popular libraries</li>
-        <li><strong>Managed service providers</strong> — IT companies with access to many clients become high-value targets</li>
-        <li><strong>Hardware tampering</strong> — devices pre-loaded with malicious firmware</li>
-        <li><strong>Third-party credentials</strong> — vendor login details stolen and used to access your systems</li>
-      </ul>
-
-      <h2>Questions to ask every vendor</h2>
-      <ul>
-        <li>Do you have a formal security programme or certification (ISO 27001, SOC 2)?</li>
-        <li>How do you handle security in your own software supply chain?</li>
-        <li>What access does your team actually need to our systems?</li>
-        <li>How would you notify us in the event of a breach?</li>
-        <li>Have you experienced a security incident in the past two years?</li>
-      </ul>
-
-      <h2>Supply chain security checklist</h2>
-      <ul class="checklist">
-        <li>Audit which third-party tools and vendors have access to your systems</li>
-        <li>Apply least privilege — vendors get only the access they genuinely need</li>
-        <li>Ask vendors about their security certifications and practices</li>
-        <li>Monitor for unusual activity from third-party connections</li>
-        <li>Keep software updated — but verify updates come from official sources</li>
-        <li>Have a response plan for when a trusted vendor is compromised</li>
-        <li>Review vendor access regularly and remove access no longer needed</li>
-      </ul>
-    `
-  },
-  {
-    id: 8,
-    title: "The true cost of a cyberattack on a small business",
-    date: "Apr 28, 2026",
-    tag: "Small Business",
-    excerpt: "Most small business owners believe a cyberattack would be an inconvenience. The data tells a very different story. For many small businesses, one attack is all it takes.",
-    body: `
-      <p>When business owners think about cyberattacks, they imagine it happening to someone else — a large bank, a global retailer, a government agency. The reality is that small businesses are among the most targeted organisations in the world, and the least prepared to survive an attack.</p>
-
-      <div class="stat-row">
-        <div class="stat-box"><div class="stat-num">60%</div><div class="stat-desc">of small businesses close within 6 months of a cyberattack</div></div>
-        <div class="stat-box"><div class="stat-num">$200K</div><div class="stat-desc">average cost of a cyberattack on a small business</div></div>
-        <div class="stat-box"><div class="stat-num">43%</div><div class="stat-desc">of all cyberattacks specifically target small businesses</div></div>
-      </div>
-
-      <h2>Where the money actually goes</h2>
-      <p>The financial damage of a cyberattack spreads across six distinct areas:</p>
-      <ul>
-        <li><strong>Incident response and investigation</strong> — $25,000 to $80,000</li>
-        <li><strong>Business downtime and lost revenue</strong> — $50,000 to $100,000</li>
-        <li><strong>Legal fees and regulatory fines</strong> — $20,000 to $75,000</li>
-        <li><strong>Customer notification and support</strong> — $10,000 to $30,000</li>
-        <li><strong>Reputation damage and lost customers</strong> — ongoing</li>
-        <li><strong>System rebuilding and upgrades</strong> — $15,000 to $50,000</li>
-      </ul>
-
-      <h2>Downtime is the silent killer</h2>
-      <p>The single largest cost for most small businesses is not data theft or fines. It is downtime. The average small business cyberattack causes 21 days of disruption. Every day your systems are down, your competitors are open for business.</p>
-      <div class="callout">Customers who cannot reach you do not wait — they find someone else, and many never come back.</div>
-
-      <h2>A real example</h2>
-      <p>A 12-person accounting firm suffered a ransomware attack on a Monday morning. Every file was encrypted. The firm spent three weeks offline — losing £40,000 in billable work. Incident response cost £18,000. Legal fees and client notification added £12,000. Two long-term clients moved to competitors and never returned — representing £35,000 in annual recurring revenue. Total first-year impact: over £105,000, from a single unpatched software vulnerability.</p>
-
-      <div class="warning"><strong>⚠ The closing statistic</strong>60% of small businesses that suffer a significant cyberattack close within six months — not because the attack destroyed them instantly, but because the accumulated costs made recovery impossible.</div>
-
-      <h2>Prevention costs a fraction of recovery</h2>
-      <p>The average small business spends less than £1,000 a year on cybersecurity. The average cost of recovery is over £150,000. Four basics prevent most attacks:</p>
-      <ul>
-        <li><strong>Multi-factor authentication</strong> — stops most account takeover attempts at near-zero cost</li>
-        <li><strong>Regular offsite backups</strong> — ransomware loses most of its power when you have clean backups</li>
-        <li><strong>Software updates</strong> — most attacks exploit known vulnerabilities in outdated software</li>
-        <li><strong>Staff security training</strong> — most successful attacks begin with a human mistake training can prevent</li>
-      </ul>
-
-      <h2>Key takeaways</h2>
-      <ul class="checklist">
-        <li>Small businesses are targeted just as often as large ones — often more so</li>
-        <li>The average attack costs over £150,000 when all costs are counted</li>
-        <li>Downtime is usually the largest single cost — plan to minimise it</li>
-        <li>60% of attacked small businesses close within six months</li>
-        <li>The four basics — MFA, backups, updates, training — prevent most attacks</li>
-      </ul>
-    `
-  },
-  {
-    id: 7,
-    title: "Your business just had a data breach. Now what?",
-    date: "Apr 26, 2026",
-    tag: "Incident Response",
-    excerpt: "The first hours after a breach are the most critical. What you do — and what you don't do — will determine how much damage your business actually suffers.",
-    body: `
-      <p>Discovering a data breach is one of the most stressful moments a business owner can face. Your instinct may be to panic, to cover it up, or to wait and see. All three reactions will make things significantly worse.</p>
-
-      <h2>Phase one — First hour: Contain the breach</h2>
-      <p>Your first priority is to stop more data from leaving. Isolate affected systems by disconnecting them from the network while keeping them powered on. Change passwords on compromised accounts. Contact your IT team immediately.</p>
-      <div class="warning"><strong>⚠ Critical — Do this first</strong>Do not wipe or reset affected systems. Doing so destroys the forensic evidence needed to understand what happened and what data was taken.</div>
-
-      <h2>Phase two — First 24 hours: Understand what happened</h2>
-      <p>Work with your IT team or a cybersecurity specialist to understand how the attacker got in, what systems they accessed, and what data they took. Document everything — timestamps, affected files, access logs, and the full sequence of events.</p>
-      <div class="callout">If you lack in-house expertise, bring in a specialist. Many cyber insurance policies cover the cost of an incident response team — check your policy immediately.</div>
-
-      <h2>Phase three — Days 1 to 3: Notify the people who need to know</h2>
-      <p>Most data protection laws require you to notify regulators within a strict timeframe. Under GDPR, that window is 72 hours. You also need to notify affected customers — clearly, honestly, and promptly.</p>
-      <div class="warning"><strong>⚠ Legal risk</strong>Failing to notify regulators within the required timeframe is itself a violation — and can result in significantly larger fines than the breach itself.</div>
-
-      <h2>The four mistakes that make breaches far worse</h2>
-      <ul>
-        <li><strong>Staying silent</strong> — regulators and customers will find out; the question is whether they hear it from you first</li>
-        <li><strong>Wiping systems immediately</strong> — destroys evidence and looks like concealment</li>
-        <li><strong>Paying ransom without advice</strong> — does not guarantee recovery and signals you will pay again</li>
-        <li><strong>Going it alone</strong> — breach response requires legal, technical, and communications expertise</li>
-      </ul>
-
-      <h2>Phase four — Ongoing: Rebuild stronger</h2>
-      <p>Fix the vulnerabilities that allowed the breach. Audit all systems. Update security policies. Retrain your team. Then communicate openly with customers about what you have changed. Businesses that respond transparently often emerge with their reputation intact.</p>
-
-      <h2>Breach response checklist</h2>
-      <ul class="checklist">
-        <li>Isolate affected systems without wiping them</li>
-        <li>Change all compromised passwords and access tokens</li>
-        <li>Contact your IT team or cybersecurity specialist</li>
-        <li>Document everything — logs, timelines, affected data</li>
-        <li>Check your cyber insurance policy for coverage</li>
-        <li>Notify regulators within the required legal timeframe</li>
-        <li>Notify affected customers honestly and promptly</li>
-        <li>Fix vulnerabilities and update your security policies</li>
-      </ul>
-    `
-  },
-  {
-    id: 6,
-    title: "Your remote team is your biggest security risk — here is how to fix that",
-    date: "Apr 25, 2026",
-    tag: "Remote Work",
-    excerpt: "Remote work has made businesses more flexible. It has also made them more vulnerable. The good news: protecting a remote team is simpler than most business owners think.",
-    body: `
-      <p>When your team worked in one office, your IT team could protect one network. Today, employees work from home, coffee shops, hotels, and co-working spaces — each with their own connection, their own devices, and their own risks.</p>
-
-      <div class="stat-row">
-        <div class="stat-box"><div class="stat-num">60%</div><div class="stat-desc">of data breaches now involve remote workers or remote access points</div></div>
-        <div class="stat-box"><div class="stat-num">3×</div><div class="stat-desc">more likely — remote workers face three times more cyberattacks</div></div>
-        <div class="stat-box"><div class="stat-num">$1M+</div><div class="stat-desc">extra cost added to a data breach when remote working is a factor</div></div>
-      </div>
-
-      <h2>Risk 1 — Home networks are not business networks</h2>
-      <p>Your office network was set up by IT professionals. Your employee's home router was probably set up once and never updated. Home networks are shared with smart TVs, gaming consoles, and children's tablets — any of which can be an entry point to your business data.</p>
-      <div class="callout">One compromised device on a home network can expose everything else connected to it — including the laptop your employee uses for work.</div>
-
-      <h2>Risk 2 — Personal devices blur the line</h2>
-      <p>When employees use personal laptops or phones for work, they mix business data with personal apps and personal browsing. If a personal device is lost, stolen, or infected, your business data goes with it.</p>
-
-      <h2>Risk 3 — Shadow IT</h2>
-      <p>When remote workers cannot access the tools they need, they find their own — personal Dropbox accounts, free file-sharing apps, consumer messaging tools. Your data ends up in systems you did not approve, cannot monitor, and cannot secure.</p>
-
-      <h2>7 ways to protect your remote team</h2>
-      <ul>
-        <li><strong>Require a VPN</strong> for all work activity — encrypts connections on any network</li>
-        <li><strong>Issue company devices</strong> where possible — gives you control personal devices cannot offer</li>
-        <li><strong>Enable multi-factor authentication</strong> on everything — stops most account takeovers</li>
-        <li><strong>Provide approved tools</strong> and enforce their use — eliminates shadow IT risk</li>
-        <li><strong>Enable automatic software updates</strong> on all work devices</li>
-        <li><strong>Train your team regularly</strong> — remote workers face more attacks with less support</li>
-        <li><strong>Create a reporting culture</strong> — make it easy and safe to flag suspicious activity</li>
-      </ul>
-
-      <h2>Remote security checklist</h2>
-      <ul class="checklist">
-        <li>VPN in use for all remote work activity</li>
-        <li>Multi-factor authentication enabled on all business accounts</li>
-        <li>Company devices issued to staff handling sensitive data</li>
-        <li>Approved tools list shared with all remote employees</li>
-        <li>Automatic software updates enabled across all devices</li>
-        <li>Regular security training scheduled for the whole team</li>
-        <li>Clear process for reporting suspicious activity</li>
-      </ul>
-    `
-  },
-  {
-    id: 5,
-    title: "The cybersecurity laws your business must know",
-    date: "Apr 24, 2026",
-    tag: "Compliance",
-    excerpt: "Compliance is no longer optional. Governments worldwide are holding businesses accountable for how they protect customer data. Here is what you need to know.",
-    body: `
-      <p>Most business owners think of cybersecurity compliance as something large corporations worry about. Today, businesses of all sizes are required by law to protect customer data — and the penalties for getting it wrong are serious.</p>
-
-      <h2>GDPR — the law that changed everything</h2>
-      <p>The General Data Protection Regulation applies to any business with European Union customers — regardless of where your business is based. GDPR requires businesses to collect only the data they need, store it securely, tell customers how it is used, and delete it when asked. Data breaches must be reported within 72 hours.</p>
-      <div class="warning"><strong>⚠ Penalty</strong>GDPR fines can reach €20 million — or 4% of your global annual revenue — whichever is higher.</div>
-
-      <h2>CCPA — California's privacy powerhouse</h2>
-      <p>The California Consumer Privacy Act gives California residents the right to know what data you collect, to request its deletion, and to opt out of it being sold. It applies to businesses earning over $25 million annually, handling data on 100,000+ consumers, or earning more than half their revenue from selling personal data.</p>
-      <div class="callout">California's law has inspired similar legislation in over 15 US states — and more are coming.</div>
-
-      <h2>HIPAA — critical for health-related businesses</h2>
-      <p>If your business handles any health or medical information — whether you are a healthcare provider, a fitness app, or an HR software company — HIPAA applies. It sets strict rules for how health data must be stored, transmitted, and protected.</p>
-      <div class="warning"><strong>⚠ Penalty</strong>HIPAA fines range from $100 to $50,000 per violation, with willful neglect cases facing no upper limit on total fines.</div>
-
-      <h2>Getting compliant — a simple roadmap</h2>
-      <ul>
-        <li><strong>Step 1:</strong> Map your data — list every type of customer data you collect and where it is stored</li>
-        <li><strong>Step 2:</strong> Identify which laws apply to your business and your customers</li>
-        <li><strong>Step 3:</strong> Update your privacy policy to clearly explain data collection and use</li>
-        <li><strong>Step 4:</strong> Secure your data — encrypt sensitive data and restrict access</li>
-        <li><strong>Step 5:</strong> Create a breach response plan with notification procedures</li>
-      </ul>
-
-      <h2>Compliance checklist</h2>
-      <ul class="checklist">
-        <li>Know which laws apply to your business and your customers</li>
-        <li>Audit what personal data you collect and where it is stored</li>
-        <li>Review and update your privacy policy</li>
-        <li>Encrypt sensitive customer data at rest and in transit</li>
-        <li>Limit data access to only the staff who need it</li>
-        <li>Have a written plan for responding to a data breach</li>
-        <li>Consult a legal advisor familiar with data protection law</li>
-      </ul>
-    `
-  },
-  {
-    id: 4,
-    title: "How AI is changing cybersecurity forever",
-    date: "Apr 23, 2026",
-    tag: "AI & Security",
-    excerpt: "AI is the most powerful tool in cybersecurity today. But it works both ways — protecting businesses and helping attackers. Here is what every business owner needs to understand.",
-    body: `
-      <p>A few years ago, cybersecurity meant firewalls and antivirus software. Today it means something far more complex. Artificial intelligence has entered the picture — and it has changed the game for everyone, including the criminals.</p>
-
-      <h2>AI is now your fastest security analyst</h2>
-      <p>Traditional security tools react to threats they already know about. AI-powered tools learn what "normal" looks like inside your business, then flag anything unusual in real time. An AI system can detect suspicious behaviour in seconds. A human analyst reviewing logs might take days. The speed difference is not minor — it is the difference between stopping an attack and suffering a full breach.</p>
-      <div class="callout">AI security tools can now detect and contain threats up to 60 days faster than traditional approaches — dramatically reducing damage before anyone notices.</div>
-
-      <h2>Criminals are using AI too</h2>
-      <p>AI lets attackers write more convincing fake messages, find software weaknesses automatically, and launch thousands of targeted attacks simultaneously — things that previously required large teams and significant skill.</p>
-      <div class="warning"><strong>⚠ Business risk</strong>AI-generated attacks are harder to spot because they look and sound more legitimate than ever. Your team may not be able to tell the difference without the right tools and training.</div>
-
-      <h2>Deepfakes are becoming a business threat</h2>
-      <p>AI can now convincingly clone voices and faces. Criminals are already using this to impersonate CEOs, call finance teams, and approve fake money transfers. In one widely reported case, a finance employee transferred millions after receiving what appeared to be a video call from their company's CFO. The CFO was a deepfake.</p>
-      <div class="callout">Verify any unusual financial request through a second, independent channel — even if you can see and hear the person asking.</div>
-
-      <h2>Small businesses are now prime targets</h2>
-      <p>AI has made it affordable and easy to attack thousands of small businesses simultaneously. Smaller businesses often have weaker defences and less incident response capability — making them attractive targets. Being small is no longer protection.</p>
-
-      <h2>Action checklist</h2>
-      <ul class="checklist">
-        <li>Ask your IT provider whether they use AI-powered threat detection tools</li>
-        <li>Set up a code word for verifying unusual financial requests from leadership</li>
-        <li>Train your team to be suspicious of any urgent request</li>
-        <li>Review your cyber insurance policy — AI-driven attacks may require updated coverage</li>
-        <li>Stay informed — the AI threat landscape is changing faster than any other area of security</li>
-      </ul>
-    `
-  },
-  {
-    id: 3,
-    title: "Inside the hacker's mind: what every business owner needs to know",
-    date: "Apr 22, 2026",
-    tag: "Threat Awareness",
-    excerpt: "Hackers are not random. They think strategically — just like you do. Understanding how they operate is the first step to stopping them.",
-    body: `
-      <p>Most business owners imagine hackers as mysterious criminals in dark rooms. The reality is far more ordinary — and more dangerous. Attackers follow a clear, repeatable process. They research, they plan, and they strike where businesses are weakest.</p>
-
-      <h2>Step 1 — They pick a target</h2>
-      <p>Hackers rarely attack randomly. They look for businesses that appear easy — outdated websites, public employee directories, or companies that recently made the news. Your business may be targeted not because you are important, but because you appear vulnerable.</p>
-      <div class="callout">Think of it like a burglar walking down a street. They do not break into every house. They look for the one with the unlocked door.</div>
-
-      <h2>Step 2 — They gather information</h2>
-      <p>Before attacking, hackers spend time learning. They study your website, social media, and job postings. A job ad that mentions "we use Microsoft Azure" tells them exactly what systems to target. This research phase is called reconnaissance. It costs them nothing — and most businesses never notice it happening.</p>
-
-      <h2>Step 3 — They find the weakest link</h2>
-      <p>Hackers rarely attack your strongest defences. They look for the gaps — an employee who has not updated their software, a contractor with access to your systems, or an old server nobody monitors. In most breaches, the entry point is not a technical failure. It is a human one.</p>
-      <div class="warning"><strong>Industry research</strong>Over 74% of breaches involve the human element — employees tricked, credentials stolen, or honest mistakes exploited.</div>
-
-      <h2>Step 4 — They move slowly and quietly</h2>
-      <p>Once inside, hackers do not rush. They explore your systems for weeks or months before you notice. They look for financial data, customer records, and anything they can sell or use as leverage. The average time to detect a breach is still measured in months, not days.</p>
-
-      <h2>Step 5 — They strike — or wait</h2>
-      <p>Some attackers steal data immediately. Others plant ransomware and wait for the right moment. Some sell access to your systems to other criminals entirely.</p>
-
-      <h2>Key actions for business owners</h2>
-      <ul class="checklist">
-        <li>Audit what information about your business is publicly available online</li>
-        <li>Train your team — most breaches start with a person, not a machine</li>
-        <li>Review who has access to your systems, and remove access no longer needed</li>
-        <li>Assume someone may already be watching — monitor your systems regularly</li>
-        <li>Have a response plan ready before an incident happens</li>
-      </ul>
-    `
-  },
-  {
-    id: 2,
-    title: "Phishing awareness: how to spot and stop email attacks",
-    date: "Apr 18, 2026",
-    tag: "Phishing",
-    excerpt: "Phishing is the most common way criminals get into business systems. Learning to spot a phishing email is one of the most valuable skills your team can have.",
-    body: `
-      <p>Phishing attacks are responsible for the majority of successful cyberattacks on businesses. They work by tricking people — not machines. And they are getting harder to spot every year.</p>
-
-      <h2>What is a phishing attack?</h2>
-      <p>A phishing attack is when a criminal sends a message — usually an email — pretending to be someone trustworthy. The goal is to get you to click a link, open a file, or hand over sensitive information like login credentials or payment details.</p>
-
-      <h2>The warning signs</h2>
-      <ul>
-        <li><strong>Urgency and pressure</strong> — "Act now or your account will be closed"</li>
-        <li><strong>Unexpected requests</strong> — especially for money, passwords, or sensitive data</li>
-        <li><strong>Mismatched email addresses</strong> — the display name looks right but the actual address does not</li>
-        <li><strong>Generic greetings</strong> — "Dear Customer" instead of your name</li>
-        <li><strong>Suspicious links</strong> — hover before clicking to see where a link actually goes</li>
-        <li><strong>Poor spelling or unusual phrasing</strong> — though AI has made this less reliable as a warning sign</li>
-      </ul>
-
-      <h2>Spear phishing — the targeted version</h2>
-      <p>Standard phishing is sent to thousands of people at once. Spear phishing is targeted at a specific individual or business — using personal details gathered from social media, your website, or public records. These attacks are far more convincing and far more dangerous.</p>
-      <div class="callout">If an email creates a strong sense of urgency and asks you to do something unusual — stop, breathe, and verify through a separate channel before taking any action.</div>
-
-      <h2>What to do if you receive a suspicious email</h2>
-      <ul>
-        <li>Do not click any links or open any attachments</li>
-        <li>Do not reply — even to say you know it is fake</li>
-        <li>Report it to your IT team or email provider</li>
-        <li>If it appears to come from a known contact, call them directly to verify</li>
-      </ul>
-
-      <h2>Phishing protection checklist</h2>
-      <ul class="checklist">
-        <li>Train your team to recognise phishing warning signs</li>
-        <li>Enable multi-factor authentication on all email accounts</li>
-        <li>Use email filtering tools to block suspicious messages</li>
-        <li>Establish a clear process for reporting suspicious emails</li>
-        <li>Never verify suspicious requests using contact details provided in the suspicious email itself</li>
-      </ul>
-    `
-  },
-  {
-    id: 1,
-    title: "Password safety: the basics every business needs",
-    date: "Apr 15, 2026",
-    tag: "Password Safety",
-    excerpt: "Weak and reused passwords are behind a huge proportion of business data breaches. The good news: fixing this is one of the simplest steps you can take.",
-    body: `
-      <p>Passwords are the front door of your business. Most businesses leave that door unlocked — not intentionally, but because password habits that feel adequate are rarely actually secure.</p>
-
-      <h2>Why passwords matter so much</h2>
-      <p>A stolen or guessed password gives an attacker everything they need. They can access your email, your files, your customer data, and your financial systems — often without triggering any alarm. Credential theft is involved in the majority of data breaches.</p>
-
-      <h2>What makes a password weak</h2>
-      <ul>
-        <li>Short passwords — under 12 characters are much easier to crack</li>
-        <li>Common words or patterns — "password123" or "company2024"</li>
-        <li>Personal information — names, birthdays, addresses</li>
-        <li>Reused passwords — if one account is breached, all others are exposed</li>
-      </ul>
-      <div class="callout">A password that is long, random, and unique to each account is vastly more secure than one that is memorable. That is exactly what a password manager provides.</div>
-
-      <h2>Use a password manager</h2>
-      <p>A password manager generates, stores, and fills in strong, unique passwords for every account. Your team only needs to remember one master password. Tools like 1Password, Bitwarden, and LastPass offer business plans that make this practical for teams of any size.</p>
-
-      <h2>Enable multi-factor authentication everywhere</h2>
-      <p>Multi-factor authentication (MFA) requires a second step — usually a code on your phone — to log in. Even if a password is stolen, MFA stops attackers from using it. Enabling MFA is one of the single most effective security improvements any business can make.</p>
-
-      <h2>Password safety checklist</h2>
-      <ul class="checklist">
-        <li>Use a password manager across your whole team</li>
-        <li>Ensure every account has a unique password — no reuse</li>
-        <li>Enable multi-factor authentication on all business accounts</li>
-        <li>Change any default passwords on devices and software</li>
-        <li>Review and revoke access for staff who have left</li>
-        <li>Use single sign-on (SSO) where possible to reduce password sprawl</li>
-      </ul>
-    `
+  function showHome(e) {
+    if (e) e.preventDefault();
+    document.getElementById('home').style.display = 'block';
+    document.getElementById('about').style.display = 'none';
+    document.getElementById('nav-home').classList.add('active');
+    document.getElementById('nav-about').classList.remove('active');
   }
-];
-
-let activeTag = 'All';
-
-function getAllTags() {
-  const tags = ['All', ...new Set(POSTS.map(p => p.tag))];
-  return tags;
-}
-
-function renderTags() {
-  const tags = getAllTags();
-  document.getElementById('tagFilter').innerHTML = tags.map(t =>
-    `<button class="tag-btn ${t === activeTag ? 'active' : ''}" onclick="filterTag('${t}')">${t}</button>`
-  ).join('');
-}
-
-function filterTag(t) {
-  activeTag = t;
-  renderTags();
-  renderPosts();
-}
-
-function renderPosts() {
-  const filtered = activeTag === 'All' ? POSTS : POSTS.filter(p => p.tag === activeTag);
-  const list = document.getElementById('postList');
-  list.innerHTML = filtered.map((p, i) => `
-    <div class="post-card" onclick="p.id===12 ? window.location='zero-trust-security-blog.html' : p.id===11 ? window.location='ransomware-blog.html' : p.id===10 ? window.location='securing-business-website-blog.html' : p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
-      <div class="post-meta">${p.date}</div>
-      <div class="post-title">${p.title}</div>
-      <div class="post-excerpt">${p.excerpt}</div>
-      <span class="post-tag">${p.tag}</span>
-    </div>
-    ${i < filtered.length - 1 ? '<div class="divider"></div>' : ''}
-  `).join('');
-}
-
-function openPost(id) {
-  const p = POSTS.find(x => x.id === id);
-  if (!p) return;
-  document.getElementById('singleContent').innerHTML = `
-    <div class="post-title">${p.title}</div>
-    <div class="post-meta">${p.date} &nbsp;·&nbsp; ${p.tag}</div>
-    <div class="body">${p.body}</div>
-  `;
-  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-  document.getElementById('single').classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-function showPage(id, el) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-  if (el) el.classList.add('active');
-  if (id === 'home') { renderTags(); renderPosts(); }
-  window.scrollTo(0, 0);
-}
-
-renderTags();
-renderPosts();
+  function showAbout(e) {
+    if (e) e.preventDefault();
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('about').style.display = 'block';
+    document.getElementById('nav-about').classList.add('active');
+    document.getElementById('nav-home').classList.remove('active');
+  }
 </script>
-
 </body>
 </html>
