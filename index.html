@@ -147,6 +147,61 @@ nav a:hover,nav a.active{color:var(--ink)}
 <script>
 const POSTS = [
   {
+    id: 12,
+    title: "Zero trust \u2014 never trust, always verify",
+    date: "May 2, 2026",
+    tag: "Zero Trust",
+    excerpt: "The old way of securing a business assumed everyone inside the network was safe. Zero trust throws that assumption out entirely \u2014 and it is changing how smart businesses protect themselves.",
+    body: `
+      <p>For decades, business security was built on one idea: protect the perimeter. Build a strong wall around your network and trust everything inside it. That model is broken. Zero trust is the replacement.</p>
+
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">80%</div><div class="stat-desc">of breaches involve compromised credentials \u2014 the exact threat zero trust is designed to stop</div></div>
+        <div class="stat-box"><div class="stat-num">72%</div><div class="stat-desc">of organisations say zero trust has reduced their number of successful attacks</div></div>
+        <div class="stat-box"><div class="stat-num">$1M</div><div class="stat-desc">less \u2014 average saving on breach costs for organisations with mature zero trust</div></div>
+      </div>
+
+      <h2>Why the old model no longer works</h2>
+      <p>The traditional model trusted everyone inside your network. Today staff work from home, coffee shops, and hotel rooms on personal devices accessing cloud services outside your network entirely. The inside/outside distinction no longer means anything \u2014 and attackers know it.</p>
+      <div class="warning"><strong>\u26a0 The insider problem</strong>Once an attacker compromises a single account, the traditional model gives them free run of your entire network. Zero trust limits the blast radius \u2014 a compromised account can only reach what it is explicitly authorised to access.</div>
+
+      <h2>What zero trust actually means</h2>
+      <p>Zero trust is a philosophy built on one principle: assume breach. Every user, device, and application must continuously prove its identity before accessing any resource \u2014 regardless of where they are or how they connected.</p>
+      <div class="callout">Zero trust does not mean trusting nobody. It means earning trust continuously \u2014 through identity, device health, location, and behaviour \u2014 rather than assuming it once and never checking again.</div>
+
+      <h2>The five pillars</h2>
+      <ul>
+        <li><strong>Verify every identity</strong> \u2014 every user proves who they are, every time</li>
+        <li><strong>Validate every device</strong> \u2014 only known, healthy devices get access</li>
+        <li><strong>Limit access to the minimum needed</strong> \u2014 the principle of least privilege</li>
+        <li><strong>Assume breach</strong> \u2014 design systems as if attackers are already inside</li>
+        <li><strong>Monitor continuously</strong> \u2014 access granted today is re-verified tomorrow</li>
+      </ul>
+
+      <h2>6 steps to get started</h2>
+      <ul>
+        <li><strong>Enable MFA everywhere</strong> \u2014 the single highest-impact step you can take</li>
+        <li><strong>Audit who has access to what</strong> \u2014 most businesses find far too much access</li>
+        <li><strong>Apply least privilege to every role</strong> \u2014 only the access genuinely needed</li>
+        <li><strong>Use single sign-on</strong> \u2014 centralises identity control across all apps</li>
+        <li><strong>Segment your network</strong> \u2014 limits how far a breach can spread</li>
+        <li><strong>Monitor access logs regularly</strong> \u2014 unusual patterns are early warning signs</li>
+      </ul>
+
+      <h2>Zero trust checklist</h2>
+      <ul class="checklist">
+        <li>Multi-factor authentication enabled on all business accounts</li>
+        <li>Access audit completed \u2014 staff have only the access they need</li>
+        <li>Least privilege applied to every role and system</li>
+        <li>Access removed promptly when staff leave or change roles</li>
+        <li>Device health checks required before granting remote access</li>
+        <li>Network segmentation in place for critical systems</li>
+        <li>Access logs monitored regularly for unusual activity</li>
+        <li>Single sign-on used to centralise and control identity</li>
+      </ul>
+    `
+  },
+  {
     id: 11,
     title: "Ransomware \u2014 what it is, how it works, and how to survive it",
     date: "May 1, 2026",
@@ -677,7 +732,7 @@ function renderPosts() {
   const filtered = activeTag === 'All' ? POSTS : POSTS.filter(p => p.tag === activeTag);
   const list = document.getElementById('postList');
   list.innerHTML = filtered.map((p, i) => `
-    <div class="post-card" onclick="p.id===11 ? window.location='ransomware-blog.html' : p.id===10 ? window.location='securing-business-website-blog.html' : p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
+    <div class="post-card" onclick="p.id===12 ? window.location='zero-trust-security-blog.html' : p.id===11 ? window.location='ransomware-blog.html' : p.id===10 ? window.location='securing-business-website-blog.html' : p.id===9 ? window.location='supply-chain-attacks-blog.html' : (p.id===8 ? window.location='real-cost-cyberattack-blog.html' : (p.id===7 ? window.location='data-breach-response-blog.html' : (p.id===6 ? window.location='remote-workers-security-blog.html' : (p.id===5 ? window.location='cybersecurity-compliance-blog.html' : (p.id===4 ? window.location='ai-cybersecurity-blog.html' : (p.id===3 ? window.location='cybersecurity-blog.html' : null))))))">
       <div class="post-meta">${p.date}</div>
       <div class="post-title">${p.title}</div>
       <div class="post-excerpt">${p.excerpt}</div>
