@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insider Threats | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #18180f;
+    --muted: #58584a;
+    --faint: #a8a898;
+    --bg: #fafaf7;
+    --bg2: #f2f2ec;
+    --border: #e4e4da;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* HEADER */
+  header { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2.5rem; }
+  .site-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px;
+  }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav { display: flex; gap: 1.5rem; align-items: center; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--ink); }
+
+  /* ARTICLE */
+  .post-eyebrow {
+    font-size: 12px; color: var(--faint);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700; line-height: 1.2;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .post-lead {
+    font-size: 18px; line-height: 1.7;
+    color: var(--muted); font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+  .post-meta {
+    font-size: 13px; color: var(--faint);
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  /* BODY */
+  .body p {
+    font-size: 17px; line-height: 1.85;
+    color: var(--ink); margin-bottom: 1.25rem;
+  }
+  .body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink); margin: 2.5rem 0 0.75rem;
+    padding-top: 0.5rem;
+  }
+  .body ul, .body ol {
+    padding-left: 1.25rem; margin-bottom: 1.25rem;
+  }
+  .body li {
+    font-size: 16px; line-height: 1.75;
+    color: var(--muted); margin-bottom: 0.5rem;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--bg2);
+    border-left: 3px solid var(--border);
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout p {
+    margin: 0; font-size: 15px;
+    color: var(--muted); font-style: italic; line-height: 1.7;
+  }
+
+  /* WARNING */
+  .warning {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+  }
+  .warning strong {
+    display: block; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--accent); margin-bottom: 0.4rem;
+  }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  /* STAT ROW */
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    margin: 1.75rem 0;
+  }
+  .stat {
+    background: var(--bg); padding: 1.25rem 1rem; text-align: center;
+  }
+  .stat-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--ink); line-height: 1; margin-bottom: 0.4rem;
+  }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+    font-size: 15px; color: var(--ink); line-height: 1.6;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '✓'; color: #166534;
+    font-weight: 700; flex-shrink: 0; font-size: 14px;
+    margin-top: 1px;
+  }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem; padding-top: 1.5rem; padding-bottom: 2rem;
+    font-size: 13px; color: var(--faint);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) {
+    .stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav>
+      <a href="index.html" class="back">← All posts</a>
+    </nav>
+  </header>
+
+  <article>
+    <div class="post-eyebrow">May 3, 2026 &nbsp;·&nbsp; Insider Threats</div>
+    <h1>Insider threats — the risk from within your own team</h1>
+    <p class="post-lead">Not every threat comes from outside. Some of the most damaging cyberattacks on businesses are carried out — intentionally or accidentally — by the people who work there.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>When business owners think about cybersecurity threats, they picture strangers — hackers in other countries, criminals trying to break in. The uncomfortable truth is that a significant proportion of security incidents come from inside the organisation. From employees, contractors, and partners who already have access.</p>
+
+      <p>Insider threats are harder to detect, harder to prevent, and often more damaging than external attacks — because they exploit trust that has already been granted.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">34%</div>
+          <div class="stat-d">of data breaches involve internal actors</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£11M</div>
+          <div class="stat-d">average annual cost of insider threats to a business</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">77</div>
+          <div class="stat-d">days — average time to detect and contain an insider incident</div>
+        </div>
+      </div>
+
+      <h2>What is an insider threat?</h2>
+      <p>An insider threat is any security risk that originates from within your organisation. That includes current and former employees, contractors, suppliers, and anyone else with legitimate access to your systems or data.</p>
+      <p>Insider threats fall into three broad categories — and understanding them is key to addressing them effectively.</p>
+
+      <ul>
+        <li><strong>Malicious insiders</strong> — staff who intentionally steal data, sabotage systems, or help external attackers. Often motivated by financial gain, grievance, or coercion.</li>
+        <li><strong>Negligent insiders</strong> — staff who accidentally cause a breach through careless behaviour — clicking a phishing link, mishandling data, losing a device, or using weak passwords.</li>
+        <li><strong>Compromised insiders</strong> — staff whose accounts or devices have been taken over by an external attacker, who then uses their legitimate access to move through your systems undetected.</li>
+      </ul>
+
+      <div class="callout">
+        <p>The majority of insider incidents are not malicious. Most are caused by well-meaning staff making honest mistakes. Effective insider threat management addresses both the bad actors and the human errors.</p>
+      </div>
+
+      <h2>Why insider threats are so difficult to detect</h2>
+      <p>External attackers have to break in. Insiders are already in. They have legitimate credentials, legitimate reasons to access systems, and often a detailed understanding of where your most valuable data lives and how your security works.</p>
+      <p>Many insider incidents go undetected for months. When an employee accesses a system they are authorised to use, most security tools do not flag it — even if the purpose is harmful. By the time the damage is discovered, the data may already be gone or the system already compromised.</p>
+
+      <div class="warning">
+        <strong>⚠ The departing employee risk</strong>
+        <p>One of the highest-risk moments for insider threats is when a staff member resigns or is let go. Research consistently shows that a significant number of employees take data with them when they leave — customer lists, proprietary processes, or confidential files. Removing access promptly at offboarding is one of the most important steps a business can take.</p>
+      </div>
+
+      <h2>Warning signs to watch for</h2>
+      <p>No single signal is conclusive — but certain patterns of behaviour are associated with insider risk. Businesses that monitor for these patterns are far more likely to detect problems early.</p>
+
+      <ul>
+        <li>Accessing systems or files outside normal working hours</li>
+        <li>Downloading or copying large volumes of data, especially close to a leaving date</li>
+        <li>Attempts to access systems or data outside their normal role</li>
+        <li>Using personal email or external storage to send or copy company files</li>
+        <li>Sudden disengagement, grievance with management, or financial difficulty</li>
+        <li>Forwarding work emails to a personal address</li>
+      </ul>
+
+      <hr>
+
+      <h2>How to protect your business</h2>
+      <p>Reducing insider threat risk is not about treating your team as suspects. It is about building systems and habits that protect your business regardless of intent — and that make accidental breaches far less likely.</p>
+
+      <h2>Least privilege access</h2>
+      <p>The single most effective insider threat control is also one of the simplest: give people access only to what they genuinely need to do their job. A finance team member does not need access to your customer database. A sales person does not need access to your payroll system.</p>
+      <p>When access is limited by design, the damage any single insider can do — accidentally or intentionally — is automatically contained.</p>
+
+      <h2>Monitor access and behaviour</h2>
+      <p>Log who accesses what, when, and from where. Review those logs regularly — or use tools that flag unusual patterns automatically. You do not need to surveil your staff. You need to know when something looks out of the ordinary.</p>
+
+      <div class="callout">
+        <p>Monitoring works best when staff know it exists. Transparent, clearly communicated monitoring policies act as a deterrent for malicious behaviour and a reminder for negligent behaviour.</p>
+      </div>
+
+      <h2>Offboarding is a security event</h2>
+      <p>When someone leaves your business — for any reason — their access should be revoked promptly. Not at the end of the week. Not when IT gets around to it. On their last day, or before. This includes email accounts, system logins, cloud tools, and any shared passwords they may have known.</p>
+
+      <h2>Build a culture of security</h2>
+      <p>Most insider incidents are caused by negligence, not malice. Regular training, clear policies, and a culture where staff feel comfortable reporting mistakes reduces accidental breaches dramatically. When people understand why security matters and feel trusted to do the right thing, they usually do.</p>
+
+      <hr>
+
+      <h2>Insider threat protection checklist</h2>
+      <ul class="checklist">
+        <li>Least privilege applied — staff access only what their role requires</li>
+        <li>Access reviewed regularly and updated when roles change</li>
+        <li>Access revoked promptly on the last day of employment</li>
+        <li>System access logs reviewed regularly for unusual behaviour</li>
+        <li>Alerts in place for large data downloads or unusual access patterns</li>
+        <li>Clear data handling policy shared with all staff</li>
+        <li>Regular security training covering accidental and intentional risks</li>
+        <li>Offboarding checklist includes full access and device audit</li>
+      </ul>
+
+      <p>Insider threats are uncomfortable to think about — because they involve people you work with and trust. But protecting against them is not about suspicion. It is about building a system that is resilient regardless of who is inside it.</p>
+
+    </div>
+  </article>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
