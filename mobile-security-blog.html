@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Device Security for Business | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #18180f;
+    --muted: #58584a;
+    --faint: #a8a898;
+    --bg: #fafaf7;
+    --bg2: #f2f2ec;
+    --border: #e4e4da;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2.5rem; }
+  .site-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px;
+  }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .post-eyebrow {
+    font-size: 12px; color: var(--faint);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700; line-height: 1.2;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .post-lead {
+    font-size: 18px; line-height: 1.7;
+    color: var(--muted); font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+  .post-meta {
+    font-size: 13px; color: var(--faint);
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink); margin: 2.5rem 0 0.75rem;
+  }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout {
+    background: var(--bg2);
+    border-left: 3px solid var(--border);
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+  }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    margin: 1.75rem 0;
+  }
+  .stat { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+    font-size: 15px; color: var(--ink); line-height: 1.6;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem; padding-top: 1.5rem; padding-bottom: 2rem;
+    font-size: 13px; color: var(--faint);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <article>
+    <div class="post-eyebrow">May 4, 2026 &nbsp;·&nbsp; Mobile Security</div>
+    <h1>Mobile device security — the risk in your team's pocket</h1>
+    <p class="post-lead">Smartphones and tablets are now central to how most businesses operate. They are also one of the least secured parts of the average business's technology setup.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Your team sends emails, approves payments, accesses customer data, and connects to company systems — all from their phones. Mobile devices have become the default work tool for millions of people. Yet most businesses apply far less security to phones than they do to laptops and desktops.</p>
+      <p>That gap is exactly what attackers exploit.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">60%</div>
+          <div class="stat-d">of corporate data is now accessed from mobile devices</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">46%</div>
+          <div class="stat-d">of businesses have had an employee lose a work mobile device</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">more likely — mobile users face three times more phishing attacks than desktop users</div>
+        </div>
+      </div>
+
+      <h2>Why mobile is a growing target</h2>
+      <p>Mobile devices present a unique combination of risk factors. They leave the office. They connect to public Wi-Fi. They are shared with family members. They are used for both work and personal activity. They are lost and stolen far more often than laptops.</p>
+      <p>And unlike a company laptop managed by IT, a personal phone used for work is often completely outside your business's visibility and control.</p>
+
+      <div class="callout">
+        <p>The phone in your employee's pocket may have access to your company email, your cloud storage, your finance tools, and your customer data — with little more than a four-digit PIN standing between that data and anyone who picks it up.</p>
+      </div>
+
+      <h2>The biggest mobile security risks</h2>
+
+      <p><strong>Lost and stolen devices</strong> are the most common mobile security incident. A phone left on a train or stolen from a bag can give anyone access to everything on it — unless the device is encrypted and protected with a strong PIN or biometric lock, and can be remotely wiped.</p>
+
+      <p><strong>Unsecured public Wi-Fi</strong> is a favourite hunting ground for attackers. Connecting to a public network at a café or airport without a VPN exposes everything your device sends and receives — including passwords, emails, and sensitive business data.</p>
+
+      <p><strong>Malicious apps</strong> can look entirely legitimate. Apps downloaded from unofficial sources, or legitimate-looking apps that request excessive permissions, can silently harvest data, intercept messages, or give attackers remote access to the device.</p>
+
+      <p><strong>Out-of-date operating systems</strong> leave known vulnerabilities unpatched. Unlike a managed laptop, a personal phone may not update automatically — and many users dismiss update notifications for weeks or months.</p>
+
+      <div class="warning">
+        <strong>⚠ The personal device problem</strong>
+        <p>When employees use personal phones for work, your business data sits on a device you do not own, cannot monitor, and cannot wipe. If that employee leaves — or their phone is compromised — your data goes with it. A clear mobile device policy is essential before the problem occurs.</p>
+      </div>
+
+      <h2>Mobile phishing — a different kind of threat</h2>
+      <p>Phishing attacks on mobile are more effective than on desktop — because the smaller screen makes it harder to inspect links, the interface conceals sender details, and people tend to respond to messages faster on their phones.</p>
+      <p>Mobile phishing does not just arrive by email. It comes through SMS, WhatsApp, Teams, Slack, and any other messaging platform your team uses. A convincing message asking someone to click a link or confirm a payment takes seconds to action — and seconds is all it takes.</p>
+
+      <hr>
+
+      <h2>How to secure mobile devices in your business</h2>
+      <p>You do not need a large IT team to significantly improve mobile security. A clear policy and a handful of practical controls cover the most important ground.</p>
+
+      <h2>Set a clear mobile device policy</h2>
+      <p>Before anything else, decide what your rules are. Can staff use personal phones for work? If so, what are the requirements? What apps are permitted? What data can be accessed? A written policy — even a simple one-page document — gives your team clarity and gives you a foundation for everything else.</p>
+
+      <h2>Enforce screen locks and encryption</h2>
+      <p>Every device used for work must have a strong screen lock — a PIN of at least six digits, a strong password, or biometric authentication. Modern smartphones encrypt their data by default when a screen lock is set. Without a screen lock, a lost device is an open book.</p>
+
+      <h2>Enable remote wipe capability</h2>
+      <p>If a device is lost or stolen, you need the ability to erase it remotely before anyone accesses its contents. Both Apple and Android devices support this — but it must be set up in advance. For company-owned devices, mobile device management (MDM) software gives you centralised control.</p>
+
+      <div class="callout">
+        <p>Remote wipe only works if the device is online. Encourage staff to report lost devices immediately — every hour of delay reduces the chance of a successful wipe.</p>
+      </div>
+
+      <h2>Require a VPN on public networks</h2>
+      <p>Any staff member who works from cafés, hotels, or public spaces should use a VPN on their mobile device. A VPN encrypts the connection and prevents attackers on the same network from intercepting data. Many business VPN services work seamlessly across phones and laptops.</p>
+
+      <h2>Keep operating systems and apps updated</h2>
+      <p>Enable automatic updates on all work devices. When updates are available, apply them promptly. OS updates frequently contain critical security patches for vulnerabilities that are actively being exploited in the wild.</p>
+
+      <h2>Only install apps from official stores</h2>
+      <p>Restrict app installations to the Apple App Store and Google Play Store. Avoid sideloading apps from unknown sources. Review the permissions any app requests — a torch app does not need access to your contacts or microphone.</p>
+
+      <hr>
+
+      <h2>Mobile security checklist</h2>
+      <ul class="checklist">
+        <li>Written mobile device policy shared with all staff</li>
+        <li>Screen lock enabled on all devices used for work</li>
+        <li>Remote wipe capability set up on all work devices</li>
+        <li>VPN required when connecting on public Wi-Fi</li>
+        <li>Automatic OS and app updates enabled</li>
+        <li>Apps installed only from official app stores</li>
+        <li>Multi-factor authentication on all work accounts accessed by mobile</li>
+        <li>Clear process for reporting lost or stolen devices immediately</li>
+        <li>Personal device usage rules defined and communicated</li>
+      </ul>
+
+      <p>Mobile devices are not going away — and neither is the risk they carry. The businesses that manage that risk well are the ones that treat phones with the same seriousness they give to laptops: with clear policies, practical controls, and a team that understands why it matters.</p>
+
+    </div>
+  </article>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
