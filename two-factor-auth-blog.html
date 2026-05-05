@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two-Factor Authentication | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #18180f;
+    --muted: #58584a;
+    --faint: #a8a898;
+    --bg: #fafaf7;
+    --bg2: #f2f2ec;
+    --border: #e4e4da;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2.5rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--bg2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* HOW IT WORKS STEPS */
+  .steps { margin: 1.75rem 0; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .step { background: var(--bg); padding: 1rem 1.25rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .step-n { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
+  .step-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .step-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { border-top: 1px solid var(--border); margin-top: 4rem; padding-top: 1.5rem; padding-bottom: 2rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <article>
+    <div class="post-eyebrow">May 5, 2026 &nbsp;·&nbsp; Authentication</div>
+    <h1>Two-factor authentication — the simplest thing you can do to protect your business</h1>
+    <p class="post-lead">One extra step when logging in stops the vast majority of account takeover attacks. Yet most small businesses still have not turned it on everywhere it matters.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 5 min read</div>
+
+    <div class="body">
+
+      <p>Stolen passwords are behind the majority of data breaches. And passwords get stolen more often than most people realise — through phishing emails, data leaks from other websites, and credential-stuffing attacks that try millions of username and password combinations automatically.</p>
+      <p>Two-factor authentication — often called 2FA or MFA — is the most effective defence against this. It is free, takes minutes to set up, and stops most account takeover attempts dead.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">99%</div>
+          <div class="stat-d">of account takeover attacks are blocked by multi-factor authentication</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">80%</div>
+          <div class="stat-d">of breaches involve compromised or weak credentials</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£0</div>
+          <div class="stat-d">cost to enable 2FA on most business accounts — it is built in</div>
+        </div>
+      </div>
+
+      <h2>What is two-factor authentication?</h2>
+      <p>Two-factor authentication adds a second step to the login process. Instead of just entering a username and password, you also need to provide a second piece of proof — something only you have, not just something you know.</p>
+      <p>Even if an attacker has your password, they cannot log in without that second factor. Your stolen password becomes useless on its own.</p>
+
+      <div class="callout">
+        <p>Think of it like a bank card. The card is your password — it gets you to the door. But you also need the PIN to actually get in. Stealing the card alone is not enough.</p>
+      </div>
+
+      <h2>How it works in practice</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-body">
+            <h4>You enter your username and password</h4>
+            <p>The first factor — something you know.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-body">
+            <h4>A second verification is requested</h4>
+            <p>A code sent to your phone, an app notification, or a hardware key.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div class="step-body">
+            <h4>You confirm the second factor</h4>
+            <p>The second factor — something you have. Access is granted only when both are correct.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>The different types of 2FA</h2>
+      <p>Not all two-factor authentication is equally secure. Understanding the options helps you choose the right level of protection for each account.</p>
+
+      <ul>
+        <li><strong>Authenticator apps</strong> — apps like Google Authenticator, Microsoft Authenticator, or Authy generate a time-sensitive code every 30 seconds. This is the most widely recommended option for businesses — more secure than SMS and easy to use.</li>
+        <li><strong>SMS text messages</strong> — a code is sent to your phone by text. Convenient and widely supported, but less secure than app-based codes. SMS can be intercepted in targeted attacks. Better than nothing, but not ideal for high-value accounts.</li>
+        <li><strong>Push notifications</strong> — your phone receives a notification asking you to approve or deny the login. Simple and fast. Used by many enterprise tools including Microsoft and Google Workspace.</li>
+        <li><strong>Hardware security keys</strong> — a physical USB or NFC key that you plug in or tap to authenticate. The most secure option, resistant to phishing. Recommended for high-privilege accounts like IT administrators.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ MFA fatigue attacks</strong>
+        <p>Attackers are increasingly using "MFA fatigue" — sending repeated push notification requests hoping the user will approve one just to make it stop. If you receive unexpected 2FA requests you did not initiate, do not approve them. Report it to your IT team immediately and change your password.</p>
+      </div>
+
+      <h2>Where to enable 2FA in your business</h2>
+      <p>The most important accounts to protect are those with the broadest access or the highest value to attackers. Start here and work outward.</p>
+
+      <ul>
+        <li><strong>Email</strong> — your email account is the master key. It can be used to reset passwords for every other account. Protect it first.</li>
+        <li><strong>Cloud storage</strong> — Google Drive, Microsoft OneDrive, Dropbox, and similar services contain sensitive business data.</li>
+        <li><strong>Finance and accounting tools</strong> — Xero, QuickBooks, banking apps, and payment platforms.</li>
+        <li><strong>HR and payroll systems</strong> — contain personal data subject to regulatory protection.</li>
+        <li><strong>Remote access</strong> — VPN logins, Remote Desktop, and any tool that gives access to your internal network.</li>
+        <li><strong>Domain registrar and DNS</strong> — compromise here can redirect your entire website and email.</li>
+        <li><strong>Website admin panels</strong> — your CMS, hosting control panel, and any backend system.</li>
+      </ul>
+
+      <div class="callout">
+        <p>If you use Google Workspace or Microsoft 365 for business email, you can enforce 2FA for your entire team from the admin panel — ensuring no one can opt out.</p>
+      </div>
+
+      <hr>
+
+      <h2>Common objections — and the honest answers</h2>
+
+      <p><strong>"It slows everyone down."</strong> Most 2FA systems remember trusted devices for 30 days. Your team authenticates once per device per month — a few seconds, not a daily inconvenience.</p>
+
+      <p><strong>"Our team will forget their phone."</strong> Authenticator apps can be set up with backup codes. Hardware keys can have a backup. The inconvenience of a forgotten second factor is minor compared to the damage of a compromised account.</p>
+
+      <p><strong>"We are too small to be targeted."</strong> Credential attacks are automated and indiscriminate. Small businesses are targeted as frequently as large ones — sometimes more so. Two-factor authentication works regardless of your size.</p>
+
+      <hr>
+
+      <h2>Two-factor authentication checklist</h2>
+      <ul class="checklist">
+        <li>2FA enabled on all business email accounts</li>
+        <li>2FA enabled on cloud storage — Google Drive, OneDrive, Dropbox</li>
+        <li>2FA enabled on finance and accounting tools</li>
+        <li>2FA enabled on all remote access — VPN, Remote Desktop</li>
+        <li>2FA enabled on website admin panels and hosting</li>
+        <li>Authenticator app used rather than SMS where possible</li>
+        <li>Backup codes or recovery methods stored securely</li>
+        <li>Team trained on MFA fatigue — not to approve unexpected requests</li>
+        <li>2FA enforced at admin level so staff cannot disable it</li>
+      </ul>
+
+      <p>Two-factor authentication is the closest thing to a silver bullet that cybersecurity has to offer. It is free, it works, and it takes minutes to set up. If there is one change you make to your business security this month, this is it.</p>
+
+    </div>
+  </article>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
