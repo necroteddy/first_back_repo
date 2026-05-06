@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Web Monitoring | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  /* ARTICLE CARD */
+  .article-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 6, 2026 &nbsp;·&nbsp; Dark Web</div>
+    <h1>Dark web monitoring — is your business data already for sale?</h1>
+    <p class="post-lead">Millions of stolen passwords and business credentials are traded on the dark web every day. Some of them may belong to your employees — and you may have no idea.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>When a company suffers a data breach, stolen credentials do not disappear. They end up for sale on dark web marketplaces — collections of websites that exist outside the normal internet, accessible only through specialist software, where criminals buy and sell stolen data, hacking tools, and access to compromised systems.</p>
+      <p>Your employees reuse passwords. They use the same password for their work email that they used on a website breached three years ago. That password is probably already on the dark web — and it may be giving criminals a direct route into your business.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">24B</div>
+          <div class="stat-d">stolen username and password combinations currently circulating on the dark web</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">15B</div>
+          <div class="stat-d">business credentials available for purchase on dark web marketplaces</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£8</div>
+          <div class="stat-d">average price for a set of stolen business login credentials</div>
+        </div>
+      </div>
+
+      <h2>What is the dark web?</h2>
+      <p>The dark web is a part of the internet that is not indexed by search engines and requires special software — most commonly the Tor browser — to access. It is not inherently criminal, but it has become the preferred marketplace for stolen data, ransomware tools, and illicit services precisely because it is difficult to monitor and trace.</p>
+      <p>Dark web markets operate like legitimate e-commerce sites — with product listings, customer reviews, and pricing. Stolen credentials are one of the most commonly traded items, often sold in bulk datasets from breached companies.</p>
+
+      <div class="callout">
+        <p>You do not need to access the dark web yourself to monitor it. Dark web monitoring services scan these markets automatically and alert you when your business data appears.</p>
+      </div>
+
+      <h2>How your data ends up there</h2>
+      <p>There are several routes by which your business credentials can appear on the dark web — and most of them have nothing to do with your own security practices.</p>
+
+      <ul>
+        <li><strong>Third-party breaches</strong> — a website or service your employee uses is breached, and their credentials are stolen and sold. If they reuse that password elsewhere, every account using it is now at risk.</li>
+        <li><strong>Phishing attacks</strong> — employees tricked into entering credentials on a fake login page hand them directly to attackers, who may sell them on.</li>
+        <li><strong>Malware and keyloggers</strong> — malicious software installed on a device silently records keystrokes and login details, which are then harvested and sold.</li>
+        <li><strong>Direct breaches</strong> — if your own systems are compromised, customer and staff data may appear for sale within hours.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ The credential stuffing threat</strong>
+        <p>Once credentials appear on the dark web, attackers use automated tools to try them across hundreds of services simultaneously. This is called credential stuffing. If an employee uses the same password for their work email and a breached retail website, that work account is now exposed — without your systems ever being directly attacked.</p>
+      </div>
+
+      <h2>What is dark web monitoring?</h2>
+      <p>Dark web monitoring services continuously scan dark web forums, marketplaces, and data dumps for your business email addresses, domain names, and credentials. When a match is found, you receive an alert — giving you the opportunity to force a password reset and investigate before an attacker can use the stolen credentials.</p>
+      <p>Many security tools now include dark web monitoring as a standard feature. Microsoft 365 Business Premium, for example, includes identity monitoring. Standalone services like Have I Been Pwned, SpyCloud, and others offer business-grade monitoring at various price points.</p>
+
+      <div class="callout">
+        <p>Have I Been Pwned (haveibeenpwned.com) is a free tool that lets you check whether any email address associated with your business has appeared in a known data breach. It is a useful starting point — though it covers only publicly disclosed breaches, not live dark web listings.</p>
+      </div>
+
+      <h2>What to do when credentials are found</h2>
+      <p>Receiving a dark web alert is alarming — but it is far better than not knowing. The response process is straightforward once you have a plan in place.</p>
+
+      <ul>
+        <li><strong>Force an immediate password reset</strong> on the affected account — and any other account where the same password may have been used</li>
+        <li><strong>Enable or verify 2FA</strong> is active on the affected account</li>
+        <li><strong>Review recent login activity</strong> on the account for any suspicious access</li>
+        <li><strong>Check for lateral movement</strong> — if the compromised account had broad access, review other systems for signs of intrusion</li>
+        <li><strong>Remind your team</strong> of password hygiene and the importance of unique passwords for every account</li>
+      </ul>
+
+      <hr>
+
+      <h2>Prevention — reducing your dark web exposure</h2>
+      <p>You cannot prevent third-party websites from being breached. But you can significantly reduce the risk that those breaches give attackers a route into your business.</p>
+
+      <ul>
+        <li><strong>Enforce unique passwords</strong> — a password manager ensures every account has a different password, so a breach on one site cannot cascade to others</li>
+        <li><strong>Require 2FA on all business accounts</strong> — even a stolen password is useless without the second factor</li>
+        <li><strong>Set up dark web monitoring</strong> — know when your credentials appear before attackers use them</li>
+        <li><strong>Train staff on password reuse</strong> — explain why using the same password across personal and work accounts creates business risk</li>
+        <li><strong>Review and audit accounts regularly</strong> — old accounts that are no longer used are still a risk if their credentials are compromised</li>
+      </ul>
+
+      <hr>
+
+      <h2>Dark web security checklist</h2>
+      <ul class="checklist">
+        <li>Business email domain monitored for dark web appearances</li>
+        <li>Dark web monitoring alert system set up and tested</li>
+        <li>Password manager in use across the whole team</li>
+        <li>Unique passwords enforced for all business accounts</li>
+        <li>2FA enabled on all accounts — especially email and finance tools</li>
+        <li>Response plan in place for when credentials are found</li>
+        <li>Staff trained on password reuse risks</li>
+        <li>Old and unused accounts regularly reviewed and closed</li>
+      </ul>
+
+      <p>The dark web sounds like something distant and criminal — and it is. But the data traded there is often very ordinary: email addresses, passwords, and login details belonging to real people at real businesses. Monitoring for your data is not paranoia. It is the same common sense as checking your bank statement for transactions you did not make.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
