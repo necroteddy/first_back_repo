@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* SHARED RESPONSIBILITY TABLE */
+  .resp-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .resp-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .resp-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; }
+  .resp-table tr:last-child td { border-bottom: none; }
+  .tag-you { display: inline-block; background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-them { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .resp-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 7, 2026 &nbsp;·&nbsp; Cloud Security</div>
+    <h1>Cloud security — keeping your business data safe online</h1>
+    <p class="post-lead">Most businesses now store their data in the cloud. But many assume the cloud provider handles all the security. That assumption is one of the most common — and costly — mistakes in modern business.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>The cloud has transformed how businesses operate. Files stored in Google Drive or Microsoft OneDrive. Email running through Microsoft 365 or Google Workspace. Accounting in Xero. Customer data in a CRM. Finance in cloud banking tools. The convenience is enormous — and so is the concentration of risk.</p>
+      <p>Cloud services are not inherently insecure. But they introduce a specific set of risks that differ from on-premise systems — and understanding those risks is the first step to managing them.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">45%</div>
+          <div class="stat-d">of businesses have experienced a cloud data breach in the past year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">80%</div>
+          <div class="stat-d">of cloud breaches are caused by misconfiguration — not provider failure</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">more data stored in the cloud today compared to just three years ago</div>
+        </div>
+      </div>
+
+      <h2>The shared responsibility model</h2>
+      <p>The most important concept in cloud security is one most business owners have never heard of: shared responsibility. Cloud providers secure the infrastructure — the servers, the network, the physical facilities. But you are responsible for securing what you put in it.</p>
+      <p>Think of it like renting a serviced office. The building owner provides locks on the front door, security cameras in the lobby, and fire safety compliance. But they are not responsible for who you give your office key to, what you leave on your desk, or whether you lock your filing cabinet.</p>
+
+      <table class="resp-table">
+        <thead>
+          <tr>
+            <th>Your responsibility</th>
+            <th>Provider's responsibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-you">You</span> Who has access to your data</td>
+            <td><span class="tag-them">Them</span> Physical server security</td>
+          </tr>
+          <tr>
+            <td><span class="tag-you">You</span> Strong passwords and 2FA</td>
+            <td><span class="tag-them">Them</span> Network infrastructure</td>
+          </tr>
+          <tr>
+            <td><span class="tag-you">You</span> Correct sharing and permission settings</td>
+            <td><span class="tag-them">Them</span> Uptime and availability</td>
+          </tr>
+          <tr>
+            <td><span class="tag-you">You</span> Detecting misconfigurations</td>
+            <td><span class="tag-them">Them</span> Encryption in transit</td>
+          </tr>
+          <tr>
+            <td><span class="tag-you">You</span> Responding to account compromise</td>
+            <td><span class="tag-them">Them</span> Compliance certifications</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>The biggest cloud security risks</h2>
+
+      <p><strong>Misconfiguration</strong> is the leading cause of cloud breaches — and it is almost entirely preventable. A file sharing folder set to "anyone with the link" instead of "only specific people". An S3 bucket left publicly accessible. A database with no authentication required. These mistakes happen constantly, often by people who did not realise the implications of a single setting.</p>
+
+      <p><strong>Compromised accounts</strong> are the second most common cause. Cloud services are accessible from anywhere — which is their strength and their vulnerability. A stolen password or a phishing attack hands an attacker the same access your employee has, from anywhere in the world, with no need to break through any further defences.</p>
+
+      <p><strong>Excessive permissions</strong> mean that when an account is compromised, the attacker can access far more than necessary. Staff given admin-level access when read-only access would suffice; contractors with access to entire drives when they only need one folder. The blast radius of any breach is directly proportional to the permissions involved.</p>
+
+      <div class="warning">
+        <strong>⚠ Shadow cloud risk</strong>
+        <p>Employees routinely sign up for cloud tools — file sharing, project management, communication apps — without IT knowledge or approval. Your business data ends up in services you cannot monitor, control, or secure. A clear cloud tool policy and an approved list of services significantly reduces this risk.</p>
+      </div>
+
+      <h2>How to secure your cloud environment</h2>
+
+      <h2>Start with access control</h2>
+      <p>Review who has access to what across every cloud service your business uses. Apply least privilege — give people the minimum access they need to do their job. Revoke access immediately when staff leave. Remove sharing links that are no longer needed.</p>
+
+      <div class="callout">
+        <p>In Google Workspace and Microsoft 365, your admin console shows you every account, every permission level, and every active sharing link. A quarterly review of this takes less than an hour and closes more security gaps than almost any other action.</p>
+      </div>
+
+      <h2>Enable 2FA on every cloud account</h2>
+      <p>Compromised credentials are the most common route into cloud services. Two-factor authentication makes stolen passwords useless on their own. Enable it on every cloud service — and enforce it at admin level so staff cannot opt out.</p>
+
+      <h2>Audit your sharing settings</h2>
+      <p>Search for files and folders shared with "anyone with the link" across your cloud storage. Unless there is a specific reason for public access, restrict sharing to named individuals or internal team members only. One misconfigured folder containing sensitive data is all it takes for a serious breach.</p>
+
+      <h2>Back up your cloud data</h2>
+      <p>Cloud services are reliable — but they are not immune to accidental deletion, ransomware, or account compromise. Your cloud provider's recovery tools have limits. An independent backup of critical cloud data ensures you can recover from worst-case scenarios.</p>
+
+      <h2>Maintain an approved tools list</h2>
+      <p>Define which cloud services your team is permitted to use for work, and communicate that list clearly. When staff know which tools are approved, they are far less likely to reach for an unsanctioned alternative. Review the list regularly as new tools emerge.</p>
+
+      <hr>
+
+      <h2>Cloud security checklist</h2>
+      <ul class="checklist">
+        <li>2FA enabled on all cloud accounts — enforced at admin level</li>
+        <li>Access permissions reviewed quarterly — least privilege applied</li>
+        <li>File and folder sharing settings audited — no unnecessary public links</li>
+        <li>Access revoked immediately when staff leave</li>
+        <li>Independent backup of critical cloud data in place</li>
+        <li>Approved cloud tools list created and shared with staff</li>
+        <li>Admin accounts separated from day-to-day user accounts</li>
+        <li>Login activity monitored for unusual access patterns</li>
+        <li>Guest and external access reviewed and limited</li>
+      </ul>
+
+      <p>The cloud is one of the best things to happen to small businesses — it has made enterprise-grade tools available at a fraction of the cost, from anywhere in the world. But that accessibility cuts both ways. The businesses that use the cloud safely are the ones that understand where their responsibility begins — and take it seriously.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
