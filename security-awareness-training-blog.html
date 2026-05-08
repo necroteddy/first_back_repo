@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Awareness Training | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* MYTH VS REALITY */
+  .myths { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .myth-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+  .myth-cell { background: var(--surface); padding: 1rem 1.25rem; }
+  .myth-cell.head { background: var(--surface2); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); }
+  .myth-cell p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .myth-cell p strong { color: var(--ink); font-weight: 500; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .myth-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 8, 2026 &nbsp;·&nbsp; Security Training</div>
+    <h1>Security awareness training — why your team is your best defence</h1>
+    <p class="post-lead">Technology alone cannot protect your business. The most sophisticated security tools in the world cannot stop an employee who clicks the wrong link. Your people are both the greatest vulnerability and the greatest asset in your security posture.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Most cyberattacks do not break through technical defences. They walk through the front door — via a staff member who clicked a convincing link, replied to a fake email, or used a weak password on a work account. The technology was fine. The human made a mistake.</p>
+      <p>Security awareness training does not eliminate human error. Nothing does. But it dramatically reduces the frequency of those errors — and ensures that when something suspicious does happen, your team knows exactly what to do.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">95%</div>
+          <div class="stat-d">of successful cyberattacks involve human error as a contributing factor</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">70%</div>
+          <div class="stat-d">reduction in phishing click rates after regular security awareness training</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£1,400</div>
+          <div class="stat-d">average cost per employee of a security incident caused by human error</div>
+        </div>
+      </div>
+
+      <h2>What security awareness training actually is</h2>
+      <p>Security awareness training is not a one-day workshop or an annual tick-box exercise. Effective training is short, regular, and relevant — woven into the working week rather than bolted on once a year.</p>
+      <p>It covers the threats your team actually faces: how to spot a phishing email, what to do if something looks suspicious, why password hygiene matters, how to handle sensitive data, and who to call when something goes wrong. The goal is not to turn employees into security experts — it is to build the habits and instincts that stop most attacks before they cause damage.</p>
+
+      <div class="callout">
+        <p>The best security training does not feel like training. It feels like useful information delivered at the right moment — a brief video, a simulated phishing test, a quick team discussion after a real-world incident in the news.</p>
+      </div>
+
+      <h2>Common myths about security training</h2>
+
+      <div class="myths">
+        <div class="myth-row">
+          <div class="myth-cell head">The myth</div>
+          <div class="myth-cell head">The reality</div>
+        </div>
+        <div class="myth-row">
+          <div class="myth-cell"><p><strong>"One annual training session is enough"</strong></p></div>
+          <div class="myth-cell"><p>Threats change constantly. Knowledge fades without reinforcement. Monthly micro-training outperforms annual sessions significantly.</p></div>
+        </div>
+        <div class="myth-row">
+          <div class="myth-cell"><p><strong>"Our team are not technical enough"</strong></p></div>
+          <div class="myth-cell"><p>Security training does not require technical knowledge. It requires awareness — and awareness is something anyone can develop with the right approach.</p></div>
+        </div>
+        <div class="myth-row">
+          <div class="myth-cell"><p><strong>"We are too small to be targeted"</strong></p></div>
+          <div class="myth-cell"><p>Small businesses are targeted more frequently than large ones in automated attacks. Being small is not protection — trained staff is.</p></div>
+        </div>
+        <div class="myth-row">
+          <div class="myth-cell"><p><strong>"Training is expensive"</strong></p></div>
+          <div class="myth-cell"><p>Free and low-cost resources exist for businesses of every size. The cost of training is a fraction of the cost of a single incident it prevents.</p></div>
+        </div>
+      </div>
+
+      <h2>What good training covers</h2>
+
+      <ul>
+        <li><strong>Phishing recognition</strong> — spotting suspicious emails, links, and attachments before clicking</li>
+        <li><strong>Password hygiene</strong> — why unique passwords and a password manager matter</li>
+        <li><strong>Social engineering</strong> — recognising manipulation attempts by phone, email, or in person</li>
+        <li><strong>Data handling</strong> — what data can be shared, stored, and sent — and what cannot</li>
+        <li><strong>Reporting procedures</strong> — who to contact when something looks wrong, and why reporting matters</li>
+        <li><strong>Remote work safety</strong> — secure habits when working outside the office</li>
+        <li><strong>Device security</strong> — locking screens, avoiding public Wi-Fi, protecting work devices</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ The reporting culture problem</strong>
+        <p>Staff who click a suspicious link and feel embarrassed often say nothing — hoping nobody notices. That silence can turn a minor incident into a major breach. Creating a culture where reporting mistakes is encouraged, not punished, is one of the most important things a business can do. The faster an incident is reported, the faster it can be contained.</p>
+      </div>
+
+      <h2>Simulated phishing tests</h2>
+      <p>One of the most effective training tools is the simulated phishing test — a fake phishing email sent to your team to see who clicks. Staff who click are not punished, but are immediately shown educational content explaining what gave the email away.</p>
+      <p>Research consistently shows that simulated phishing tests, combined with immediate feedback, reduce click rates dramatically over time. Many security training platforms include this as a standard feature, and the results often surprise business owners — revealing which departments or roles are most vulnerable.</p>
+
+      <div class="callout">
+        <p>Run a simulated phishing test before and after a training programme. The improvement in click rates is one of the clearest measures of whether training is working.</p>
+      </div>
+
+      <h2>How to build a training programme for your business</h2>
+      <p>You do not need a large budget or a dedicated security team to run effective training. A consistent, lightweight approach beats an expensive occasional one.</p>
+
+      <ul>
+        <li><strong>Start with a baseline</strong> — a simulated phishing test or a short quiz shows you where the gaps are before you begin</li>
+        <li><strong>Keep sessions short</strong> — five to ten minutes monthly is more effective than an hour annually</li>
+        <li><strong>Make it relevant</strong> — use real examples from recent news and incidents in your industry</li>
+        <li><strong>Use a platform</strong> — tools like KnowBe4, Proofpoint, and Curricula offer small business plans with automated training and phishing simulations</li>
+        <li><strong>Lead from the top</strong> — when leadership participates visibly, training is taken more seriously across the team</li>
+        <li><strong>Reward good behaviour</strong> — recognise staff who report suspicious activity, not just those who pass tests</li>
+      </ul>
+
+      <hr>
+
+      <h2>Security training checklist</h2>
+      <ul class="checklist">
+        <li>Regular security awareness training scheduled — at least monthly</li>
+        <li>All new staff complete security onboarding training</li>
+        <li>Phishing simulation tests run regularly</li>
+        <li>Clear reporting procedure communicated to all staff</li>
+        <li>No-blame culture for reporting mistakes established</li>
+        <li>Training covers phishing, passwords, social engineering, and data handling</li>
+        <li>Leadership visibly participates in training</li>
+        <li>Training effectiveness measured — click rates, quiz scores, incident reports</li>
+      </ul>
+
+      <p>Your team is not your weakest link — an untrained team is. The same people who represent your greatest vulnerability today can become your most effective line of defence with the right knowledge, habits, and culture. Security awareness training is not a cost. It is an investment with one of the clearest returns in cybersecurity.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
