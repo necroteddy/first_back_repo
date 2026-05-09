@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incident Response Planning | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* PHASE STEPS */
+  .phases { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .phase { background: var(--surface); padding: 1.25rem 1.5rem; display: flex; gap: 1.25rem; align-items: flex-start; }
+  .phase-n { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.2; min-width: 28px; }
+  .phase-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .phase-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 9, 2026 &nbsp;·&nbsp; Incident Response</div>
+    <h1>Incident response planning — prepare before the attack happens</h1>
+    <p class="post-lead">Every business will face a cyber incident at some point. The difference between businesses that recover quickly and those that do not is rarely luck — it is preparation.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Most businesses spend the majority of their security budget on prevention — firewalls, antivirus, training. Prevention is important. But no defence is perfect. At some point, something will get through. A phishing email will be clicked. A credential will be stolen. A system will be compromised.</p>
+      <p>What happens next depends almost entirely on whether you have a plan. Businesses that have rehearsed their response contain incidents faster, lose less data, spend less on recovery, and suffer less reputational damage. Those that improvise under pressure rarely fare as well.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">54%</div>
+          <div class="stat-d">of businesses have no formal incident response plan in place</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">38%</div>
+          <div class="stat-d">lower breach costs for organisations with a tested incident response plan</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">2× faster</div>
+          <div class="stat-d">incident containment for businesses with a plan versus those without</div>
+        </div>
+      </div>
+
+      <h2>What is an incident response plan?</h2>
+      <p>An incident response plan is a documented, pre-agreed set of actions your business will take when a security incident occurs. It answers the questions your team will be asking under pressure: Who do we call? What do we shut down? Who needs to be notified? What do we say to customers?</p>
+      <p>A good plan does not need to be long or complex. A clear, concise document that your team has actually read and rehearsed is far more valuable than a comprehensive manual nobody has ever opened.</p>
+
+      <div class="callout">
+        <p>An incident response plan is like a fire drill. You do not wait until the building is burning to find out where the exits are. You practice in advance so that when it matters, everyone knows what to do without thinking.</p>
+      </div>
+
+      <h2>The six phases of incident response</h2>
+
+      <div class="phases">
+        <div class="phase">
+          <div class="phase-n">1</div>
+          <div class="phase-body">
+            <h4>Preparation</h4>
+            <p>Build the plan before an incident occurs. Define roles, document contacts, establish communication channels, and run tabletop exercises to rehearse your response.</p>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-n">2</div>
+          <div class="phase-body">
+            <h4>Detection and identification</h4>
+            <p>Recognise that an incident has occurred. This may come from monitoring tools, a staff report, a customer complaint, or an external notification. The faster you detect, the less damage occurs.</p>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-n">3</div>
+          <div class="phase-body">
+            <h4>Containment</h4>
+            <p>Stop the incident from spreading. Isolate affected systems, disable compromised accounts, and cut off the attacker's access — without destroying evidence.</p>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-n">4</div>
+          <div class="phase-body">
+            <h4>Eradication</h4>
+            <p>Remove the threat entirely. This may mean removing malware, patching the vulnerability that was exploited, or rebuilding compromised systems from clean backups.</p>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-n">5</div>
+          <div class="phase-body">
+            <h4>Recovery</h4>
+            <p>Restore systems and resume normal operations. Verify that the threat has been fully removed before bringing systems back online. Monitor closely for signs of re-infection.</p>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-n">6</div>
+          <div class="phase-body">
+            <h4>Post-incident review</h4>
+            <p>Once the dust has settled, review what happened, why, how it was handled, and what should change. Every incident is an opportunity to improve your defences and your plan.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>What your plan must include</h2>
+      <p>A practical incident response plan for a small business does not need to be a lengthy document. It needs to be clear, accessible, and actionable under pressure. At minimum it should cover:</p>
+
+      <ul>
+        <li><strong>Key contacts</strong> — your IT provider, cybersecurity specialist, legal advisor, insurance provider, and relevant regulators, with phone numbers available offline</li>
+        <li><strong>Defined roles</strong> — who is in charge of the technical response, who handles communications, who makes decisions about paying ransoms or notifying customers</li>
+        <li><strong>First steps for common scenarios</strong> — ransomware, data breach, account compromise, website defacement. What to do in the first hour of each</li>
+        <li><strong>Communication templates</strong> — pre-drafted messages to customers, staff, and regulators that can be adapted quickly under pressure</li>
+        <li><strong>Legal obligations</strong> — notification timeframes required by GDPR, CCPA, or other applicable regulations</li>
+        <li><strong>Evidence preservation guidance</strong> — what not to delete or reset before an investigation</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Keep a copy offline</strong>
+        <p>If your incident response plan is stored only in a cloud document or on your company network, it may be inaccessible during the incident itself — particularly during a ransomware attack. Keep a printed copy and a copy on an offline or separately stored device.</p>
+      </div>
+
+      <h2>Tabletop exercises — testing your plan before you need it</h2>
+      <p>A plan that has never been tested is an untested assumption. Tabletop exercises are low-cost, low-pressure rehearsals where your team works through a fictional incident scenario together — discussing what they would do at each stage, identifying gaps in the plan, and building the muscle memory of response.</p>
+      <p>A tabletop exercise does not require specialist facilitation or expensive tools. A business owner, a couple of senior staff, and an hour around a table with a realistic scenario is enough to surface significant improvements in your plan.</p>
+
+      <div class="callout">
+        <p>Run a tabletop exercise at least once a year — and after any significant change to your systems, team, or suppliers. Update the plan based on what you learn.</p>
+      </div>
+
+      <h2>Who to have on speed dial</h2>
+      <p>When an incident occurs, the time spent finding contact details is time the attacker is still inside your systems. Build your contact list in advance and make sure it is accessible to the right people offline.</p>
+
+      <ul>
+        <li><strong>IT support provider</strong> — your first technical call</li>
+        <li><strong>Cybersecurity incident response specialist</strong> — for serious incidents beyond your IT provider's scope</li>
+        <li><strong>Cyber insurance provider</strong> — many policies include 24/7 incident response support</li>
+        <li><strong>Legal advisor</strong> — for data breach notification obligations and liability guidance</li>
+        <li><strong>Relevant regulator</strong> — ICO in the UK, relevant data protection authority in your jurisdiction</li>
+        <li><strong>Your bank</strong> — if financial fraud is involved, time is critical</li>
+      </ul>
+
+      <hr>
+
+      <h2>Incident response planning checklist</h2>
+      <ul class="checklist">
+        <li>Incident response plan documented and accessible offline</li>
+        <li>Key contacts list built and kept up to date</li>
+        <li>Roles and responsibilities defined for each team member</li>
+        <li>First-response steps documented for common incident types</li>
+        <li>Customer and regulator communication templates prepared</li>
+        <li>Legal notification obligations understood and documented</li>
+        <li>Tabletop exercise completed and scheduled annually</li>
+        <li>Plan reviewed and updated after every significant change</li>
+        <li>Cyber insurance policy reviewed for incident response coverage</li>
+      </ul>
+
+      <p>You cannot prevent every cyberattack. But you can control how your business responds to one. A clear, tested incident response plan is one of the highest-value investments a small business can make — not because incidents are inevitable, but because the difference between a managed incident and a catastrophic one is almost always preparation.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
