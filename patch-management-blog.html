@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patch Management | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* PRIORITY TABLE */
+  .priority-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .priority-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .priority-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; }
+  .priority-table tr:last-child td { border-bottom: none; }
+  .tag-critical { display: inline-block; background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-high { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-medium { display: inline-block; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-low { display: inline-block; background: var(--surface2); color: var(--faint); border: 1px solid var(--border); border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .priority-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 11, 2026 &nbsp;·&nbsp; Patch Management</div>
+    <h1>Patch management — why keeping software updated is your best defence</h1>
+    <p class="post-lead">The single most effective thing most businesses can do to improve their cybersecurity costs nothing and takes minutes. Yet most businesses do not do it consistently. Keeping your software updated is not optional — it is foundational.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 5 min read</div>
+
+    <div class="body">
+
+      <p>Every piece of software your business uses — operating systems, browsers, accounting tools, email clients, plugins, firmware — contains code written by humans. Humans make mistakes. Those mistakes become vulnerabilities. Vulnerabilities get discovered — sometimes by security researchers, sometimes by criminals.</p>
+      <p>When a vulnerability is discovered and a fix is released, a race begins. Software vendors release a patch. Attackers reverse-engineer it to understand what was broken — and immediately begin targeting every business that has not yet applied it. The window between patch release and active exploitation is shrinking every year.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">60%</div>
+          <div class="stat-d">of breaches exploit vulnerabilities where a patch was already available</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">15 days</div>
+          <div class="stat-d">average time for attackers to weaponise a newly disclosed vulnerability</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">48%</div>
+          <div class="stat-d">of businesses take more than a month to apply critical security patches</div>
+        </div>
+      </div>
+
+      <h2>What is a patch?</h2>
+      <p>A patch is an update released by a software vendor to fix a known problem — most commonly a security vulnerability. When you see a notification that Windows needs to restart to apply updates, or that your browser has a new version available, those updates typically include security patches for vulnerabilities that have been discovered since the last release.</p>
+      <p>Ignoring or delaying those updates leaves your systems exposed to attacks that the vendor has already provided a fix for. It is the digital equivalent of knowing your front door lock is broken and choosing not to replace it.</p>
+
+      <div class="callout">
+        <p>The 2017 WannaCry ransomware attack — which caused billions of pounds in damage worldwide — exploited a vulnerability Microsoft had patched two months earlier. Every business hit was running unpatched software.</p>
+      </div>
+
+      <h2>What needs patching</h2>
+      <p>Most business owners think of updates as something that happens to their laptop. In reality, almost every piece of technology your business uses needs regular patching.</p>
+
+      <ul>
+        <li><strong>Operating systems</strong> — Windows, macOS, Linux. The most critical layer to keep updated.</li>
+        <li><strong>Web browsers</strong> — Chrome, Edge, Firefox, Safari. Frequently targeted and frequently patched.</li>
+        <li><strong>Business applications</strong> — Microsoft 365, accounting software, CRM tools, email clients.</li>
+        <li><strong>Plugins and extensions</strong> — especially WordPress plugins and browser extensions.</li>
+        <li><strong>Network devices</strong> — routers, firewalls, switches. Often forgotten but frequently exploited.</li>
+        <li><strong>Mobile devices</strong> — iOS and Android updates include critical security fixes.</li>
+        <li><strong>Servers and infrastructure</strong> — any server software your business runs or hosts.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ The forgotten devices</strong>
+        <p>Network routers and printers are among the most frequently compromised devices in small business networks — and among the least frequently updated. Check your router manufacturer's website for firmware updates, and check your printer's settings menu. Many have automatic update options that are simply not turned on by default.</p>
+      </div>
+
+      <h2>How to prioritise patches</h2>
+      <p>Not all patches are equally urgent. Security patches should be prioritised over feature updates, and critical vulnerabilities must be addressed faster than minor ones. Most vendors assign severity ratings to their patches — use these to guide your response time.</p>
+
+      <table class="priority-table">
+        <thead>
+          <tr>
+            <th>Severity</th>
+            <th>Description</th>
+            <th>Target patch time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-critical">Critical</span></td>
+            <td>Actively exploited, remote code execution possible</td>
+            <td>Within 24–48 hours</td>
+          </tr>
+          <tr>
+            <td><span class="tag-high">High</span></td>
+            <td>Significant risk, likely to be exploited soon</td>
+            <td>Within 7 days</td>
+          </tr>
+          <tr>
+            <td><span class="tag-medium">Medium</span></td>
+            <td>Moderate risk, requires specific conditions to exploit</td>
+            <td>Within 30 days</td>
+          </tr>
+          <tr>
+            <td><span class="tag-low">Low</span></td>
+            <td>Minimal risk, unlikely to be exploited in isolation</td>
+            <td>Next scheduled maintenance</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Automatic updates — the simplest solution</h2>
+      <p>For most software, the simplest and most effective patching approach is to enable automatic updates. When updates are applied automatically in the background, your systems stay protected without requiring anyone to remember to check for them.</p>
+      <p>Enable automatic updates on every device and application your business uses. For operating systems, enable automatic security updates specifically — these can usually be set separately from feature updates, which some businesses prefer to test before deploying.</p>
+
+      <div class="callout">
+        <p>Automatic updates occasionally cause compatibility issues with specific software. The solution is not to disable automatic updates — it is to test updates in a non-critical environment first and maintain backups so you can roll back if needed.</p>
+      </div>
+
+      <h2>Building a patch management process</h2>
+      <p>For businesses with multiple devices and systems, an ad hoc approach to patching is not enough. A simple, consistent process ensures nothing falls through the gaps.</p>
+
+      <ul>
+        <li><strong>Maintain an inventory</strong> — know every device and piece of software your business uses. You cannot patch what you do not know about.</li>
+        <li><strong>Subscribe to vendor alerts</strong> — sign up for security notifications from your key software vendors so you hear about critical patches the day they are released.</li>
+        <li><strong>Set a patching schedule</strong> — weekly for critical systems, monthly for everything else. Consistency matters more than perfection.</li>
+        <li><strong>Test before deploying widely</strong> — for business-critical systems, test patches on one device before rolling out to all of them.</li>
+        <li><strong>Document what has been patched</strong> — a simple spreadsheet log of what was updated, when, and by whom is sufficient for most small businesses.</li>
+        <li><strong>Use patch management tools</strong> — for businesses with many devices, tools like NinjaRMM, Automox, or Microsoft Intune automate the process significantly.</li>
+      </ul>
+
+      <hr>
+
+      <h2>Patch management checklist</h2>
+      <ul class="checklist">
+        <li>Automatic updates enabled on all operating systems</li>
+        <li>Automatic updates enabled on all browsers and business applications</li>
+        <li>Router and network device firmware checked and updated</li>
+        <li>Mobile device OS updates applied promptly</li>
+        <li>WordPress or website CMS plugins updated regularly</li>
+        <li>Software inventory maintained — know everything that needs patching</li>
+        <li>Critical patches applied within 48 hours of release</li>
+        <li>Patch schedule documented and followed consistently</li>
+        <li>End-of-life software identified and replaced or isolated</li>
+      </ul>
+
+      <p>Patch management is not glamorous. It does not require specialist skills or significant investment. But it closes more doors to attackers than almost any other security practice. Most successful attacks exploit known vulnerabilities with available fixes. Keep your software updated, and you eliminate the majority of your risk at virtually no cost.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
