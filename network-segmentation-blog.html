@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Segmentation | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* SEGMENT DIAGRAM */
+  .segments { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .segment { background: var(--surface); padding: 1rem 1.25rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .segment-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .segment h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .segment p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 12, 2026 &nbsp;·&nbsp; Network Security</div>
+    <h1>Network segmentation — containing the damage when something goes wrong</h1>
+    <p class="post-lead">Prevention is essential — but it is not enough on its own. Network segmentation is how smart businesses limit the damage of a breach that gets through, stopping attackers from reaching everything at once.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Most small business networks are flat. Every device — laptops, printers, smart TVs, CCTV cameras, payment terminals, staff phones — sits on the same network and can communicate freely with everything else. It is simple and convenient. It is also exactly what attackers rely on.</p>
+      <p>When ransomware or malware gets onto a flat network, it spreads. Fast. From one infected laptop to every other device within minutes. Network segmentation is the practice of dividing your network into separate zones — so that a breach in one area cannot automatically reach everything else.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">faster lateral movement on flat networks compared to segmented ones</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">67%</div>
+          <div class="stat-d">of ransomware attacks spread beyond the initial infection point within one hour</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">40%</div>
+          <div class="stat-d">lower average breach cost for organisations with network segmentation in place</div>
+        </div>
+      </div>
+
+      <h2>What is network segmentation?</h2>
+      <p>Network segmentation means dividing your network into separate zones — each with its own access controls — so that devices and systems can only communicate with what they genuinely need to. A device in one segment cannot freely talk to devices in another without explicit permission.</p>
+      <p>Think of it like a building with locked doors between departments. A visitor let into the reception area cannot walk freely into the server room, the finance office, or the warehouse. Each area has its own access controls. A breach of one area does not automatically compromise the others.</p>
+
+      <div class="callout">
+        <p>Network segmentation does not stop attackers getting in. It stops them getting everywhere once they are in — and that containment can be the difference between a minor incident and a catastrophic one.</p>
+      </div>
+
+      <h2>What should be in separate segments</h2>
+      <p>You do not need a complex architecture to benefit from segmentation. For most small businesses, separating a handful of key zones provides significant protection.</p>
+
+      <div class="segments">
+        <div class="segment">
+          <div class="segment-icon">💼</div>
+          <div>
+            <h4>Staff work devices</h4>
+            <p>Laptops and desktops used for day-to-day business — email, documents, applications. The core business network.</p>
+          </div>
+        </div>
+        <div class="segment">
+          <div class="segment-icon">🖨️</div>
+          <div>
+            <h4>Printers and IoT devices</h4>
+            <p>Printers, scanners, smart TVs, CCTV, and building systems. These often have weak security and should be isolated from core business systems.</p>
+          </div>
+        </div>
+        <div class="segment">
+          <div class="segment-icon">💳</div>
+          <div>
+            <h4>Payment systems</h4>
+            <p>Card payment terminals and point-of-sale systems. PCI DSS compliance often requires these to be on a separate network segment.</p>
+          </div>
+        </div>
+        <div class="segment">
+          <div class="segment-icon">🗄️</div>
+          <div>
+            <h4>Servers and critical systems</h4>
+            <p>File servers, databases, and business-critical infrastructure. Should have the most restricted access of any segment.</p>
+          </div>
+        </div>
+        <div class="segment">
+          <div class="segment-icon">📶</div>
+          <div>
+            <h4>Guest Wi-Fi</h4>
+            <p>Visitors, customers, and contractors. Should be completely isolated from all business systems — internet access only.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>The guest Wi-Fi problem</h2>
+      <p>One of the most common and easily exploited flat network vulnerabilities is a guest Wi-Fi network that shares the same subnet as internal business systems. A visitor connected to your guest Wi-Fi — or a contractor, or a customer — can potentially reach your internal file servers, printers, and devices.</p>
+      <p>A proper guest network gives visitors internet access only. It is completely isolated from everything else on your network. Most modern business routers support this as a standard feature — it simply needs to be configured correctly.</p>
+
+      <div class="warning">
+        <strong>⚠ IoT devices are a serious risk</strong>
+        <p>Smart TVs, CCTV cameras, environmental sensors, and other IoT devices are notorious for poor security — infrequent updates, default credentials, and limited hardening. Placing them on the same network as your business systems gives an attacker who compromises a CCTV camera a foothold on your entire network. Always isolate IoT devices on their own segment.</p>
+      </div>
+
+      <h2>VLANs — the practical tool</h2>
+      <p>The most common technical approach to network segmentation for small businesses is the VLAN — Virtual Local Area Network. A VLAN allows you to divide a single physical network into multiple logical segments, each behaving as if it were a separate network.</p>
+      <p>Most managed switches and business-grade routers support VLANs. Configuration requires some technical knowledge — if your business does not have in-house IT, this is a task for your IT provider and typically takes a few hours to set up correctly.</p>
+
+      <div class="callout">
+        <p>A simple starting point is three VLANs: one for staff devices, one for IoT and printers, and one for guests. This alone eliminates the most common lateral movement paths in small business networks.</p>
+      </div>
+
+      <h2>Firewall rules between segments</h2>
+      <p>Segmentation alone is not enough — you also need rules controlling what traffic is allowed to pass between segments. A firewall sitting between network segments enforces those rules: allowing necessary communication, blocking everything else by default.</p>
+      <p>For example: staff devices may need to reach the file server. The file server should not need to initiate connections to staff devices. IoT devices should reach the internet but nothing internal. Guest devices should reach the internet only. These rules are the substance of segmentation — the VLANs are just the plumbing.</p>
+
+      <hr>
+
+      <h2>Network segmentation checklist</h2>
+      <ul class="checklist">
+        <li>Guest Wi-Fi isolated from all internal business systems</li>
+        <li>IoT and printer devices on a separate network segment</li>
+        <li>Payment terminals on a dedicated, isolated segment</li>
+        <li>Servers and critical systems in the most restricted segment</li>
+        <li>Firewall rules between segments — deny by default, allow by exception</li>
+        <li>Staff devices separated from guest and IoT networks</li>
+        <li>Network diagram documented showing all segments and rules</li>
+        <li>Segmentation reviewed when new devices or systems are added</li>
+      </ul>
+
+      <p>Network segmentation is one of the most effective ways to limit the damage of a breach that gets through your other defences. It does not prevent attacks — but it stops them spreading. In cybersecurity, containment is often as important as prevention. A breach contained to one device is an incident. A breach that reaches everything is a disaster.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
