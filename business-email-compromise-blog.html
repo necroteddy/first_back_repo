@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Email Compromise | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* SCENARIO CARDS */
+  .scenarios { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .scenario { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .scenario-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.5rem; }
+  .scenario h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .scenario p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 13, 2026 &nbsp;·&nbsp; Email Fraud</div>
+    <h1>Business email compromise — the costly fraud hiding in your inbox</h1>
+    <p class="post-lead">Business email compromise is the most financially damaging form of cybercrime. It does not use malware, exploit vulnerabilities, or trigger security alerts. It simply sends an email — and waits for someone to act on it.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Business email compromise — often called BEC — is a type of fraud where criminals impersonate a trusted person or organisation to trick employees into transferring money or sharing sensitive information. No technical expertise required. No malware deployed. Just a convincing email arriving at the right moment.</p>
+      <p>It is the single costliest form of cybercrime globally — accounting for more financial loss than ransomware, data theft, and all other types of attack combined. And it works on businesses of every size.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">$2.9B</div>
+          <div class="stat-d">lost to business email compromise in the US alone in 2023 — the FBI's most reported cybercrime loss</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£137K</div>
+          <div class="stat-d">average loss per BEC incident for UK businesses</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">72hrs</div>
+          <div class="stat-d">average window to recover funds after a BEC transfer — after that, recovery is unlikely</div>
+        </div>
+      </div>
+
+      <h2>How business email compromise works</h2>
+      <p>BEC attacks succeed because they exploit trust and urgency — two things that are deeply embedded in how businesses operate. An email appears to come from the CEO, a supplier, or a colleague. It requests something time-sensitive. The recipient acts quickly, without questioning the request, because it seems entirely legitimate.</p>
+      <p>Attackers invest significant time in researching their targets. They study your website, your LinkedIn, your social media, and any publicly available information about your business relationships, your senior staff, and your suppliers. The email they send reflects that research — it references real names, real projects, and real relationships.</p>
+
+      <div class="callout">
+        <p>Unlike phishing, BEC attacks are often entirely targeted. A single, carefully crafted email sent to one person at one business. There is no malicious link to click, no attachment to scan. Just a request that looks completely normal.</p>
+      </div>
+
+      <h2>The most common BEC scenarios</h2>
+
+      <div class="scenarios">
+        <div class="scenario">
+          <div class="scenario-label">Scenario 01</div>
+          <h4>CEO fraud</h4>
+          <p>An email appearing to come from the CEO or senior leader asks a finance team member to make an urgent payment — often for a confidential acquisition, a supplier payment, or a tax matter. The request is marked urgent and asks for discretion.</p>
+        </div>
+        <div class="scenario">
+          <div class="scenario-label">Scenario 02</div>
+          <h4>Supplier impersonation</h4>
+          <p>A familiar supplier emails to say their bank details have changed. Future payments should go to a new account. The email looks identical to previous correspondence. The next payment goes directly to the criminal.</p>
+        </div>
+        <div class="scenario">
+          <div class="scenario-label">Scenario 03</div>
+          <h4>Invoice fraud</h4>
+          <p>A criminal intercepts or monitors an email chain involving a real invoice, then steps in at the right moment with a modified version — same supplier name, different bank account. The business pays the invoice and has no idea until the real supplier chases payment.</p>
+        </div>
+        <div class="scenario">
+          <div class="scenario-label">Scenario 04</div>
+          <h4>Payroll diversion</h4>
+          <p>An email appearing to come from an employee asks HR or payroll to update their bank account details before the next pay run. The salary goes to the criminal, not the employee.</p>
+        </div>
+      </div>
+
+      <div class="warning">
+        <strong>⚠ AI is making BEC harder to spot</strong>
+        <p>AI tools now allow criminals to generate highly convincing emails in any tone, style, or language — with no spelling errors, no awkward phrasing, and no obvious tells. AI can also clone voices for phone-based verification calls. The old advice of "look for bad grammar" is no longer reliable. Verify through a separate channel, always.</p>
+      </div>
+
+      <h2>Why BEC is so effective</h2>
+      <p>Traditional email security tools look for malicious links, attachments, and known spam signatures. A BEC email often contains none of these. It is plain text. It may come from a legitimate email address that has been compromised. It passes every technical filter — because it looks exactly like a real business email.</p>
+      <p>The vulnerability is human, not technical. And the solution — unlike most cybersecurity challenges — is primarily about process, not technology.</p>
+
+      <h2>How to protect your business</h2>
+
+      <p><strong>Verify payment requests out of band.</strong> Any request to transfer money or change bank details must be verified by phone — using a number you already have on file, not a number provided in the email. A two-minute call can prevent a six-figure loss.</p>
+
+      <p><strong>Establish a payments verification policy.</strong> No payment above a set threshold should be processed without a secondary approval from a named individual. No bank account changes should be made without a verification call to the existing number on file.</p>
+
+      <p><strong>Train your finance and HR teams specifically.</strong> The people most targeted by BEC are those who process payments, manage payroll, and handle supplier relationships. They need specific, practical training on BEC scenarios — not just general security awareness.</p>
+
+      <p><strong>Enable email authentication.</strong> DMARC, DKIM, and SPF are email security protocols that make it harder for criminals to spoof your domain — sending emails that appear to come from your company's address. Ask your IT provider to check these are correctly configured.</p>
+
+      <p><strong>Be cautious about what you share publicly.</strong> The research attackers do before a BEC attack relies on publicly available information — your website, LinkedIn profiles, press releases, and social media. Review what information about your senior staff, suppliers, and business relationships is publicly visible.</p>
+
+      <div class="callout">
+        <p>If a transfer has already been made, contact your bank immediately. Time is critical — banks can sometimes recover funds if notified within hours. Also report to Action Fraud (UK) or the FBI's IC3 (US) — both have mechanisms to assist with fund recovery.</p>
+      </div>
+
+      <hr>
+
+      <h2>Business email compromise checklist</h2>
+      <ul class="checklist">
+        <li>Payment verification policy in place — all transfers above a threshold require secondary approval</li>
+        <li>Bank account change requests always verified by phone to a known number</li>
+        <li>Finance and HR teams trained specifically on BEC scenarios</li>
+        <li>DMARC, DKIM, and SPF configured on your email domain</li>
+        <li>Staff aware that urgency and secrecy in payment requests are red flags</li>
+        <li>Process for reporting suspicious emails without fear of blame</li>
+        <li>Bank contact details kept accessible for immediate response if fraud occurs</li>
+        <li>Public information about senior staff and suppliers reviewed regularly</li>
+      </ul>
+
+      <p>Business email compromise succeeds not because businesses are careless — but because it is designed to look completely normal. The defence is not better technology. It is a culture of verification: a simple, non-negotiable habit of confirming unusual requests through a second channel before acting on them. One phone call is often all it takes.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
