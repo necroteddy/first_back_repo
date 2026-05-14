@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Backup Strategies | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* 3-2-1 RULE VISUAL */
+  .rule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .rule-card { background: var(--surface); padding: 1.5rem 1.25rem; text-align: center; }
+  .rule-num { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; }
+  .rule-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
+  .rule-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* BACKUP TYPES */
+  .backup-types { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .backup-type { background: var(--surface); padding: 1rem 1.25rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .backup-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .backup-type h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .backup-type p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats, .rule-grid { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 14, 2026 &nbsp;·&nbsp; Data Backup</div>
+    <h1>Data backup strategies — the 3-2-1 rule and why it matters</h1>
+    <p class="post-lead">Backups are the last line of defence against ransomware, hardware failure, accidental deletion, and disaster. Most businesses think they have a backup strategy. Many discover they do not — at exactly the wrong moment.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Every business loses data at some point. A hard drive fails. An employee accidentally deletes a critical file. Ransomware encrypts everything on the network. A fire destroys the office server. The question is not whether you will need a backup — it is whether you will have one when that moment comes.</p>
+      <p>A backup strategy is not complicated. But it does need to be deliberate, tested, and maintained. Many businesses discover their backup process is broken, incomplete, or out of date only when they are already in crisis.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">93%</div>
+          <div class="stat-d">of businesses without a tested backup that suffer a major data loss close within one year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">30%</div>
+          <div class="stat-d">of businesses have never tested their backup restore process</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">140K</div>
+          <div class="stat-d">hard drives fail every week in the UK alone — hardware failure is the most common cause of data loss</div>
+        </div>
+      </div>
+
+      <h2>The 3-2-1 backup rule</h2>
+      <p>The 3-2-1 rule is the gold standard of backup strategy. It is simple, proven, and applicable to businesses of every size. If your backup approach satisfies these three principles, you are protected against the vast majority of data loss scenarios.</p>
+
+      <div class="rule-grid">
+        <div class="rule-card">
+          <div class="rule-num">3</div>
+          <div class="rule-title">Copies of your data</div>
+          <div class="rule-desc">The original plus two backups. If one copy is lost or corrupted, you always have another.</div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num">2</div>
+          <div class="rule-title">Different storage types</div>
+          <div class="rule-desc">Store backups on at least two different types of media — for example, an external drive and cloud storage.</div>
+        </div>
+        <div class="rule-card">
+          <div class="rule-num">1</div>
+          <div class="rule-title">Copy offsite</div>
+          <div class="rule-desc">At least one copy must be in a different physical location — protecting against fire, flood, theft, and ransomware.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p>The "offsite" requirement is the most important and most commonly skipped. A backup stored in the same building as the original is destroyed in the same fire. A backup on the same network is encrypted by the same ransomware. Distance and separation are what make a backup a genuine safety net.</p>
+      </div>
+
+      <h2>What needs to be backed up</h2>
+      <p>Before you can build a backup strategy, you need to know what data your business cannot afford to lose. For most businesses this includes:</p>
+
+      <ul>
+        <li><strong>Business documents and files</strong> — contracts, proposals, financial records, correspondence</li>
+        <li><strong>Customer and supplier data</strong> — contact databases, order histories, relationship records</li>
+        <li><strong>Accounting and financial data</strong> — invoices, payroll records, bank reconciliations</li>
+        <li><strong>Email archives</strong> — often overlooked, frequently critical</li>
+        <li><strong>System configurations</strong> — server settings, software configurations, network settings</li>
+        <li><strong>Website and database content</strong> — your website's files and database</li>
+      </ul>
+
+      <h2>Types of backup storage</h2>
+
+      <div class="backup-types">
+        <div class="backup-type">
+          <div class="backup-icon">☁️</div>
+          <div>
+            <h4>Cloud backup</h4>
+            <p>Automated, offsite, and accessible from anywhere. Services like Backblaze, Acronis, and Veeam offer affordable business cloud backup. The natural choice for the offsite copy in a 3-2-1 strategy.</p>
+          </div>
+        </div>
+        <div class="backup-type">
+          <div class="backup-icon">💾</div>
+          <div>
+            <h4>External hard drives</h4>
+            <p>Low cost and simple. Good for a local backup copy — but must be rotated and stored offsite periodically. Vulnerable to physical damage, theft, and the same ransomware that hits your main systems if connected.</p>
+          </div>
+        </div>
+        <div class="backup-type">
+          <div class="backup-icon">🖥️</div>
+          <div>
+            <h4>Network-attached storage (NAS)</h4>
+            <p>A dedicated device on your network that stores backups automatically. Faster than cloud for large restores. Must be isolated from main network to prevent ransomware reaching backup copies.</p>
+          </div>
+        </div>
+        <div class="backup-type">
+          <div class="backup-icon">📼</div>
+          <div>
+            <h4>Tape backup</h4>
+            <p>Old technology that has made a comeback for exactly one reason: ransomware cannot encrypt an offline tape. Used by larger businesses with high-value data needing air-gapped protection.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning">
+        <strong>⚠ Cloud sync is not a backup</strong>
+        <p>Google Drive, OneDrive, and Dropbox sync your files — they do not back them up. If you delete a file or ransomware encrypts it, the sync service faithfully replicates the deletion or encryption to all your devices. These services have limited recovery windows. A dedicated backup solution is essential alongside any sync service.</p>
+      </div>
+
+      <h2>How often should you back up?</h2>
+      <p>The answer depends on how much data your business can afford to lose — measured in time. This is called your Recovery Point Objective (RPO).</p>
+      <p>For most small businesses: critical data should be backed up daily at minimum, with cloud backup services offering continuous or near-continuous backup for important files. Less critical data may be backed up weekly. The key question to ask is: if we lost everything since our last backup, how damaging would that be?</p>
+
+      <h2>The most important step — testing your restore</h2>
+      <p>A backup you have never tested is not a backup — it is a hope. Backup files can become corrupted. Backup processes can silently fail. Restore procedures can be slower or more complex than expected.</p>
+      <p>Test your backup restore process at least quarterly. Choose a sample of critical files, restore them to a test location, and verify they are complete and uncorrupted. Time the process — knowing how long a full restore takes is essential for planning your recovery from a serious incident.</p>
+
+      <div class="callout">
+        <p>Many businesses discover during a crisis that their backups are months out of date, partially corrupted, or missing key data. Discover this during a planned test, not during an incident.</p>
+      </div>
+
+      <hr>
+
+      <h2>Backup strategy checklist</h2>
+      <ul class="checklist">
+        <li>3-2-1 rule applied — 3 copies, 2 storage types, 1 offsite</li>
+        <li>All critical business data identified and included in backup scope</li>
+        <li>Automated daily backups configured — not reliant on manual processes</li>
+        <li>Cloud backup in place for at least one offsite copy</li>
+        <li>Backup storage isolated from main network — ransomware cannot reach it</li>
+        <li>Cloud sync (Drive, OneDrive, Dropbox) not relied upon as sole backup</li>
+        <li>Backup restore tested quarterly — files verified as complete and recoverable</li>
+        <li>Recovery time estimated — how long does a full restore take?</li>
+        <li>Backup logs monitored — failures flagged and investigated promptly</li>
+      </ul>
+
+      <p>A backup strategy is not exciting. It does not stop attacks, impress customers, or show up in any metric until the day it saves your business. That day will come — for almost every business, sooner or later. When it does, the businesses that recover are those that treated backups as a priority, not an afterthought.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
