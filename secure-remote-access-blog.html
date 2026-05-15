@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Remote Access | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* COMPARISON TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .compare-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .compare-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { font-weight: 500; }
+  .tag-good { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-ok { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-risk { display: inline-block; background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .compare-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 15, 2026 &nbsp;·&nbsp; Remote Access</div>
+    <h1>Secure remote access — VPNs, zero trust, and keeping your business safe from anywhere</h1>
+    <p class="post-lead">Remote access to your business systems is now a daily necessity. But every connection from outside your office is also a potential entry point for attackers. How you manage remote access matters more than ever.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>The shift to remote and hybrid work has fundamentally changed the attack surface of most businesses. Staff no longer sit inside a protected office network. They connect from home, from hotels, from client sites — over connections you do not control, on devices you may not manage, through internet links that may be insecure.</p>
+      <p>Remote access is not going away. But the way businesses implement it varies enormously — from secure and well-managed to dangerously exposed. Understanding your options, and the risks of each, is the starting point for getting it right.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">55%</div>
+          <div class="stat-d">of businesses experienced a remote access security incident in the past year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">82%</div>
+          <div class="stat-d">of ransomware attacks use compromised remote access credentials as the entry point</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">higher breach cost when remote access is the attack vector versus other methods</div>
+        </div>
+      </div>
+
+      <h2>The risks of unmanaged remote access</h2>
+      <p>The most dangerous remote access setup is one that was never designed — it just grew. Remote Desktop Protocol (RDP) exposed directly to the internet. VPN credentials shared between staff. Personal devices connecting to business systems with no security checks. Each of these is a documented, actively exploited vulnerability.</p>
+      <p>Attackers scan the internet continuously for exposed remote access services. An RDP port left open on a server is found and attacked within hours. A VPN with a simple password and no 2FA is a straightforward target for credential stuffing.</p>
+
+      <div class="warning">
+        <strong>⚠ RDP on the internet is a major risk</strong>
+        <p>Remote Desktop Protocol exposed directly to the internet — without a VPN in front of it — is one of the most commonly exploited entry points in ransomware attacks. If your business uses RDP for remote access, it must sit behind a VPN or a secure gateway, never directly accessible from the internet.</p>
+      </div>
+
+      <h2>VPNs — the most common solution</h2>
+      <p>A Virtual Private Network (VPN) creates an encrypted tunnel between a remote device and your business network. Anyone connecting through the VPN appears to be on your internal network — and the connection is protected from interception in transit.</p>
+      <p>A business VPN is fundamentally different from a consumer VPN. Consumer VPNs (NordVPN, ExpressVPN) are designed for privacy on the internet. Business VPNs (Cisco AnyConnect, Palo Alto GlobalProtect, WireGuard, OpenVPN) are designed to give employees secure access to your business systems.</p>
+
+      <div class="callout">
+        <p>A VPN is only as secure as the credentials used to access it. Always require multi-factor authentication on your business VPN — a stolen username and password alone should never be enough to connect.</p>
+      </div>
+
+      <h2>Beyond VPN — modern remote access options</h2>
+      <p>Traditional VPNs connect a device to your entire network — which means a compromised device connected via VPN has access to everything the user can reach. Modern approaches are more targeted.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Solution</th>
+            <th>How it works</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Traditional VPN</td>
+            <td>Encrypted tunnel to your full internal network</td>
+            <td><span class="tag-ok">Small teams</span> needing full network access</td>
+          </tr>
+          <tr>
+            <td>Split-tunnel VPN</td>
+            <td>Only business traffic goes through VPN; personal traffic goes direct</td>
+            <td><span class="tag-ok">Reduces bandwidth</span> while protecting business systems</td>
+          </tr>
+          <tr>
+            <td>Zero Trust Network Access (ZTNA)</td>
+            <td>Grants access to specific applications only — not the full network</td>
+            <td><span class="tag-good">Best practice</span> for modern remote teams</td>
+          </tr>
+          <tr>
+            <td>Cloud app access (SSO)</td>
+            <td>Staff access cloud tools directly via single sign-on with 2FA</td>
+            <td><span class="tag-good">Cloud-first</span> businesses with minimal on-premise infrastructure</td>
+          </tr>
+          <tr>
+            <td>RDP direct to internet</td>
+            <td>Remote desktop exposed without a secure gateway</td>
+            <td><span class="tag-risk">Avoid</span> — actively exploited by ransomware attackers</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Device trust — who is connecting, and from what?</h2>
+      <p>Remote access security is not just about the connection — it is also about the device making the connection. A well-secured VPN connected from a compromised personal laptop provides limited protection. The malware on the laptop travels through the tunnel with the user.</p>
+      <p>For higher-security environments, consider requiring that only managed, known devices can connect remotely. Tools like Microsoft Intune and Jamf allow businesses to enforce device compliance — ensuring connecting devices have up-to-date software, encryption enabled, and security software running before access is granted.</p>
+
+      <h2>Securing your remote access — practical steps</h2>
+
+      <ul>
+        <li><strong>Enable MFA on all remote access</strong> — VPN, remote desktop, and any cloud tools staff access from outside the office</li>
+        <li><strong>Never expose RDP directly to the internet</strong> — always place it behind a VPN or secure gateway</li>
+        <li><strong>Use strong, unique credentials for remote access</strong> — managed through a password manager, not shared between staff</li>
+        <li><strong>Monitor remote access logs</strong> — unusual login times, locations, or failed attempts are early warning signs</li>
+        <li><strong>Restrict access to what is needed</strong> — not every remote user needs access to every system</li>
+        <li><strong>Disable remote access for staff who no longer need it</strong> — including staff who have left</li>
+        <li><strong>Keep VPN and gateway software updated</strong> — VPN vulnerabilities are frequently exploited and frequently patched</li>
+      </ul>
+
+      <div class="callout">
+        <p>Review your remote access setup at least annually — and any time your team structure changes significantly. Access granted during a rapid shift to remote working may be far broader than necessary for your current needs.</p>
+      </div>
+
+      <hr>
+
+      <h2>Secure remote access checklist</h2>
+      <ul class="checklist">
+        <li>MFA required on all remote access — VPN, RDP, and cloud tools</li>
+        <li>RDP not directly exposed to the internet</li>
+        <li>Business VPN deployed and configured for all remote staff</li>
+        <li>Unique credentials used for remote access — no shared accounts</li>
+        <li>Remote access logs monitored for unusual activity</li>
+        <li>Access limited to systems each user genuinely needs</li>
+        <li>Departed staff remote access revoked on last day</li>
+        <li>VPN and gateway software kept up to date</li>
+        <li>Device compliance considered for sensitive remote access scenarios</li>
+      </ul>
+
+      <p>Remote access done well is invisible — staff connect, work, and disconnect without friction or incident. Remote access done poorly is one of the most reliable ways into a business for an attacker. The gap between the two is not large — a few deliberate choices about how you implement and manage it make all the difference.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
