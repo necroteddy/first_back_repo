@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Small Retailers | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* THREAT CARDS */
+  .threats { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .threat { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .threat-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .threat h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .threat p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 16, 2026 &nbsp;·&nbsp; Retail Security</div>
+    <h1>Cybersecurity for small retailers — protecting payments and customer data</h1>
+    <p class="post-lead">Small retailers handle card payments, store customer details, and run websites that process orders. Each of these creates specific security obligations — and specific risks that are different from other types of business.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Retail businesses sit at the intersection of several high-value targets for criminals: card payment data, customer personal information, and often an e-commerce website with a direct payment gateway. A small independent retailer may feel like an unlikely target — but the automated tools attackers use do not distinguish between a corner shop and a national chain.</p>
+      <p>The good news is that most of the security measures required for retail are straightforward, affordable, and achievable without a dedicated IT team. Understanding the specific risks your business faces is the starting point.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">28%</div>
+          <div class="stat-d">of data breaches target retail businesses — the second most targeted sector</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£150</div>
+          <div class="stat-d">average value of stolen card data sold on the dark web per card</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">71%</div>
+          <div class="stat-d">of retail breaches involve point-of-sale systems or e-commerce payment pages</div>
+        </div>
+      </div>
+
+      <h2>The specific threats retailers face</h2>
+
+      <div class="threats">
+        <div class="threat">
+          <div class="threat-label">Threat 01</div>
+          <h4>Card skimming — physical and digital</h4>
+          <p>Physical skimmers are devices fitted to card terminals to capture card data. Digital skimming (also called Magecart attacks) involves malicious code injected into your website's payment page, silently harvesting card details as customers enter them. Both are common and both are hard to spot without active monitoring.</p>
+        </div>
+        <div class="threat">
+          <div class="threat-label">Threat 02</div>
+          <h4>Point-of-sale malware</h4>
+          <p>Malware specifically designed to target point-of-sale systems reads payment card data from memory as transactions are processed. It typically enters via a phishing email, a remote access compromise, or an infected USB device.</p>
+        </div>
+        <div class="threat">
+          <div class="threat-label">Threat 03</div>
+          <h4>E-commerce site compromise</h4>
+          <p>Attackers target e-commerce platforms — particularly those running outdated plugins or CMS versions — to inject code, steal customer data, redirect payments, or use the site as a platform for further attacks.</p>
+        </div>
+        <div class="threat">
+          <div class="threat-label">Threat 04</div>
+          <h4>Customer data theft</h4>
+          <p>Customer databases — names, email addresses, purchase histories, and delivery addresses — are valuable targets sold on dark web markets. A breach of customer data also triggers regulatory notification obligations under GDPR and similar laws.</p>
+        </div>
+      </div>
+
+      <h2>PCI DSS — what retailers need to know</h2>
+      <p>If your business accepts card payments — in person or online — you are subject to the Payment Card Industry Data Security Standard (PCI DSS). This is not optional. It is a contractual requirement imposed by card schemes (Visa, Mastercard) through your payment processor.</p>
+      <p>PCI DSS compliance does not need to be complicated for small retailers. The simplest approach is to minimise the scope of your compliance obligation:</p>
+
+      <ul>
+        <li><strong>Use a payment service provider that handles card processing entirely</strong> — Stripe, Square, SumUp, iZettle. When card data never touches your own systems, your compliance burden is dramatically reduced.</li>
+        <li><strong>For in-person payments, use chip and PIN terminals from your payment provider</strong> — these are already PCI-compliant devices; you are responsible for the environment around them.</li>
+        <li><strong>For online payments, use hosted payment pages</strong> — redirect customers to your payment provider's own hosted page rather than collecting card details on your own site.</li>
+        <li><strong>Complete your annual PCI self-assessment questionnaire</strong> — your payment processor will provide this; it is a requirement of your merchant account.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Never store card data yourself</strong>
+        <p>Unless you have specific contractual and technical justification — and the security infrastructure to match — never store card numbers, CVV codes, or full magnetic stripe data. There is almost no legitimate reason for a small retailer to do this, and the liability if that data is breached is severe. Use a payment provider that handles storage entirely.</p>
+      </div>
+
+      <h2>Securing your e-commerce site</h2>
+      <p>An e-commerce website is a complex security target. It handles payments, stores customer data, and is accessible to anyone on the internet. The basics of website security apply — but there are additional considerations specific to retail.</p>
+
+      <ul>
+        <li><strong>Use a reputable e-commerce platform</strong> — Shopify, WooCommerce, BigCommerce. Keep all software, plugins, and themes updated at all times.</li>
+        <li><strong>Use a hosted payment page or trusted payment plugin</strong> — avoid handling raw card data on your own server.</li>
+        <li><strong>Implement Content Security Policy headers</strong> — these help prevent malicious code injections (Magecart attacks) by restricting which scripts can run on your payment pages.</li>
+        <li><strong>Monitor for unauthorised changes</strong> — use a website integrity monitoring tool to alert you if your site's code changes unexpectedly.</li>
+        <li><strong>Conduct regular security scans</strong> — scan your site monthly for malware, vulnerabilities, and suspicious code.</li>
+      </ul>
+
+      <div class="callout">
+        <p>Magecart attacks — where malicious code is injected into your payment page — can run silently for months. Many retailers discover they have been harvesting customer card data for criminals without any idea. Website integrity monitoring is essential for any site taking card payments.</p>
+      </div>
+
+      <h2>Protecting your point-of-sale environment</h2>
+      <p>Your in-store payment environment requires its own set of controls — separate from your general business network and your back-office systems.</p>
+
+      <ul>
+        <li><strong>Isolate your POS network</strong> — payment terminals should be on a dedicated network segment, separate from your staff computers, guest Wi-Fi, and back-office systems.</li>
+        <li><strong>Inspect terminals regularly</strong> — physically check card terminals for signs of tampering, unusual attachments, or modifications. Brief staff on what to look for.</li>
+        <li><strong>Restrict physical access to POS systems</strong> — terminals and the computers they connect to should not be accessible to customers or unauthorised staff.</li>
+        <li><strong>Keep POS software updated</strong> — your payment provider or POS vendor will issue updates; apply them promptly.</li>
+      </ul>
+
+      <h2>Customer data — your obligations</h2>
+      <p>Every customer record your business holds is a data protection obligation. Under GDPR (and equivalent laws), you must collect only what you need, store it securely, tell customers how it is used, and delete it when it is no longer needed.</p>
+      <p>For small retailers this means: secure your customer database with proper access controls, do not keep customer data longer than necessary, ensure your email marketing tool (Mailchimp, Klaviyo) is properly configured, and have a process for responding to customer data requests.</p>
+
+      <hr>
+
+      <h2>Retail cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>PCI DSS self-assessment questionnaire completed annually</li>
+        <li>Card data never stored on your own systems</li>
+        <li>Hosted payment pages or trusted payment provider used</li>
+        <li>POS network isolated from general business and guest networks</li>
+        <li>Payment terminals inspected regularly for tampering</li>
+        <li>E-commerce platform, plugins, and themes kept up to date</li>
+        <li>Website malware and integrity scanning scheduled monthly</li>
+        <li>Content Security Policy headers implemented on payment pages</li>
+        <li>Customer data stored securely with appropriate access controls</li>
+        <li>Staff trained on card fraud awareness and terminal inspection</li>
+      </ul>
+
+      <p>Retail security is not more complicated than other types of business security — it just has some specific requirements around payments and customer data that need to be addressed deliberately. Get the foundations right, work with payment providers who take compliance seriously, and your business will be significantly better protected than the majority of small retailers operating today.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
