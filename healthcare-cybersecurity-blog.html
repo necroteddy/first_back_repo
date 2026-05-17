@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Healthcare | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* OBLIGATION CARDS */
+  .obligations { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .obligation { background: var(--surface); padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .obligation-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .obligation h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.25rem; }
+  .obligation p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 17, 2026 &nbsp;·&nbsp; Healthcare Security</div>
+    <h1>Cybersecurity for healthcare — protecting patient data and clinical systems</h1>
+    <p class="post-lead">Healthcare organisations hold the most sensitive personal data that exists. They are also among the most heavily targeted by attackers. For small clinics, practices, and health businesses, the stakes — legal, financial, and human — are higher than almost any other sector.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>A patient's medical record contains their name, address, date of birth, NHS number, medication history, diagnoses, mental health records, and financial details. On the dark web, a complete medical record sells for significantly more than a payment card — because it can be used for identity theft, insurance fraud, and targeted blackmail in ways that other data cannot.</p>
+      <p>For small healthcare providers — GP practices, dental surgeries, physiotherapy clinics, care homes, mental health services — the combination of sensitive data, often limited IT resource, and critical operational dependency on systems makes cybersecurity both essential and urgent.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">#1</div>
+          <div class="stat-d">most targeted sector for ransomware attacks globally — ahead of finance and government</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£408</div>
+          <div class="stat-d">average value of a complete medical record on the dark web — ten times the value of a payment card</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£6.5M</div>
+          <div class="stat-d">average cost of a healthcare data breach in the UK — the highest of any sector</div>
+        </div>
+      </div>
+
+      <h2>Why healthcare is so heavily targeted</h2>
+      <p>Healthcare organisations face a specific combination of factors that make them attractive to attackers and vulnerable to attack.</p>
+      <p>Patient data is highly valuable. Systems are often critical — a hospital that cannot access patient records or clinical systems faces immediate, life-affecting consequences, which makes it more likely to pay a ransom quickly. Legacy systems are common — older medical devices and software that cannot be updated run alongside modern infrastructure. And staff turnover is high, creating continuous training challenges.</p>
+
+      <div class="callout">
+        <p>The 2017 WannaCry attack that affected NHS trusts across the UK demonstrated the real-world impact of healthcare cyber incidents — cancelled appointments, diverted ambulances, and clinical staff reverting to paper records. The attack exploited a vulnerability that had been patched months earlier.</p>
+      </div>
+
+      <h2>Your legal obligations</h2>
+      <p>Healthcare organisations in the UK operate under multiple overlapping legal frameworks for data protection and security. Understanding these obligations is the foundation of a compliant security programme.</p>
+
+      <div class="obligations">
+        <div class="obligation">
+          <div class="obligation-icon">📋</div>
+          <div>
+            <h4>UK GDPR and Data Protection Act 2018</h4>
+            <p>Health data is special category data requiring the highest level of protection. Breaches must be reported to the ICO within 72 hours where they pose a risk to individuals.</p>
+          </div>
+        </div>
+        <div class="obligation">
+          <div class="obligation-icon">🏥</div>
+          <div>
+            <h4>NHS Data Security and Protection Toolkit</h4>
+            <p>Organisations handling NHS patient data must complete the DSP Toolkit annually. It covers ten standards including staff training, data storage, and incident management.</p>
+          </div>
+        </div>
+        <div class="obligation">
+          <div class="obligation-icon">⚕️</div>
+          <div>
+            <h4>CQC registration requirements</h4>
+            <p>Care Quality Commission-registered providers must have robust information governance arrangements as part of their registration obligations.</p>
+          </div>
+        </div>
+        <div class="obligation">
+          <div class="obligation-icon">📜</div>
+          <div>
+            <h4>Common Law Duty of Confidentiality</h4>
+            <p>Healthcare professionals have a legal and ethical duty to protect patient confidentiality. Unauthorised disclosure of patient information can result in professional and legal consequences.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>The most critical security controls for healthcare</h2>
+
+      <p><strong>Access control and least privilege.</strong> Clinical staff should only access patient records relevant to their role and their patients. Administrative staff should not have access to clinical records. A receptionist does not need the same access as a GP. Audit logs should record who accessed which records and when — and should be reviewed regularly.</p>
+
+      <p><strong>Encryption of patient data.</strong> Patient data must be encrypted both in transit and at rest. Any device that might leave the practice — a laptop, a tablet, a USB drive — must be encrypted. The ICO has issued significant fines for unencrypted data being lost on devices.</p>
+
+      <p><strong>Multi-factor authentication on clinical systems.</strong> EMIS, SystmOne, Vision, and other clinical systems should require MFA. Email accounts used for patient communication must have MFA enabled. A compromised clinical system account gives an attacker access to thousands of patient records.</p>
+
+      <p><strong>Secure handling of patient communication.</strong> Patient data should only be communicated through secure, encrypted channels. Standard email is not appropriate for patient identifiable information unless encrypted. NHS mail (nhs.net) is the recommended option for NHS-connected organisations.</p>
+
+      <div class="warning">
+        <strong>⚠ Ransomware is an existential threat for small healthcare providers</strong>
+        <p>A ransomware attack on a small clinical practice can make patient records completely inaccessible for days or weeks. For a practice with no paper backup system and appointments that cannot be met, the operational and reputational damage can be severe. Offline, tested backups of clinical data are not optional — they are critical.</p>
+      </div>
+
+      <h2>Staff training — the most important control</h2>
+      <p>Healthcare staff are under immense pressure and are frequently targeted by highly convincing phishing attacks impersonating NHS systems, HMRC, or pharmaceutical suppliers. Regular, relevant training is consistently identified as the most effective security control available.</p>
+      <p>Training should cover: how to spot phishing emails, what to do if they click something suspicious, the correct handling of patient data, device security when working remotely, and who to contact when something goes wrong. Short, frequent sessions — not an annual tick-box exercise.</p>
+
+      <h2>Medical devices and legacy systems</h2>
+      <p>Many clinical environments include medical devices — imaging equipment, ECG machines, diagnostic tools — running software that cannot be updated and was never designed with network security in mind. These devices must be isolated on their own network segment, prevented from communicating with general business systems, and assessed for their specific risk profile.</p>
+
+      <div class="callout">
+        <p>If a medical device vendor tells you their device cannot be patched or updated, ask whether it can be isolated from your main network. Network segmentation is often the most practical way to manage the risk of legacy clinical devices.</p>
+      </div>
+
+      <hr>
+
+      <h2>Healthcare cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>DSP Toolkit completed and up to date (NHS-connected organisations)</li>
+        <li>Access controls applied — staff access only what their role requires</li>
+        <li>All devices containing patient data encrypted</li>
+        <li>MFA enabled on clinical systems and email accounts</li>
+        <li>Patient data communicated only through secure, approved channels</li>
+        <li>Offline, tested backups of clinical data in place</li>
+        <li>Medical devices and legacy systems isolated on separate network segments</li>
+        <li>Staff training on phishing and data handling scheduled regularly</li>
+        <li>ICO breach notification process understood and documented</li>
+        <li>Incident response plan in place for ransomware and data breach scenarios</li>
+      </ul>
+
+      <p>Healthcare cybersecurity is not a compliance exercise — it is a patient safety issue. The data your practice holds is among the most sensitive that exists, and the consequences of a breach extend far beyond financial penalties. The controls required are not beyond any small provider — they are practical, achievable, and increasingly supported by NHS guidance and tooling. The organisations that suffer the worst outcomes are almost always those that delayed getting the basics in place.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
