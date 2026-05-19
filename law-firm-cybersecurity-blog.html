@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Law Firms | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 19, 2026 &nbsp;·&nbsp; Professional Services</div>
+    <h1>Cybersecurity for law firms — protecting privileged client information</h1>
+    <p class="post-lead">Law firms hold legally privileged communications, commercially sensitive deal information, and the personal details of clients at some of the most vulnerable moments of their lives. Attackers know this — and they target law firms accordingly.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>A solicitor's file contains things that exist nowhere else: privileged communications, confidential settlement terms, details of ongoing litigation, property transaction data, and sometimes the most personal information a client will ever share with a professional. That uniqueness — the fact that this data cannot be recreated if it is lost or stolen — makes law firms extraordinarily valuable targets.</p>
+      <p>The legal sector is one of the most heavily targeted professional services industries for cybercrime. Not just because of the data, but because law firms are also trusted intermediaries who regularly move large sums of client money — making them targets for both data theft and financial fraud simultaneously.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">75%</div>
+          <div class="stat-d">of the top 100 UK law firms have experienced a cyber incident in the past year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£4M</div>
+          <div class="stat-d">lost by UK law firms to cybercrime annually — primarily through client account fraud</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">23%</div>
+          <div class="stat-d">of all SRA-regulated firms have reported a cybercrime incident to the regulator</div>
+        </div>
+      </div>
+
+      <h2>Why law firms are high-value targets</h2>
+      <p>Law firms combine several factors that make them particularly attractive to attackers. They hold legally privileged and commercially sensitive information that can be sold to competitors or used for insider trading. They hold client funds in client accounts — making financial fraud both possible and lucrative. They are trusted by their clients, making impersonation attacks especially effective. And they often handle urgent, time-pressured transactions where staff are under pressure to act quickly without questioning requests.</p>
+
+      <div class="callout">
+        <p>In a conveyancing fraud, criminals intercept communications between a law firm and their client, substituting genuine bank details for fraudulent ones at the point of completion. The client transfers their entire house purchase price — sometimes hundreds of thousands of pounds — to the criminal. Recovery is rare.</p>
+      </div>
+
+      <h2>The specific threats law firms face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Conveyancing and client account fraud</h4>
+          <p>Criminals intercept or monitor email communications around property transactions and substitute genuine bank details with fraudulent ones. The stakes are enormous — completion funds can run to hundreds of thousands of pounds and are transferred in a single transaction.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Business email compromise</h4>
+          <p>A compromised or spoofed fee earner email is used to redirect client payments, authorise fraudulent disbursements, or extract sensitive client information. Criminals monitor compromised inboxes for months, learning transaction patterns before striking.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Ransomware targeting matter files</h4>
+          <p>Ransomware that encrypts your matter management system and document store can bring a firm to a complete standstill — with client deadlines, court dates, and completion dates impossible to meet. The pressure to pay is immense.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Privileged data theft for commercial advantage</h4>
+          <p>Sophisticated attackers — including nation-states and corporate intelligence operations — target law firms specifically to steal commercially sensitive information: M&A plans, litigation strategies, settlement terms, and regulatory investigations.</p>
+        </div>
+      </div>
+
+      <h2>SRA and regulatory obligations</h2>
+      <p>The Solicitors Regulation Authority holds firms to standards that include information security as a core obligation. The SRA Code of Conduct requires firms to have appropriate systems and controls to protect client money and assets, and to maintain client confidentiality. A cyber incident that results in client harm or financial loss is likely to trigger an SRA investigation.</p>
+      <p>In addition, the ICO expects firms to report significant personal data breaches within 72 hours — and the legal sector has been the subject of increasing ICO enforcement action in recent years.</p>
+
+      <div class="warning">
+        <strong>⚠ Cyber insurance is increasingly essential for law firms</strong>
+        <p>Standard professional indemnity insurance may not cover cyber incidents fully — particularly where client funds are lost through fraud rather than negligence. Dedicated cyber insurance is increasingly a regulatory expectation as well as a practical necessity. Check your policy covers client fund fraud, ransomware recovery, and regulatory defence costs.</p>
+      </div>
+
+      <h2>Protecting client communications and matter files</h2>
+      <p>The security of client communications is a professional duty, not just a technical requirement. Standard email is not appropriate for transmitting privileged documents, settlement terms, or personally sensitive client information. End-to-end encrypted email, a secure client portal, or encrypted file transfer should be standard practice.</p>
+
+      <ul>
+        <li><strong>Use a secure client portal</strong> for matter documents and communications — platforms like Clio, LEAP, or dedicated legal portals</li>
+        <li><strong>Enable email encryption</strong> for sensitive communications — Microsoft 365 and Google Workspace both offer message encryption options</li>
+        <li><strong>Implement DMARC, DKIM, and SPF</strong> on your firm's email domain to prevent impersonation of your email addresses</li>
+        <li><strong>Train fee earners on email verification</strong> — particularly around bank detail changes and payment instructions from clients or other solicitors</li>
+      </ul>
+
+      <h2>Protecting client funds — the verification imperative</h2>
+      <p>Any instruction involving client money must be verified through a channel completely separate from email. A phone call — using a number you already have on file, not a number provided in the email — before any payment is made or any bank details are changed. This is not bureaucracy. It is the most effective single control against conveyancing fraud.</p>
+      <p>Many firms now use a formal "call back" procedure as standard for all bank detail instructions — documenting the call, who was spoken to, and when. This is both a security control and a professional protection if the instruction later proves to be fraudulent.</p>
+
+      <div class="callout">
+        <p>The Law Society's Practice Note on cybercrime recommends that all firms have a written policy requiring verbal verification of bank account details before any payment is made — regardless of how legitimate the email instruction appears.</p>
+      </div>
+
+      <h2>Access control for matter management systems</h2>
+      <p>Fee earners should access only the matters they are working on. Support staff should access only what their role requires. Partners and senior staff need elevated access — but that access should be logged and audited. When staff leave, access must be revoked immediately — including remote access, email, matter management systems, and document stores.</p>
+
+      <hr>
+
+      <h2>Law firm cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all email accounts and matter management systems</li>
+        <li>DMARC, DKIM, and SPF configured on the firm's email domain</li>
+        <li>Written policy in place requiring verbal verification of bank details before payment</li>
+        <li>Secure client portal used for sensitive document exchange</li>
+        <li>Encrypted, offsite backups of all matter files — tested regularly</li>
+        <li>Access controls applied — staff access only their own matters</li>
+        <li>Leavers' access revoked on last day — all systems, email, and remote access</li>
+        <li>Staff training on conveyancing fraud and BEC scenarios</li>
+        <li>Cyber insurance reviewed — covers client fund fraud and ransomware</li>
+        <li>SRA and ICO breach notification procedures documented and understood</li>
+      </ul>
+
+      <p>Legal professional privilege is one of the oldest and most important protections in English law. Protecting it in the digital age requires deliberate, maintained security controls — not because regulation demands it, though it does, but because clients trust their solicitors with information they share with almost no one else. That trust is worth protecting.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
