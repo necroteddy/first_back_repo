@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Schools | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 20, 2026 &nbsp;·&nbsp; Education Security</div>
+    <h1>Cybersecurity for schools and education — protecting students, staff, and data</h1>
+    <p class="post-lead">Schools hold some of the most sensitive personal data imaginable — information about children. They also operate with large numbers of users, limited IT resource, and open network environments. It is a combination that attackers exploit regularly.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Education has become one of the most targeted sectors for ransomware and data theft. Schools, colleges, and universities hold personal data on students and their families, special educational needs information, safeguarding records, staff HR data, and financial records. The sensitivity of this data — particularly anything related to children's welfare — makes a breach not just a regulatory problem, but a safeguarding one.</p>
+      <p>At the same time, the education sector faces challenges that make security harder: large numbers of users including students who may deliberately probe systems, open networks designed for learning rather than security, legacy devices and software on tight budgets, and a culture where ease of access is often prioritised over restriction.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">78%</div>
+          <div class="stat-d">of secondary schools and 67% of further education colleges reported a cyber incident in the past year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3 days</div>
+          <div class="stat-d">average disruption caused by a ransomware attack on a school — with some lasting weeks</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£600K</div>
+          <div class="stat-d">estimated cost of a major ransomware incident for a secondary school, including recovery and lost learning</div>
+        </div>
+      </div>
+
+      <h2>Why schools are heavily targeted</h2>
+      <p>Education institutions present a combination of factors that make them attractive to attackers. They hold highly sensitive data on minors — which is valuable on dark web markets and useful for identity theft that may not be discovered for years. They have large, open networks with many users, creating a broad attack surface. They often run legacy systems that cannot be updated. And they have limited dedicated security resource compared to similarly-sized organisations in other sectors.</p>
+
+      <div class="callout">
+        <p>Student identity data is particularly valuable to criminals because it may not be monitored or checked for years — giving criminals a long window to exploit stolen details before the victim discovers the fraud.</p>
+      </div>
+
+      <h2>The specific threats education institutions face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Ransomware targeting school systems</h4>
+          <p>Ransomware attacks on schools encrypt administrative systems, student records, and management information systems — preventing access to timetables, attendance records, and safeguarding information. During exam periods the pressure to restore systems quickly makes schools more likely to pay.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Student data theft</h4>
+          <p>Student records — names, dates of birth, addresses, parental details, and sometimes medical or SEN information — are targets for identity theft and dark web sale. The sensitivity of data about minors means a breach carries heightened regulatory and reputational consequences.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Phishing targeting staff and governors</h4>
+          <p>School staff are targeted with phishing emails impersonating HMRC, the DfE, Ofsted, and educational software providers. Business email compromise targeting finance staff — for invoice fraud or payment diversion — is increasingly common in the education sector.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Insider threats from students</h4>
+          <p>Students with technical curiosity — or malicious intent — may attempt to access teacher accounts, change grades, access other students' data, or disrupt systems. This is a unique threat vector in education that requires specific access controls and monitoring.</p>
+        </div>
+      </div>
+
+      <h2>Legal and regulatory obligations</h2>
+      <p>Schools and educational institutions operate under a complex web of data protection obligations, many of which carry specific requirements around data about children.</p>
+
+      <ul>
+        <li><strong>UK GDPR and Data Protection Act 2018</strong> — all personal data about students and staff must be protected appropriately. Children's data requires particular care. Breaches must be reported to the ICO within 72 hours where there is a risk to individuals.</li>
+        <li><strong>DfE Data Protection in Schools guidance</strong> — the Department for Education provides specific guidance on data protection in schools, including requirements for a Data Protection Officer for most schools.</li>
+        <li><strong>Keeping Children Safe in Education (KCSIE)</strong> — safeguarding obligations extend to digital systems. Schools must ensure that safeguarding records and sensitive student information are appropriately protected.</li>
+        <li><strong>NCSC Cyber Security Standards for Schools</strong> — the National Cyber Security Centre provides specific guidance and standards for the education sector, including the Cyber Essentials scheme which many schools are now expected to achieve.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Safeguarding data requires the highest level of protection</strong>
+        <p>Safeguarding records — information about child protection concerns, vulnerable students, and welfare interventions — are among the most sensitive records a school holds. Access must be strictly limited to those with a professional need, audit-logged, and protected by the strongest available controls. A breach of safeguarding data is a serious safeguarding incident, not just a data protection one.</p>
+      </div>
+
+      <h2>Protecting the school network</h2>
+      <p>School networks are uniquely challenging because they must serve two very different populations: staff who need access to administrative and safeguarding systems, and students who need access to learning resources but should be isolated from everything else.</p>
+
+      <ul>
+        <li><strong>Segment student and staff networks</strong> — students should have access to learning resources and filtered internet only, completely isolated from administrative systems, staff data, and safeguarding records</li>
+        <li><strong>Filter internet access for students</strong> — content filtering is both a legal obligation under KCSIE and a security control; unfiltered internet access on school networks increases malware risk significantly</li>
+        <li><strong>Restrict student device permissions</strong> — students should not be able to install software, change system settings, or access network shares beyond what their learning requires</li>
+        <li><strong>Monitor for unusual activity</strong> — attempts to access teacher or admin accounts, unusual data transfers, or access to restricted system areas should be flagged automatically</li>
+      </ul>
+
+      <h2>Managing the human element in education</h2>
+      <p>Schools face a particularly challenging human security environment. Staff turnover is high, creating continuous training needs. Teaching staff are time-pressured and may not prioritise security. Governors and trust board members may have significant system access with limited security awareness. And students may actively test the boundaries of what they can access.</p>
+      <p>Regular, short security awareness training — built into staff induction and annual professional development — is the most effective single investment an educational institution can make in its security posture. Training should cover phishing recognition, data handling, device security, and the reporting of incidents without fear of blame.</p>
+
+      <div class="callout">
+        <p>The NCSC's free Cyber Essentials certification provides a structured framework of basic security controls — including patching, access control, malware protection, and network firewalls — that significantly reduces the most common attack vectors. Many schools are now expected to achieve Cyber Essentials as a baseline.</p>
+      </div>
+
+      <hr>
+
+      <h2>Education cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>Student and staff networks segmented — students isolated from admin systems</li>
+        <li>Internet content filtering active for all student network access</li>
+        <li>MFA enabled on all staff and admin accounts</li>
+        <li>Safeguarding records accessible only to those with professional need</li>
+        <li>Cyber Essentials certification achieved or in progress</li>
+        <li>Regular security awareness training in staff induction and CPD</li>
+        <li>Data Protection Officer appointed and GDPR obligations documented</li>
+        <li>Offsite, tested backups of all student and administrative data</li>
+        <li>Student device permissions restricted — no software installation or system changes</li>
+        <li>Incident response plan covering ransomware and data breach scenarios</li>
+        <li>ICO and DfE breach notification procedures understood and documented</li>
+      </ul>
+
+      <p>Schools carry a responsibility for children that extends into the digital world. The data they hold about students, families, and staff is sensitive, legally protected, and morally significant in ways that go beyond compliance. Getting the security basics right — segmentation, access control, training, and backups — is achievable for any educational institution and protects not just the organisation, but the people it serves.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
