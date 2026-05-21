@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Charities | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 21, 2026 &nbsp;·&nbsp; Charity Security</div>
+    <h1>Cybersecurity for charities — protecting donors, beneficiaries, and the mission</h1>
+    <p class="post-lead">Charities are trusted with donations, personal data, and the welfare of vulnerable people. Criminals know this — and they exploit that trust deliberately. A cyberattack on a charity does not just cause financial harm. It can undermine the mission entirely.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Charities face a unique cybersecurity challenge. They hold sensitive data — donor details, beneficiary information, health and welfare records, financial data — while often operating with minimal IT resource, a large and varied volunteer base, and a culture that prioritises openness and accessibility over restriction.</p>
+      <p>That combination makes charities both attractive targets and less well-defended ones. The government's Cyber Security Breaches Survey consistently finds that charities are significantly less likely than businesses to have basic security controls in place — even while holding data that warrants the same level of protection.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">32%</div>
+          <div class="stat-d">of charities reported a cyber breach or attack in the past year — rising to 51% for larger charities</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£3,290</div>
+          <div class="stat-d">average direct cost of the most disruptive breach experienced by a charity</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">24%</div>
+          <div class="stat-d">of charities have a formal cybersecurity policy in place — leaving the majority exposed</div>
+        </div>
+      </div>
+
+      <h2>Why charities are targeted</h2>
+      <p>Charities handle real money — donations, grants, fundraising proceeds, and often restricted funds with specific obligations. They hold donor payment details, direct debit mandates, and Gift Aid records. They hold beneficiary data that is often highly sensitive — health conditions, financial circumstances, family situations, and in some cases, safeguarding information about vulnerable adults and children.</p>
+      <p>Attackers target charities for the same reasons they target any organisation with money and data — but with the added advantage that charities are often less well-defended, more likely to rely on volunteers who have not been security-trained, and more likely to pay a ransom quickly to protect their beneficiaries and reputation.</p>
+
+      <div class="callout">
+        <p>Charity donor databases are particularly valuable targets. A list of regular, committed donors — with names, addresses, payment details, and donation history — can be used for financial fraud, targeted phishing, and identity theft. Donors trust charities with their details; protecting that trust is both a legal and an ethical obligation.</p>
+      </div>
+
+      <h2>The specific threats charities face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Donation and fundraising fraud</h4>
+          <p>Criminals impersonate well-known charities to divert donations — particularly during emergency appeals when giving is high and donors are less cautious. They also target charity payment systems directly to intercept or redirect fundraising income.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>CEO and trustee impersonation</h4>
+          <p>Business email compromise targeting charity finance staff — emails apparently from the CEO or a trustee requesting urgent transfers, often citing a time-sensitive grant payment or emergency expenditure. The charity sector has seen significant losses to this type of fraud.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Beneficiary data breach</h4>
+          <p>Charities working with vulnerable people — homeless individuals, domestic abuse survivors, people with health conditions or addiction — hold data that could cause direct harm if disclosed. A breach of beneficiary data is not just a regulatory incident; it can put people at risk.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Ransomware disrupting services</h4>
+          <p>A ransomware attack on a charity's systems can prevent the delivery of vital services — crisis helplines, food bank databases, case management systems, and volunteer coordination tools. For charities serving vulnerable people, the human cost of downtime is immediate and real.</p>
+        </div>
+      </div>
+
+      <h2>The volunteer challenge</h2>
+      <p>Most charities rely heavily on volunteers — people who give their time generously but who may have no security training, use personal devices, connect to the charity's systems from home networks, and rotate regularly, making access management complex.</p>
+      <p>Volunteers with system access must receive basic security awareness training before they are given credentials. Access should be limited to what their role requires and revoked promptly when they leave. Shared accounts — a common workaround for volunteer management — create serious accountability and security risks and should be replaced with individual credentials wherever possible.</p>
+
+      <div class="warning">
+        <strong>⚠ Shared accounts are a significant risk</strong>
+        <p>Many charities use shared login credentials for systems accessed by multiple volunteers. Shared accounts mean you cannot audit who did what, cannot revoke access for a single individual, and create a situation where one compromised credential exposes all users. Individual accounts with appropriate permissions take more time to set up but dramatically reduce risk.</p>
+      </div>
+
+      <h2>Protecting beneficiary data</h2>
+      <p>The most sensitive data a charity holds is often its beneficiary data — particularly for charities working with vulnerable adults, children, domestic abuse survivors, people in mental health crisis, or individuals with addiction. This data requires the highest level of protection.</p>
+
+      <ul>
+        <li><strong>Classify beneficiary data separately</strong> — apply stricter access controls than donor or administrative data</li>
+        <li><strong>Limit access strictly</strong> — only staff and volunteers with a direct case management role should access beneficiary records</li>
+        <li><strong>Encrypt beneficiary records</strong> at rest and in transit</li>
+        <li><strong>Never store beneficiary data on personal devices</strong> — use organisation-managed systems only</li>
+        <li><strong>Have a clear data retention policy</strong> — delete beneficiary data when it is no longer needed</li>
+      </ul>
+
+      <h2>Protecting donations and financial controls</h2>
+      <p>Any instruction to change bank account details, make an emergency transfer, or redirect a donation must be verified by phone — using a number you already have on file — before action is taken. This applies to instructions that appear to come from trustees, the CEO, a grant funder, or a donor. The urgency or apparent legitimacy of the instruction is not a reason to skip verification.</p>
+      <p>Dual authorisation for payments above a threshold — where two separate people must approve a transfer — is standard good practice in the charity sector and a requirement under many grant funding agreements.</p>
+
+      <div class="callout">
+        <p>The Charity Commission's guidance on protecting charity money specifically identifies cybercrime as a major risk and recommends multi-factor authentication, payment verification procedures, and regular staff training as priority controls for all charities.</p>
+      </div>
+
+      <h2>Free and low-cost resources for charities</h2>
+      <p>Budget constraints are real in the charity sector. Fortunately, significant security improvements can be made at little or no cost.</p>
+
+      <ul>
+        <li><strong>NCSC Cyber Essentials</strong> — free guidance and a low-cost certification that covers the five most important basic controls</li>
+        <li><strong>NCSC's free tools</strong> — free services including mail check, web check, and exercise-in-a-box for simulated incident training</li>
+        <li><strong>Microsoft and Google nonprofit programmes</strong> — both offer significantly discounted or free versions of their productivity and security tools for registered charities</li>
+        <li><strong>Charity Digital</strong> — provides discounted technology tools specifically for the charity sector</li>
+      </ul>
+
+      <hr>
+
+      <h2>Charity cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all staff, volunteer, and trustee accounts</li>
+        <li>Individual accounts used — no shared credentials</li>
+        <li>Volunteer access limited to what their role requires and revoked on departure</li>
+        <li>Beneficiary data classified and protected with strictest access controls</li>
+        <li>Dual authorisation in place for payments above a set threshold</li>
+        <li>Payment verification procedure in place — verbal confirmation for bank detail changes</li>
+        <li>Donor database access restricted and protected with strong authentication</li>
+        <li>Cyber Essentials certification achieved or in progress</li>
+        <li>Staff and volunteer security awareness training included in onboarding</li>
+        <li>Offsite, tested backups of all data including beneficiary and donor records</li>
+        <li>Charity Commission and ICO breach reporting obligations understood</li>
+      </ul>
+
+      <p>The trust that donors place in charities — and that beneficiaries place in the organisations that support them — is hard-won and easily damaged. A cybersecurity incident does not just cost money. It can undermine fundraising, erode public confidence, and in the worst cases, put vulnerable people at direct risk. The controls required to prevent this are well within the reach of any charity that makes security a priority.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
