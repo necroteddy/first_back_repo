@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Construction | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 22, 2026 &nbsp;·&nbsp; Construction Security</div>
+    <h1>Cybersecurity for construction — protecting project data, finances, and site systems</h1>
+    <p class="post-lead">Construction businesses handle large contracts, significant cash flows, sensitive design data, and increasingly connected site technology. Each of these is a target. The sector is one of the fastest-growing areas of cybercrime — and one of the least prepared.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>The construction industry has historically seen itself as a low-priority target for cybercriminals. That perception is dangerously outdated. Modern construction businesses run complex digital operations — project management platforms, BIM files, financial systems, procurement tools, and increasingly, connected site equipment and building management systems. Each represents a potential entry point and a valuable target.</p>
+      <p>Construction projects involve large sums of money moving between multiple parties — clients, contractors, subcontractors, suppliers. That flow of payments, combined with the pressure of project deadlines and the complexity of supply chains, creates exactly the conditions that enable fraud and attack.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">55%</div>
+          <div class="stat-d">of construction firms experienced a cybersecurity incident in the past two years</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£300K</div>
+          <div class="stat-d">average loss from a single invoice fraud incident targeting a construction business</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">increase in cyberattacks targeting construction and infrastructure over the past three years</div>
+        </div>
+      </div>
+
+      <h2>Why construction is increasingly targeted</h2>
+      <p>Construction businesses combine several factors that make them attractive to attackers. Large project values mean high-value payments moving regularly between many parties. Complex supply chains with multiple contractors, subcontractors, and suppliers create many opportunities for invoice fraud and payment diversion. Project deadlines create pressure that discourages careful verification. And the sector has historically under-invested in cybersecurity relative to the value it handles.</p>
+
+      <div class="callout">
+        <p>A typical construction project involves dozens of organisations exchanging invoices, payment applications, and bank details over email. Each one of those exchanges is an opportunity for a criminal to intercept communications and substitute genuine details with fraudulent ones.</p>
+      </div>
+
+      <h2>The specific threats construction businesses face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Invoice and payment fraud</h4>
+          <p>The most common and costly cyber threat in construction. Criminals intercept or monitor email communications between contractors, subcontractors, and suppliers, substituting legitimate bank details with fraudulent ones. A single fraudulent payment on a large project can run to hundreds of thousands of pounds.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>BIM and project data theft</h4>
+          <p>Building Information Modelling files and project data contain commercially sensitive design information, security system layouts, structural data, and infrastructure details. For certain project types — government buildings, critical infrastructure, high-security facilities — this data is of significant interest to sophisticated attackers.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Ransomware disrupting project delivery</h4>
+          <p>Ransomware that encrypts a construction firm's project management systems, financial software, and document stores can halt project delivery, trigger contractual penalties, and create significant reputational damage with clients. The pressure of project deadlines makes construction firms more likely to pay.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Connected site and building system attacks</h4>
+          <p>Smart building systems — access control, CCTV, environmental monitoring, and building management systems — are increasingly connected to business networks. Poorly secured, they can provide attackers with a foothold on the wider network or enable physical security breaches.</p>
+        </div>
+      </div>
+
+      <h2>Invoice fraud — the biggest threat</h2>
+      <p>Invoice fraud deserves particular attention because it is so prevalent in construction and so financially damaging. The typical attack involves a criminal monitoring email communications between your business and a supplier or subcontractor. At the right moment — often when a significant payment is due — they send an email appearing to come from the supplier, advising that their bank details have changed.</p>
+      <p>The solution is straightforward but must be consistently applied: any change to bank account details for a payee must be verified by telephone, using a number already held on file — not a number provided in the email — before any payment is made. No exceptions, regardless of the apparent urgency of the request.</p>
+
+      <div class="warning">
+        <strong>⚠ Verify every bank detail change — no exceptions</strong>
+        <p>A common pattern in construction fraud is an email arriving just before a major payment milestone — an interim application, a final account settlement, or a retention release — advising of changed bank details. The timing is deliberate. The financial pressure of the deadline is counted on to discourage careful verification. A two-minute phone call to a known number prevents a potentially catastrophic loss.</p>
+      </div>
+
+      <h2>Protecting project data and BIM files</h2>
+      <p>Project data — including BIM models, design drawings, specifications, and tender documents — represents significant intellectual property and, for some project types, sensitive security information. This data must be protected with appropriate access controls, encryption, and secure sharing practices.</p>
+
+      <ul>
+        <li><strong>Use a dedicated project collaboration platform</strong> rather than email for sharing sensitive project files — platforms like Autodesk Construction Cloud, Aconex, or Procore provide access controls and audit trails that email does not</li>
+        <li><strong>Apply access controls by project and role</strong> — only parties with a legitimate need should access specific project files</li>
+        <li><strong>Encrypt sensitive design files</strong> when transmitting outside your organisation</li>
+        <li><strong>Have clear data handling clauses in subcontractor agreements</strong> — establish expectations around data security across your supply chain</li>
+      </ul>
+
+      <h2>Managing the supply chain security risk</h2>
+      <p>Construction supply chains are extensive — a major project may involve dozens of subcontractors and suppliers, each with their own systems and security posture. A criminal does not need to attack your business directly; they can compromise a smaller subcontractor whose emails you trust and use that access to reach you.</p>
+      <p>Ask key supply chain partners about their cybersecurity practices. Verify payment details directly. Be sceptical of urgency in financial communications. And ensure your contracts include clear security obligations for parties handling your project data.</p>
+
+      <div class="callout">
+        <p>The Construction Leadership Council's cybersecurity guidance recommends that all businesses in the construction sector achieve Cyber Essentials certification as a baseline — and that major contractors begin requiring it of their supply chain partners.</p>
+      </div>
+
+      <h2>Connected site technology</h2>
+      <p>Modern construction sites increasingly use connected technology — access control systems, CCTV, environmental monitoring, telematics on plant and equipment, and building management systems that remain connected after handover. Each of these needs to be considered as part of your security posture.</p>
+      <p>Site systems should be on isolated network segments, separate from your business administrative systems. Default credentials on site technology must be changed immediately. Software and firmware should be kept updated. And at project handover, ensure that all access credentials are transferred securely to the client and any temporary access your team had is revoked.</p>
+
+      <hr>
+
+      <h2>Construction cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>Bank detail verification policy in place — verbal confirmation required for all changes</li>
+        <li>Dual authorisation for payments above a set threshold</li>
+        <li>Project collaboration platform used for sensitive file sharing — not plain email</li>
+        <li>Access controls applied to project data by role and project</li>
+        <li>MFA enabled on all email accounts, financial systems, and project platforms</li>
+        <li>DMARC, DKIM, and SPF configured on your email domain</li>
+        <li>Staff trained on invoice fraud and BEC — particularly finance and project management teams</li>
+        <li>Connected site systems on isolated network segments</li>
+        <li>Default credentials changed on all site and building management technology</li>
+        <li>Supply chain data handling obligations included in subcontractor agreements</li>
+        <li>Cyber Essentials certification achieved or in progress</li>
+      </ul>
+
+      <p>Construction is a sector built on trust — between clients, contractors, and supply chain partners. Cybercriminals exploit that trust with targeted, patient attacks that are designed to look exactly like normal business. The defences are not complex — they are consistent habits of verification, access control, and awareness that any construction business can build into its operations.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
