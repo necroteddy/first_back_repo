@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Estate Agents | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 23, 2026 &nbsp;·&nbsp; Property Security</div>
+    <h1>Cybersecurity for estate agents — protecting property transactions and client data</h1>
+    <p class="post-lead">Estate agents sit at the centre of some of the largest financial transactions individuals ever make. That makes them — and their clients — prime targets for fraud, data theft, and increasingly sophisticated cybercrime.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>A property transaction involves the transfer of enormous sums of money, the exchange of highly personal client data, and a complex chain of communications between agents, solicitors, mortgage brokers, and buyers and sellers. Each link in that chain is a potential target — and estate agents, as the trusted central point of contact, are frequently in the crosshairs.</p>
+      <p>The combination of high-value transactions, time pressure, multiple parties communicating by email, and clients who are often emotionally and financially stressed creates exactly the conditions that enable cybercrime to succeed.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">£1.2M</div>
+          <div class="stat-d">lost by UK property buyers to conveyancing fraud in a single recent year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">48%</div>
+          <div class="stat-d">of estate agencies have experienced a phishing attack or email fraud attempt</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£50K</div>
+          <div class="stat-d">average loss per victim in property transaction fraud — with many cases far higher</div>
+        </div>
+      </div>
+
+      <h2>Why estate agents are high-value targets</h2>
+      <p>Property transactions are uniquely valuable to criminals because the sums involved are large, the pressure to complete is intense, and the communications are complex enough that a fraudulent email can easily go unnoticed. A buyer who has spent months searching, had an offer accepted, and is days from completion is under enormous pressure — and is more likely to act on a convincing email without pausing to verify it.</p>
+      <p>Estate agents also hold significant amounts of personal data: identification documents, financial information, proof of funds, mortgage details, and sensitive personal circumstances. That data has value on dark web markets and creates GDPR obligations that many agencies have not fully addressed.</p>
+
+      <div class="callout">
+        <p>Property fraud does not just harm the buyer or seller. An estate agency whose email is compromised and used to redirect completion funds faces potential liability, regulatory investigation, and permanent reputational damage. The firm may not have lost the money directly — but they may be held responsible for enabling the fraud.</p>
+      </div>
+
+      <h2>The specific threats estate agents face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Conveyancing and completion fraud</h4>
+          <p>The most financially devastating threat. Criminals monitor email communications around a property transaction and at the point of completion — when the buyer is about to transfer their deposit or full purchase price — substitute genuine bank details with fraudulent ones. Victims transfer their entire house purchase savings to criminals.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Email interception and impersonation</h4>
+          <p>Criminals compromise or spoof estate agent email accounts to intercept client communications, redirect responses, and insert themselves into property transactions. A client who receives an email they believe is from their trusted agent will follow instructions without question.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Client identity data theft</h4>
+          <p>Anti-money laundering requirements mean estate agents collect copies of passports, driving licences, utility bills, and bank statements. This data is extraordinarily valuable for identity fraud and is a target for both external attackers and malicious insiders.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Ransomware disrupting transactions</h4>
+          <p>Ransomware that encrypts an agency's systems — including property management software, CRM, and document stores — can halt all active transactions simultaneously. With exchange and completion deadlines at risk, the pressure to pay a ransom quickly is severe.</p>
+        </div>
+      </div>
+
+      <h2>The conveyancing fraud threat in detail</h2>
+      <p>Conveyancing fraud deserves particular attention because it is so prevalent in property transactions and so catastrophic for victims. The typical attack pattern is well-documented: criminals monitor an email chain involving a property purchase, identify the point at which completion funds will be transferred, and send a convincing email — appearing to come from the solicitor or the estate agent — with changed bank details.</p>
+      <p>The client, under the pressure of completion day, transfers their life savings to the criminal. By the time the fraud is discovered, the money is gone. Recovery rates are low.</p>
+
+      <div class="warning">
+        <strong>⚠ Warn every client — every time</strong>
+        <p>The most effective single defence against conveyancing fraud is client education. Every client should be told explicitly, at the start of a transaction: we will never change our bank details by email. If you receive an email asking you to transfer money to a different account, call us immediately using the number on our website. This warning should be in your terms of engagement, repeated at key stages, and sent as a dedicated communication before completion.</p>
+      </div>
+
+      <h2>Protecting client AML data</h2>
+      <p>Anti-money laundering regulations require estate agents to collect and verify the identity of buyers and sellers. The documents this generates — passports, driving licences, utility bills, bank statements — represent some of the most valuable identity data that exists.</p>
+      <p>This data must be stored securely, with access limited to staff who genuinely need it, encrypted at rest, and deleted when the retention period expires. It should never be stored in an email inbox, a shared folder with no access controls, or on personal devices.</p>
+
+      <ul>
+        <li><strong>Use a dedicated AML platform</strong> where possible — services like Thirdfort, SmartSearch, or InfoTrack manage identity verification securely and reduce the volume of sensitive documents your agency holds directly</li>
+        <li><strong>Restrict access to AML documents</strong> — only the staff member handling the transaction should access identity documents</li>
+        <li><strong>Apply a retention policy</strong> — HMRC guidance sets minimum retention periods for AML records; delete documents when retention periods expire</li>
+        <li><strong>Never email unencrypted copies</strong> of passport or ID documents to clients or third parties</li>
+      </ul>
+
+      <h2>Email security — your first line of defence</h2>
+      <p>Your email domain must be protected against spoofing. DMARC, DKIM, and SPF records prevent criminals from sending emails that appear to come from your domain — the technical foundation of much property fraud. Ask your IT provider or domain registrar to verify these are correctly configured.</p>
+      <p>All staff email accounts must have multi-factor authentication enabled. A compromised estate agent email account is a direct route into active property transactions. The cost of enabling MFA is nothing. The cost of a compromised account can be catastrophic.</p>
+
+      <div class="callout">
+        <p>Check your email accounts for unexpected forwarding rules — a common tactic where criminals set a rule to silently copy all emails to an external address, giving them visibility of every property transaction without needing to log in again.</p>
+      </div>
+
+      <h2>Propertymark and regulatory obligations</h2>
+      <p>Estate agents in the UK operate under multiple regulatory frameworks with data security implications. Propertymark members are expected to maintain appropriate client data protection standards. GDPR requires proper handling of all client personal data. HMRC AML supervision requires secure handling of identity documents. And the National Trading Standards Estate and Letting Agents team expects professional standards that include information security.</p>
+      <p>A data breach at an estate agency is likely to trigger multiple regulatory notifications — to the ICO, potentially to Propertymark, and to affected clients. Having a documented breach response plan is no longer optional.</p>
+
+      <hr>
+
+      <h2>Estate agent cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>All clients warned explicitly about bank detail fraud — in writing, at transaction start and before completion</li>
+        <li>MFA enabled on all staff email accounts</li>
+        <li>DMARC, DKIM, and SPF configured on the agency email domain</li>
+        <li>Email accounts checked for unexpected forwarding rules</li>
+        <li>AML identity documents stored securely — not in email inboxes or unprotected folders</li>
+        <li>Access to client identity data restricted to relevant staff only</li>
+        <li>AML document retention policy in place — records deleted when period expires</li>
+        <li>Property management and CRM software kept up to date</li>
+        <li>Offsite, tested backups of all client and transaction data</li>
+        <li>Staff trained on conveyancing fraud, phishing, and data handling</li>
+        <li>Breach response plan documented — ICO notification procedure understood</li>
+      </ul>
+
+      <p>Property transactions represent the largest financial decisions most people ever make. Estate agents are trusted guides through that process. Protecting clients from fraud — and protecting the agency's own systems and data — is not just a regulatory obligation. It is the foundation of the trust that makes the business work.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
