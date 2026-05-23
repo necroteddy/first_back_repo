@@ -20,41 +20,41 @@
   .header h1 span { color: var(--cyan); }
   .header p { font-size: 13px; color: var(--muted); }
   .input-row { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .input-row input { flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; font-family: var(--mono); font-size: 13px; color: var(--text); outline: none; transition: border-color 0.15s; }
-  .input-row input:focus { border-color: var(--cyan); }
-  .input-row input::placeholder { color: var(--muted); }
-  .btn { background: var(--cyan); color: var(--bg); border: none; border-radius: 6px; padding: 0.7rem 1.5rem; font-family: var(--sans); font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity 0.15s; white-space: nowrap; }
-  .btn:hover { opacity: 0.85; }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  #host { flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; font-family: var(--mono); font-size: 13px; color: var(--text); outline: none; transition: border-color 0.15s; }
+  #host:focus { border-color: var(--cyan); }
+  #host::placeholder { color: var(--muted); }
+  #inspect-btn { background: var(--cyan); color: var(--bg); border: none; border-radius: 6px; padding: 0.7rem 1.5rem; font-family: var(--sans); font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity 0.15s; white-space: nowrap; }
+  #inspect-btn:hover { opacity: 0.85; }
+  #inspect-btn:disabled { opacity: 0.4; cursor: not-allowed; }
   .examples { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.5rem; align-items: center; }
-  .example-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 3px 10px; font-family: var(--mono); font-size: 11px; color: var(--cyan); cursor: pointer; transition: border-color 0.15s; }
-  .example-btn:hover { border-color: var(--cyan); }
-  .status { font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; min-height: 18px; }
-  .status.connecting { color: var(--cyan); }
-  .status.error { color: var(--red); }
+  .examples span { font-size: 11px; color: var(--muted); }
+  .eg { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 3px 10px; font-family: var(--mono); font-size: 11px; color: var(--cyan); cursor: pointer; transition: border-color 0.15s; }
+  .eg:hover { border-color: var(--cyan); }
+  #status { font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; min-height: 18px; }
+  #status.connecting { color: var(--cyan); }
+  #status.error { color: var(--red); }
+  .progress-bar { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; height: 4px; margin-bottom: 1rem; overflow: hidden; display: none; }
+  #progress-fill { height: 100%; background: var(--cyan); width: 0%; transition: width 0.5s ease; }
   .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
   .panel-header { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
   .panel-body { padding: 1rem; }
   .detail-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; padding: 0.35rem 0; border-bottom: 1px solid var(--faint); align-items: start; }
   .detail-row:last-child { border-bottom: none; }
-  .detail-key { color: var(--muted); font-size: 12px; }
-  .detail-val { color: var(--text); font-size: 12px; word-break: break-all; }
+  .dk { color: var(--muted); font-size: 12px; }
+  .dv { color: var(--text); font-size: 12px; word-break: break-all; }
   .check-row { display: flex; align-items: flex-start; gap: 10px; padding: 0.4rem 0; border-bottom: 1px solid var(--faint); font-size: 13px; }
   .check-row:last-child { border-bottom: none; }
-  .check-icon { flex-shrink: 0; width: 16px; margin-top: 1px; }
+  .ci { flex-shrink: 0; width: 16px; margin-top: 1px; }
   .c-ok { color: var(--green); } .c-warn { color: var(--yellow); } .c-fail { color: var(--red); }
+  #results { display: none; }
   .summary-ok { background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.25); border-radius: 8px; padding: 1rem 1.25rem; color: var(--green); font-family: var(--sans); font-size: 14px; font-weight: 700; }
-  .summary-issues { background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.25); border-radius: 8px; padding: 1rem 1.25rem; }
-  .summary-issues .issue-title { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 0.75rem; }
-  .issue-item { display: flex; gap: 8px; font-size: 13px; color: var(--red); padding: 0.2rem 0; }
-  .issue-item::before { content: '•'; flex-shrink: 0; }
-  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--faint); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .progress-bar { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; height: 4px; margin-bottom: 1rem; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--cyan); width: 0%; transition: width 0.5s ease; }
+  .summary-bad { background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.25); border-radius: 8px; padding: 1rem 1.25rem; }
+  .bad-title { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 0.75rem; }
+  .bad-item { display: flex; gap: 8px; font-size: 13px; color: var(--red); padding: 0.2rem 0; }
+  .bad-item::before { content: '•'; flex-shrink: 0; }
   .note { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1.5rem; font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .note a { color: var(--cyan); }
   .note code { background: var(--faint); border-radius: 3px; padding: 1px 5px; color: var(--cyan); }
-  .hidden { display: none; }
   @media (max-width: 500px) { .input-row { flex-direction: column; } .detail-row { grid-template-columns: 90px 1fr; } }
 </style>
 </head>
@@ -63,28 +63,28 @@
 
   <div class="header">
     <h1>TLS <span>Inspector</span></h1>
-    <p>Real certificate checks via SSL Labs — expiry, key strength, protocol, hostname match, and more.</p>
+    <p>Real certificate checks via SSL Labs — expiry, key strength, protocol, hostname, and more.</p>
   </div>
 
   <div class="input-row">
     <input type="text" id="host" placeholder="github.com" spellcheck="false" autocomplete="off" />
-    <button class="btn" id="inspect-btn" onclick="runInspect()">Inspect</button>
+    <button id="inspect-btn">Inspect</button>
   </div>
 
   <div class="examples">
-    <span style="font-size:11px;color:var(--muted)">Try:</span>
-    <button class="example-btn" onclick="setExample('github.com')">github.com</button>
-    <button class="example-btn" onclick="setExample('google.com')">google.com</button>
-    <button class="example-btn" onclick="setExample('cloudflare.com')">cloudflare.com</button>
-    <button class="example-btn" onclick="setExample('expired.badssl.com')">expired.badssl.com</button>
-    <button class="example-btn" onclick="setExample('self-signed.badssl.com')">self-signed</button>
-    <button class="example-btn" onclick="setExample('sha1-intermediate.badssl.com')">weak-sha1</button>
+    <span>Try:</span>
+    <button class="eg" data-host="github.com">github.com</button>
+    <button class="eg" data-host="google.com">google.com</button>
+    <button class="eg" data-host="cloudflare.com">cloudflare.com</button>
+    <button class="eg" data-host="expired.badssl.com">expired.badssl.com</button>
+    <button class="eg" data-host="self-signed.badssl.com">self-signed</button>
+    <button class="eg" data-host="sha1-intermediate.badssl.com">weak-sha1</button>
   </div>
 
-  <div class="status" id="status"></div>
-  <div class="progress-bar hidden" id="progress-wrap"><div class="progress-fill" id="progress-fill"></div></div>
+  <div id="status"></div>
+  <div class="progress-bar" id="progress-bar"><div id="progress-fill"></div></div>
 
-  <div id="results" class="hidden">
+  <div id="results">
     <div class="panel">
       <div class="panel-header">📄 Certificate Details</div>
       <div class="panel-body" id="details-body"></div>
@@ -97,288 +97,277 @@
   </div>
 
   <div class="note">
-    <strong style="color:var(--text)">How this works:</strong> Uses the <a href="https://www.ssllabs.com/ssltest/" target="_blank" style="color:var(--cyan)">SSL Labs API</a> to fetch real certificate data. Analysis takes 60–90 seconds for a fresh scan. Results are cached by SSL Labs for ~82 hours so repeat scans are instant.<br><br>
+    <strong style="color:var(--text)">How this works:</strong> Uses the <a href="https://www.ssllabs.com/ssltest/" target="_blank">SSL Labs API</a> to fetch real certificate data. First scan takes 60–90 seconds. Repeat scans are instant (cached ~82 hours).<br><br>
     To run locally: <code>pip install cryptography</code> then <code>python tls_inspector.py example.com</code>
   </div>
 
 </div>
 
 <script>
-let pollTimer = null;
-let progressTimer = null;
-let progressValue = 0;
+(function () {
+  var progressTimer = null;
+  var progressValue = 0;
 
-function setExample(host) {
-  document.getElementById('host').value = host;
-}
+  function setStatus(msg, cls) {
+    var el = document.getElementById('status');
+    el.textContent = msg;
+    el.className = cls || '';
+  }
 
-function setStatus(msg, cls, spinner) {
-  const el = document.getElementById('status');
-  el.innerHTML = (spinner ? '<span class="spinner"></span>' : '') + msg;
-  el.className = 'status' + (cls ? ' ' + cls : '');
-}
+  function setProgress(pct) {
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
 
-function setProgress(pct) {
-  document.getElementById('progress-fill').style.width = pct + '%';
-}
+  function startProgress() {
+    document.getElementById('progress-bar').style.display = 'block';
+    progressValue = 5;
+    setProgress(progressValue);
+    progressTimer = setInterval(function () {
+      if (progressValue < 85) {
+        progressValue += Math.random() * 3;
+        setProgress(Math.min(progressValue, 85));
+      }
+    }, 800);
+  }
 
-function startProgress() {
-  document.getElementById('progress-wrap').classList.remove('hidden');
-  progressValue = 5;
-  setProgress(progressValue);
-  progressTimer = setInterval(() => {
-    if (progressValue < 85) {
-      progressValue += Math.random() * 3;
-      setProgress(Math.min(progressValue, 85));
+  function finishProgress() {
+    clearInterval(progressTimer);
+    setProgress(100);
+    setTimeout(function () {
+      document.getElementById('progress-bar').style.display = 'none';
+      setProgress(0);
+    }, 600);
+  }
+
+  function dr(key, val) {
+    return '<div class="detail-row"><span class="dk">' + key + '</span><span class="dv">' + val + '</span></div>';
+  }
+
+  function cr(icon, cls, msg) {
+    return '<div class="check-row"><span class="ci ' + cls + '">' + icon + '</span><span>' + msg + '</span></div>';
+  }
+
+  function sleep(ms) {
+    return new Promise(function (r) { setTimeout(r, ms); });
+  }
+
+  function fetchJSON(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' from SSL Labs');
+      return r.json();
+    });
+  }
+
+  function poll(host, data) {
+    var status = data.status;
+    if (status === 'ERROR') {
+      throw new Error(data.statusMessage || 'SSL Labs error');
     }
-  }, 800);
-}
-
-function finishProgress() {
-  clearInterval(progressTimer);
-  setProgress(100);
-  setTimeout(() => {
-    document.getElementById('progress-wrap').classList.add('hidden');
-    setProgress(0);
-  }, 600);
-}
-
-function detailRow(key, val) {
-  return `<div class="detail-row"><span class="detail-key">${key}</span><span class="detail-val">${val}</span></div>`;
-}
-function checkRow(icon, cls, msg) {
-  return `<div class="check-row"><span class="check-icon ${cls}">${icon}</span><span>${msg}</span></div>`;
-}
-
-async function runInspect() {
-  const host = document.getElementById('host').value.trim()
-    .replace(/^https?:\/\//, '').replace(/\/.*$/, '').toLowerCase();
-  if (!host) { setStatus('Please enter a hostname.', 'error'); return; }
-
-  clearInterval(pollTimer);
-  document.getElementById('results').classList.add('hidden');
-  document.getElementById('inspect-btn').disabled = true;
-  setStatus('Starting SSL Labs analysis…', 'connecting', true);
-  startProgress();
-
-  try {
-    await pollSSLLabs(host);
-  } catch(err) {
-    finishProgress();
-    setStatus('Error: ' + err.message, 'error');
-    document.getElementById('inspect-btn').disabled = false;
-  }
-}
-
-async function pollSSLLabs(host) {
-  // Kick off a new analysis
-  const startUrl = `https://api.ssllabs.com/api/v3/analyze?host=${encodeURIComponent(host)}&startNew=on&all=done`;
-  let data = await fetchJSON(startUrl);
-  await waitAndPoll(host, data);
-}
-
-async function waitAndPoll(host, data) {
-  const status = data.status;
-
-  if (status === 'ERROR') {
-    throw new Error(data.statusMessage || 'SSL Labs returned an error');
+    if (status === 'READY') {
+      finishProgress();
+      render(host, data);
+      setStatus('Analysis complete — ' + host);
+      document.getElementById('inspect-btn').disabled = false;
+      return;
+    }
+    var msg = status === 'DNS' ? 'Resolving DNS…'
+      : 'Analysing — ' + (data.endpoints && data.endpoints[0] && data.endpoints[0].statusMessage || 'in progress') + '…';
+    setStatus(msg, 'connecting');
+    return sleep(8000).then(function () {
+      return fetchJSON('https://api.ssllabs.com/api/v3/analyze?host=' + encodeURIComponent(host) + '&all=done');
+    }).then(function (next) {
+      return poll(host, next);
+    });
   }
 
-  if (status === 'DNS' || status === 'IN_PROGRESS') {
-    const msg = status === 'DNS' ? 'Resolving DNS…' : `Analysing — ${data.endpoints?.[0]?.statusMessage || 'in progress'}…`;
-    setStatus(msg, 'connecting', true);
-    await sleep(8000);
-    const pollUrl = `https://api.ssllabs.com/api/v3/analyze?host=${encodeURIComponent(host)}&all=done`;
-    const next = await fetchJSON(pollUrl);
-    return waitAndPoll(host, next);
+  function runInspect() {
+    var raw = document.getElementById('host').value.trim();
+    var host = raw.replace(/^https?:\/\//, '').replace(/\/.*$/, '').toLowerCase();
+    if (!host) { setStatus('Please enter a hostname.', 'error'); return; }
+
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('inspect-btn').disabled = true;
+    setStatus('Starting SSL Labs analysis…', 'connecting');
+    startProgress();
+
+    fetchJSON('https://api.ssllabs.com/api/v3/analyze?host=' + encodeURIComponent(host) + '&startNew=on&all=done')
+      .then(function (data) { return poll(host, data); })
+      .catch(function (err) {
+        finishProgress();
+        setStatus('Error: ' + err.message, 'error');
+        document.getElementById('inspect-btn').disabled = false;
+      });
   }
 
-  if (status === 'READY') {
-    finishProgress();
-    renderSSLLabs(host, data);
-    setStatus(`Analysis complete — ${host}`);
-    document.getElementById('inspect-btn').disabled = false;
-    return;
+  function render(host, data) {
+    var ep = data.endpoints && data.endpoints[0];
+    if (!ep) { setStatus('No endpoint data returned.', 'error'); return; }
+
+    var details = ep.details || {};
+    var cert = details.cert || {};
+    var proto = details.protocols || [];
+    var issues = [];
+
+    var now = Date.now();
+    var notBefore = cert.notBefore ? new Date(cert.notBefore) : null;
+    var notAfter  = cert.notAfter  ? new Date(cert.notAfter)  : null;
+    var daysLeft  = notAfter ? Math.floor((notAfter - now) / 86400000) : null;
+
+    var subject = cert.subject   || 'N/A';
+    var issuer  = cert.issuerSubject || 'N/A';
+    var keyAlg  = cert.keyAlg    || 'N/A';
+    var keySize = cert.keySize   || 0;
+    var sigAlg  = cert.sigAlg    || 'N/A';
+    var altNames = cert.altNames || [];
+
+    var protoList = proto.map(function (p) { return p.name + ' ' + p.version; });
+    var bestProto = protoList.length ? protoList[protoList.length - 1] : 'N/A';
+
+    // DETAILS
+    var dh = '';
+    dh += dr('Host', host + ':443');
+    dh += dr('Subject', subject);
+    dh += dr('Issuer', issuer);
+    if (notBefore) dh += dr('Valid from', notBefore.toISOString().slice(0, 10));
+    if (notAfter) {
+      var dc = daysLeft !== null ? ' (' + daysLeft + ' days)' : '';
+      dh += dr('Expires', notAfter.toISOString().slice(0, 10) + dc);
+    }
+    dh += dr('Key', keyAlg + ' ' + keySize + '-bit');
+    dh += dr('Signature', sigAlg);
+    dh += dr('Protocol', bestProto);
+    if (ep.grade) dh += dr('SSL Labs grade', '<strong style="color:' + gradeColor(ep.grade) + '">' + ep.grade + '</strong>');
+    if (altNames.length) {
+      var shown = altNames.slice(0, 6).join(', ');
+      var more = altNames.length > 6 ? ' … (+' + (altNames.length - 6) + ' more)' : '';
+      dh += dr('SANs', shown + more);
+    }
+    document.getElementById('details-body').innerHTML = dh;
+
+    // CHECKS
+    var ch = '';
+
+    // 1. Expiry
+    if (daysLeft === null) {
+      ch += cr('⚠', 'c-warn', 'Could not determine expiry date');
+    } else if (daysLeft <= 0) {
+      ch += cr('✘', 'c-fail', 'Certificate EXPIRED ' + Math.abs(daysLeft) + ' days ago');
+      issues.push('Expired certificate');
+    } else if (daysLeft <= 14) {
+      ch += cr('⚠', 'c-warn', 'Expires in ' + daysLeft + ' days — renew immediately');
+      issues.push('Expiring in ' + daysLeft + ' days');
+    } else if (daysLeft <= 30) {
+      ch += cr('⚠', 'c-warn', 'Expires in ' + daysLeft + ' days — renew soon');
+      issues.push('Expiring in ' + daysLeft + ' days');
+    } else {
+      ch += cr('✔', 'c-ok', 'Valid for ' + daysLeft + ' more days');
+    }
+
+    // 2. Hostname
+    var matched = altNames.some(function (n) {
+      try { return new RegExp('^' + n.replace(/\./g, '\\.').replace(/\*/g, '[^.]+') + '$', 'i').test(host); }
+      catch (e) { return false; }
+    });
+    if (matched || altNames.length === 0) {
+      ch += cr('✔', 'c-ok', 'Hostname matches certificate');
+    } else {
+      ch += cr('✘', 'c-fail', "Hostname '" + host + "' does NOT match certificate SANs");
+      issues.push('Hostname mismatch');
+    }
+
+    // 3. Signature
+    var sl = sigAlg.toLowerCase();
+    if (sl.indexOf('md5') !== -1 || sl.indexOf('sha1') !== -1) {
+      ch += cr('✘', 'c-fail', 'Weak signature algorithm: ' + sigAlg + ' (use SHA-256+)');
+      issues.push('Weak signature: ' + sigAlg);
+    } else {
+      ch += cr('✔', 'c-ok', 'Strong signature algorithm: ' + sigAlg);
+    }
+
+    // 4. Key size
+    if (keyAlg === 'RSA' && keySize < 2048) {
+      ch += cr('✘', 'c-fail', 'RSA key too small: ' + keySize + '-bit (2048+ required)');
+      issues.push('Weak RSA key: ' + keySize + '-bit');
+    } else if (keyAlg === 'RSA' && keySize < 3072) {
+      ch += cr('⚠', 'c-warn', 'RSA key is ' + keySize + '-bit (3072+ preferred long-term)');
+    } else {
+      ch += cr('✔', 'c-ok', 'Key size adequate: ' + keyAlg + ' ' + keySize + '-bit');
+    }
+
+    // 5. Protocol
+    var oldProtos = proto.filter(function (p) {
+      var v = (p.name + p.version).replace(' ', '');
+      return ['SSL2.0','SSL3.0','TLS1.0','TLS1.1'].indexOf(v) !== -1;
+    });
+    if (oldProtos.length) {
+      var ol = oldProtos.map(function (p) { return p.name + ' ' + p.version; }).join(', ');
+      ch += cr('✘', 'c-fail', 'Old protocol(s) supported: ' + ol + ' — disable TLS 1.0/1.1');
+      issues.push('Old protocol: ' + ol);
+    } else {
+      ch += cr('✔', 'c-ok', 'Modern protocol only: ' + bestProto);
+    }
+
+    // 6. Self-signed
+    if (subject === issuer) {
+      ch += cr('✘', 'c-fail', 'Self-signed certificate (not trusted by browsers)');
+      issues.push('Self-signed');
+    } else {
+      ch += cr('✔', 'c-ok', 'Issued by a CA (not self-signed)');
+    }
+
+    // 7. Chain
+    var chain = details.certChains && details.certChains[0];
+    if (chain && chain.issues && chain.issues !== 0) {
+      ch += cr('⚠', 'c-warn', 'Certificate chain has issues — check SSL Labs for details');
+      issues.push('Chain issues');
+    } else {
+      ch += cr('✔', 'c-ok', 'Certificate chain OK');
+    }
+
+    // 8. SANs
+    if (altNames.length > 0) {
+      ch += cr('✔', 'c-ok', 'SANs present (' + altNames.length + ' name(s))');
+    } else {
+      ch += cr('⚠', 'c-warn', 'No Subject Alternative Names — some clients may reject this');
+      issues.push('No SANs');
+    }
+
+    document.getElementById('checks-body').innerHTML = ch;
+
+    // SUMMARY
+    var sp = document.getElementById('summary-panel');
+    if (!issues.length) {
+      sp.innerHTML = '<div class="summary-ok">✔ All checks passed. Certificate looks good.</div>';
+    } else {
+      var items = issues.map(function (i) { return '<div class="bad-item">' + i + '</div>'; }).join('');
+      sp.innerHTML = '<div class="summary-bad"><div class="bad-title">✘ ' + issues.length + ' issue(s) found</div>' + items + '</div>';
+    }
+
+    document.getElementById('results').style.display = 'block';
   }
 
-  // Unknown status — keep polling
-  await sleep(5000);
-  const pollUrl = `https://api.ssllabs.com/api/v3/analyze?host=${encodeURIComponent(host)}&all=done`;
-  const next = await fetchJSON(pollUrl);
-  return waitAndPoll(host, next);
-}
-
-async function fetchJSON(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status} from SSL Labs`);
-  return res.json();
-}
-
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-function gradeColor(grade) {
-  if (!grade) return 'var(--muted)';
-  if (grade.startsWith('A')) return 'var(--green)';
-  if (grade.startsWith('B')) return 'var(--yellow)';
-  return 'var(--red)';
-}
-
-function renderSSLLabs(host, data) {
-  const ep = data.endpoints?.[0];
-  if (!ep) throw new Error('No endpoint data returned');
-
-  const details = ep.details || {};
-  const cert = details.cert || details.certChains?.[0]?.certs?.[0] || {};
-  const proto = details.protocols || [];
-  const issues = [];
-
-  // --- DETAILS PANEL ---
-  const now = Date.now();
-  const notBefore = cert.notBefore ? new Date(cert.notBefore) : null;
-  const notAfter  = cert.notAfter  ? new Date(cert.notAfter)  : null;
-  const daysLeft  = notAfter ? Math.floor((notAfter - now) / 86400000) : null;
-
-  const subject = cert.subject || 'N/A';
-  const issuer  = cert.issuerSubject || 'N/A';
-  const keyAlg  = cert.keyAlg  || 'N/A';
-  const keySize = cert.keySize || 0;
-  const sigAlg  = cert.sigAlg  || 'N/A';
-
-  // Best protocol
-  const protoVersions = proto.map(p => p.name + ' ' + p.version);
-  const bestProto = protoVersions.length ? protoVersions[protoVersions.length - 1] : 'N/A';
-
-  // SANs
-  const altNames = cert.altNames || [];
-
-  let detailsHtml = '';
-  detailsHtml += detailRow('Host', host + ':443');
-  detailsHtml += detailRow('Subject', subject);
-  detailsHtml += detailRow('Issuer', issuer);
-  if (notBefore) detailsHtml += detailRow('Valid from', notBefore.toISOString().slice(0,10));
-  if (notAfter) {
-    const dayStr = daysLeft !== null ? ` <span style="color:${daysLeft<=30?'var(--yellow)':'var(--muted)'">(${daysLeft} days)</span>` : '';
-    detailsHtml += detailRow('Expires', notAfter.toISOString().slice(0,10) + dayStr);
-  }
-  detailsHtml += detailRow('Key', `${keyAlg} ${keySize}-bit`);
-  detailsHtml += detailRow('Signature', sigAlg);
-  detailsHtml += detailRow('Protocol', bestProto);
-  if (ep.grade) detailsHtml += detailRow('SSL Labs grade', `<span style="color:${gradeColor(ep.grade)};font-weight:700">${ep.grade}</span>`);
-  if (altNames.length) {
-    const shown = altNames.slice(0,6).join(', ');
-    const more = altNames.length > 6 ? ` … (+${altNames.length-6} more)` : '';
-    detailsHtml += detailRow('SANs', shown + more);
-  }
-  document.getElementById('details-body').innerHTML = detailsHtml;
-
-  // --- CHECKS PANEL ---
-  let checksHtml = '';
-
-  // 1. Expiry
-  if (daysLeft === null) {
-    checksHtml += checkRow('⚠', 'c-warn', 'Could not determine expiry date');
-  } else if (daysLeft <= 0) {
-    checksHtml += checkRow('✘', 'c-fail', `Certificate EXPIRED ${Math.abs(daysLeft)} days ago`);
-    issues.push('Expired certificate');
-  } else if (daysLeft <= 14) {
-    checksHtml += checkRow('⚠', 'c-warn', `Expires in ${daysLeft} days — renew immediately`);
-    issues.push(`Expiring in ${daysLeft} days`);
-  } else if (daysLeft <= 30) {
-    checksHtml += checkRow('⚠', 'c-warn', `Expires in ${daysLeft} days — renew soon`);
-    issues.push(`Expiring in ${daysLeft} days`);
-  } else {
-    checksHtml += checkRow('✔', 'c-ok', `Valid for ${daysLeft} more days`);
+  function gradeColor(g) {
+    if (!g) return 'var(--muted)';
+    if (g.charAt(0) === 'A') return 'var(--green)';
+    if (g.charAt(0) === 'B') return 'var(--yellow)';
+    return 'var(--red)';
   }
 
-  // 2. Hostname match
-  const hostMatch = altNames.some(n => {
-    const pat = n.replace(/\*/g, '[^.]+');
-    return new RegExp('^' + pat + '$', 'i').test(host);
-  }) || subject.includes('CN=' + host) || subject.includes(host);
-  if (hostMatch || altNames.length === 0) {
-    checksHtml += checkRow('✔', 'c-ok', 'Hostname matches certificate');
-  } else {
-    checksHtml += checkRow('✘', 'c-fail', `Hostname '${host}' does NOT match certificate SANs`);
-    issues.push('Hostname mismatch');
-  }
-
-  // 3. Signature algorithm
-  const sigLower = sigAlg.toLowerCase();
-  if (sigLower.includes('md5') || sigLower.includes('sha1')) {
-    checksHtml += checkRow('✘', 'c-fail', `Weak signature algorithm: ${sigAlg} (use SHA-256+)`);
-    issues.push(`Weak signature: ${sigAlg}`);
-  } else {
-    checksHtml += checkRow('✔', 'c-ok', `Strong signature algorithm: ${sigAlg}`);
-  }
-
-  // 4. Key size
-  if (keyAlg === 'RSA' && keySize < 2048) {
-    checksHtml += checkRow('✘', 'c-fail', `RSA key too small: ${keySize}-bit (2048+ required)`);
-    issues.push(`Weak RSA key: ${keySize}-bit`);
-  } else if (keyAlg === 'RSA' && keySize < 3072) {
-    checksHtml += checkRow('⚠', 'c-warn', `RSA key is ${keySize}-bit (3072+ preferred long-term)`);
-  } else {
-    checksHtml += checkRow('✔', 'c-ok', `Key size adequate: ${keyAlg} ${keySize}-bit`);
-  }
-
-  // 5. Protocol
-  const hasOld = proto.some(p => {
-    const v = p.name + p.version;
-    return ['SSL2.0','SSL3.0','TLS1.0','TLS1.1'].includes(v.replace(' ',''));
+  // Wire up events after DOM is ready — no inline onclick at all
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('inspect-btn').addEventListener('click', runInspect);
+    document.getElementById('host').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') runInspect();
+    });
+    var egs = document.querySelectorAll('.eg');
+    for (var i = 0; i < egs.length; i++) {
+      egs[i].addEventListener('click', function () {
+        document.getElementById('host').value = this.getAttribute('data-host');
+      });
+    }
   });
-  if (hasOld) {
-    const oldList = proto.filter(p => ['SSL2.0','SSL3.0','TLS1.0','TLS1.1'].includes((p.name+p.version).replace(' ',''))).map(p=>p.name+' '+p.version).join(', ');
-    checksHtml += checkRow('✘', 'c-fail', `Old protocol(s) supported: ${oldList} — disable TLS 1.0/1.1`);
-    issues.push(`Old protocol: ${oldList}`);
-  } else {
-    checksHtml += checkRow('✔', 'c-ok', `Modern protocol only: ${bestProto}`);
-  }
 
-  // 6. Self-signed
-  const selfSigned = cert.issues & 0x04 || subject === issuer;
-  if (selfSigned) {
-    checksHtml += checkRow('✘', 'c-fail', 'Self-signed certificate (not trusted by browsers)');
-    issues.push('Self-signed');
-  } else {
-    checksHtml += checkRow('✔', 'c-ok', 'Issued by a CA (not self-signed)');
-  }
-
-  // 7. Chain issues
-  const chainIssues = details.certChains?.[0]?.issues;
-  if (chainIssues && chainIssues !== 0) {
-    checksHtml += checkRow('⚠', 'c-warn', 'Certificate chain has issues — check SSL Labs for details');
-    issues.push('Chain issues detected');
-  } else {
-    checksHtml += checkRow('✔', 'c-ok', 'Certificate chain OK');
-  }
-
-  // 8. SANs
-  if (altNames.length > 0) {
-    checksHtml += checkRow('✔', 'c-ok', `SANs present (${altNames.length} name(s))`);
-  } else {
-    checksHtml += checkRow('⚠', 'c-warn', 'No Subject Alternative Names — some clients may reject this');
-    issues.push('No SANs');
-  }
-
-  document.getElementById('checks-body').innerHTML = checksHtml;
-
-  // SUMMARY
-  const panel = document.getElementById('summary-panel');
-  if (!issues.length) {
-    panel.innerHTML = `<div class="summary-ok">✔ All checks passed. Certificate looks good.</div>`;
-  } else {
-    const items = issues.map(i => `<div class="issue-item">${i}</div>`).join('');
-    panel.innerHTML = `<div class="summary-issues"><div class="issue-title">✘ ${issues.length} issue(s) found</div>${items}</div>`;
-  }
-
-  document.getElementById('results').classList.remove('hidden');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('host').addEventListener('keydown', e => {
-    if (e.key === 'Enter') runInspect();
-  });
-});
+}());
 </script>
 </body>
 </html>
