@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Hospitality | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 24, 2026 &nbsp;·&nbsp; Hospitality Security</div>
+    <h1>Cybersecurity for hospitality — protecting guest data and payment systems</h1>
+    <p class="post-lead">Hotels, restaurants, and hospitality businesses collect guest payment details, personal data, and loyalty information at scale. They are also targets for the kind of attacks that can compromise thousands of customers at once — silently and for months.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>The hospitality industry has a long and documented history as a target for payment card theft. Major hotel chains and restaurant groups have suffered some of the most significant data breaches of the past decade — not because they were careless, but because they hold high volumes of payment data, operate complex distributed networks across many locations, and often rely on legacy point-of-sale systems that are difficult to update.</p>
+      <p>For smaller hospitality businesses — independent hotels, restaurants, pubs, cafés, and venues — the risks are just as real, and the resources to address them are often more limited.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">89%</div>
+          <div class="stat-d">of hospitality businesses that experienced a breach had payment card data compromised</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">166</div>
+          <div class="stat-d">days — average time before a hospitality data breach is detected</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£185K</div>
+          <div class="stat-d">average cost of a data breach for a small hospitality business including fines and recovery</div>
+        </div>
+      </div>
+
+      <h2>Why hospitality is a persistent target</h2>
+      <p>Hospitality businesses process payment cards constantly — hundreds or thousands of transactions per day across multiple terminals. That volume of card data, combined with the operational complexity of managing a busy venue, creates conditions where a silent attacker can harvest card details for months before anyone notices.</p>
+      <p>The 166-day average detection time in the sector is not a coincidence. Hospitality staff are focused on delivering guest experiences, not monitoring network logs. IT resource is often minimal or outsourced. And point-of-sale systems are frequently older, harder to update, and connected to the same network as everything else.</p>
+
+      <div class="callout">
+        <p>In a typical hospitality breach, malware is installed on a point-of-sale system — often through a phishing email or a compromised remote access connection — and silently captures card data from every transaction for weeks or months before discovery.</p>
+      </div>
+
+      <h2>The specific threats hospitality businesses face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Point-of-sale malware</h4>
+          <p>Malware installed on POS systems reads payment card data from memory during transactions. It is silent, persistent, and can affect every payment taken across every terminal at every site. Entry is typically via phishing email, compromised remote access, or a supplier's systems.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Online booking and reservation system compromise</h4>
+          <p>Online booking platforms that store guest payment details are targets for data theft. A compromised booking system can expose thousands of guest records simultaneously — names, contact details, payment information, and stay history.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Guest Wi-Fi as an attack vector</h4>
+          <p>Poorly configured guest Wi-Fi that shares a network with back-office systems, POS terminals, or property management systems creates a direct route from a guest's device — or an attacker posing as a guest — into your business infrastructure.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Loyalty programme and guest data theft</h4>
+          <p>Guest loyalty databases contain names, email addresses, phone numbers, stay preferences, and often partial payment details for millions of customers. A breach of loyalty data triggers GDPR notifications and damages the guest relationships that are central to hospitality businesses.</p>
+        </div>
+      </div>
+
+      <h2>PCI DSS in hospitality — what you need to know</h2>
+      <p>If your business takes card payments — at the front desk, at the bar, through your website, or via a booking system — you are subject to PCI DSS. In hospitality, where card payments are central to almost every transaction, compliance is not optional.</p>
+      <p>The most important principle for smaller hospitality businesses is to minimise your PCI scope — the range of systems and processes that handle card data. Using a payment provider whose terminals handle card processing entirely, and whose hosted payment pages handle online bookings, means card data never touches your own systems, dramatically reducing your compliance burden and your risk.</p>
+
+      <div class="warning">
+        <strong>⚠ Never store full card numbers</strong>
+        <p>There is no legitimate reason for a hospitality business to store full payment card numbers, CVV codes, or magnetic stripe data. If your property management system or booking platform stores this data, ask your provider about tokenisation — replacing card data with a token that can be used for repeat transactions without storing the actual card details.</p>
+      </div>
+
+      <h2>Network segmentation is essential</h2>
+      <p>One of the most important security controls for any hospitality business with multiple systems is network segmentation. Guest Wi-Fi, POS systems, property management systems, back-office computers, and smart building systems should all be on separate network segments that cannot communicate freely with each other.</p>
+
+      <ul>
+        <li><strong>Guest Wi-Fi</strong> — internet access only, completely isolated from all business systems</li>
+        <li><strong>POS terminals</strong> — on a dedicated, isolated segment; never on the same network as guest Wi-Fi or general staff computers</li>
+        <li><strong>Property management and booking systems</strong> — restricted segment with access limited to relevant staff</li>
+        <li><strong>Back-office computers</strong> — general business use, separated from POS and guest-facing systems</li>
+        <li><strong>Smart building systems</strong> — HVAC, access control, and entertainment systems on their own isolated segment</li>
+      </ul>
+
+      <div class="callout">
+        <p>A guest connecting to your Wi-Fi should never be able to reach your POS terminals, your property management system, or your back-office network. A single misconfigured router can make all of these accessible from the car park.</p>
+      </div>
+
+      <h2>Remote access to POS and management systems</h2>
+      <p>Many hospitality businesses allow their IT support providers or POS vendors to access systems remotely for maintenance. This remote access, if poorly secured, is one of the most common entry points for attacks on hospitality businesses.</p>
+      <p>Remote access to POS and management systems must use a VPN with multi-factor authentication — never direct RDP exposed to the internet. Remote access sessions should be logged and reviewed. Access should be revoked when a support engagement ends, not left permanently enabled.</p>
+
+      <h2>Staff training — the front line of defence</h2>
+      <p>In hospitality, staff turnover is high and training time is limited. Security awareness needs to be brief, practical, and built into onboarding. The most important messages: never open email attachments from unknown senders on a POS or back-office computer; never plug unknown USB devices into any system; report anything unusual immediately without fear of blame.</p>
+
+      <hr>
+
+      <h2>Hospitality cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>PCI DSS self-assessment questionnaire completed annually</li>
+        <li>Card data never stored — tokenisation used for repeat payments</li>
+        <li>POS terminals on an isolated network segment</li>
+        <li>Guest Wi-Fi completely isolated from all business systems</li>
+        <li>Remote access to POS and management systems via VPN with MFA only</li>
+        <li>Online booking system uses hosted payment pages — card data handled by provider</li>
+        <li>Property management system access restricted by role</li>
+        <li>POS and management software kept up to date</li>
+        <li>Staff trained on phishing and safe device use during onboarding</li>
+        <li>Offsite backups of booking, guest, and operational data in place</li>
+        <li>Incident response plan covering data breach and system outage scenarios</li>
+      </ul>
+
+      <p>Hospitality is built on trust — guests trust you with their payment details, their personal information, and their safety. A cybersecurity incident does not just cause financial harm. It damages the guest relationship that every hospitality business depends on. The controls required to prevent it are achievable, and the cost of putting them in place is a fraction of the cost of the incidents they prevent.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
