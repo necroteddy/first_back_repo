@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Insurance | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* COVERAGE TABLE */
+  .cov-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .cov-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .cov-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.55; font-size: 14px; }
+  .cov-table tr:last-child td { border-bottom: none; }
+  .cov-table td:first-child { font-weight: 500; }
+  .tag-yes { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-check { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-no { display: inline-block; background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .cov-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 25, 2026 &nbsp;·&nbsp; Cyber Insurance</div>
+    <h1>Cyber insurance — what every business owner needs to know before buying</h1>
+    <p class="post-lead">Cyber insurance has gone from a niche product to a business essential in under a decade. But not all policies are equal, the exclusions can be significant, and buying without understanding what you are getting can leave you badly exposed when you need it most.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>A cyberattack on your business triggers costs that can quickly reach six figures — incident response specialists, legal advice, regulatory notifications, customer communications, system rebuilding, lost revenue, and potential fines. For many small businesses, these costs would be existential without insurance cover.</p>
+      <p>Cyber insurance has grown rapidly in response to this reality. But the market is complex, the policies vary enormously, and the fine print contains exclusions that have left businesses without cover precisely when they needed it most. Understanding what you are buying — before an incident — is essential.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">64%</div>
+          <div class="stat-d">of UK businesses now have some form of cyber insurance — up from 32% in 2020</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£350K</div>
+          <div class="stat-d">average cyber insurance claim value for a small business ransomware incident</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">38%</div>
+          <div class="stat-d">of cyber insurance claims are partially or fully denied due to policy exclusions</div>
+        </div>
+      </div>
+
+      <h2>What cyber insurance actually covers</h2>
+      <p>A comprehensive cyber insurance policy covers two broad categories: first-party costs (your own losses) and third-party liability (claims made against you by others). Understanding the distinction helps you assess whether a policy actually meets your needs.</p>
+
+      <table class="cov-table">
+        <thead>
+          <tr>
+            <th>Coverage area</th>
+            <th>What it pays for</th>
+            <th>Included?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Incident response</td>
+            <td>Forensic investigation, cybersecurity specialists, legal advice</td>
+            <td><span class="tag-yes">Most policies</span></td>
+          </tr>
+          <tr>
+            <td>Business interruption</td>
+            <td>Lost revenue and extra costs while systems are down</td>
+            <td><span class="tag-check">Check terms</span></td>
+          </tr>
+          <tr>
+            <td>Data breach notification</td>
+            <td>Costs of notifying affected individuals and regulators</td>
+            <td><span class="tag-yes">Most policies</span></td>
+          </tr>
+          <tr>
+            <td>Ransomware payment</td>
+            <td>The ransom itself — if you choose to pay</td>
+            <td><span class="tag-check">Check terms</span></td>
+          </tr>
+          <tr>
+            <td>Regulatory fines</td>
+            <td>ICO fines and other regulatory penalties</td>
+            <td><span class="tag-no">Often excluded</span></td>
+          </tr>
+          <tr>
+            <td>Reputation management</td>
+            <td>PR and communications support after an incident</td>
+            <td><span class="tag-check">Some policies</span></td>
+          </tr>
+          <tr>
+            <td>Third-party liability</td>
+            <td>Claims from customers whose data was breached</td>
+            <td><span class="tag-yes">Most policies</span></td>
+          </tr>
+          <tr>
+            <td>Social engineering fraud</td>
+            <td>Losses from BEC and invoice fraud</td>
+            <td><span class="tag-no">Often excluded</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>The exclusions that catch businesses out</h2>
+      <p>The most significant claims disputes in cyber insurance come from exclusions that policy holders did not fully understand at the point of purchase. These are the ones to watch most carefully.</p>
+
+      <p><strong>War and nation-state exclusions.</strong> Most policies exclude losses caused by acts of war or nation-state attacks. In 2017, Merck lost a $1.4 billion insurance claim when its insurer argued the NotPetya ransomware attack — attributed to the Russian government — was an act of war. This exclusion is increasingly being tested and courts have ruled differently in different jurisdictions. Check exactly how your policy defines this.</p>
+
+      <p><strong>Pre-existing conditions.</strong> If a vulnerability existed before your policy started and was exploited after, some insurers will argue the incident stems from a pre-existing condition and deny the claim. This is why underwriters increasingly require security assessments before coverage begins.</p>
+
+      <p><strong>Failure to maintain adequate security.</strong> Most policies require you to maintain minimum security standards — updated software, MFA on critical systems, regular backups. If you suffer a breach and the insurer finds you were not meeting those standards, your claim can be denied. These requirements are not always clearly spelled out at purchase.</p>
+
+      <div class="warning">
+        <strong>⚠ Read the security warranties carefully</strong>
+        <p>Many cyber policies now include security warranties — statements you make at the time of purchase about the security controls you have in place. If those statements are inaccurate, or if your security deteriorates after purchase, your cover may be void. Be accurate and keep your security controls up to standard throughout the policy period.</p>
+      </div>
+
+      <h2>What insurers ask for — and why it matters</h2>
+      <p>The cyber insurance application process has become significantly more rigorous in recent years. Insurers now routinely ask detailed questions about your security posture — and the answers you give form the basis of your cover.</p>
+      <p>Common questions include: do you use MFA on email and remote access? Do you have offsite backups? Do you run regular vulnerability scans? Do you have an incident response plan? Giving accurate answers is essential — both to get appropriate cover and to ensure claims are not denied later on the basis of inaccurate representations.</p>
+
+      <div class="callout">
+        <p>The process of applying for cyber insurance is itself a useful security exercise. The questions insurers ask reveal the controls that matter most — and if you cannot answer them positively, that is a clear signal of where your security needs to improve.</p>
+      </div>
+
+      <h2>How much does it cost?</h2>
+      <p>Cyber insurance premiums have risen significantly in recent years as claims have increased. For a small business with revenue under £1 million, annual premiums typically range from £500 to £2,500 depending on the sector, the security controls in place, and the coverage limits selected. Higher-risk sectors — financial services, healthcare, legal — attract higher premiums.</p>
+      <p>Businesses with strong security controls — MFA, patching, backups, staff training — typically attract lower premiums. The investment in security pays twice: it reduces the risk of an incident, and it reduces the cost of insuring against one.</p>
+
+      <h2>What to look for when comparing policies</h2>
+      <ul>
+        <li><strong>Coverage limits</strong> — is the limit sufficient to cover a realistic worst-case incident for your business?</li>
+        <li><strong>Sub-limits</strong> — some policies have lower limits for specific coverage areas like ransomware or social engineering; check these carefully</li>
+        <li><strong>Retroactive date</strong> — coverage for incidents that began before the policy start date; important for slow-burn breaches</li>
+        <li><strong>24/7 incident response</strong> — the most valuable policies include immediate access to an incident response team when something goes wrong</li>
+        <li><strong>Business interruption waiting period</strong> — how long must systems be down before business interruption coverage begins?</li>
+        <li><strong>Panel providers</strong> — many policies require you to use their nominated incident response firms; check these are reputable</li>
+      </ul>
+
+      <hr>
+
+      <h2>Cyber insurance checklist</h2>
+      <ul class="checklist">
+        <li>Cyber insurance policy in place with appropriate coverage limits</li>
+        <li>Policy reviewed annually — coverage kept current with business changes</li>
+        <li>Security warranties on application answered accurately and completely</li>
+        <li>Security controls maintained throughout policy period — not just at renewal</li>
+        <li>Policy exclusions reviewed — particularly war, nation-state, and security failure clauses</li>
+        <li>Business interruption coverage confirmed — limits and waiting period understood</li>
+        <li>24/7 incident response contact details saved and accessible offline</li>
+        <li>Finance team knows to call insurer immediately if a cyber incident occurs</li>
+        <li>Policy reviewed after significant business or security changes</li>
+      </ul>
+
+      <p>Cyber insurance is not a substitute for good security — it is a safety net for when security fails. The businesses that get the most value from their policies are those that have invested in the controls insurers value, understood exactly what they are buying, and kept their cover current as their business evolves. Buy it carefully, read it thoroughly, and treat it as one layer of a broader security strategy — not a replacement for one.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
