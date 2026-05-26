@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Financial Services | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 26, 2026 &nbsp;·&nbsp; Financial Services</div>
+    <h1>Cybersecurity for financial services — protecting client money and data</h1>
+    <p class="post-lead">Financial services firms are among the most heavily targeted organisations in the world. They hold client money, sensitive personal data, and access to payment systems — a combination that makes them extraordinarily valuable to attackers and subject to some of the most demanding regulatory requirements of any sector.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Whether you are an IFA, a mortgage broker, a wealth manager, a credit union, or a fintech startup, the regulatory and security obligations placed on financial services firms are among the most stringent of any sector. The FCA, PRA, and Bank of England have made operational resilience and cybersecurity central to their supervisory agenda — and enforcement action for failures is increasingly common.</p>
+      <p>Beyond regulation, the practical consequences of a cyber incident in financial services are severe. Client money at risk, market-sensitive information exposed, regulatory investigations triggered, and the client trust that takes years to build destroyed in hours.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">#2</div>
+          <div class="stat-d">most targeted sector globally for cyberattacks — behind only healthcare</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£8.4M</div>
+          <div class="stat-d">average cost of a data breach in financial services — the highest of any sector outside healthcare</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">300×</div>
+          <div class="stat-d">more likely to be targeted by cyberattacks than businesses in other sectors</div>
+        </div>
+      </div>
+
+      <h2>The regulatory landscape</h2>
+      <p>Financial services firms in the UK operate under a demanding and overlapping set of cybersecurity and operational resilience requirements. Understanding these obligations is not just about compliance — the controls they require are genuinely effective at reducing risk.</p>
+
+      <ul>
+        <li><strong>FCA operational resilience requirements</strong> — FCA-authorised firms must identify important business services, set impact tolerances, and demonstrate they can remain within those tolerances during severe but plausible disruption scenarios. Cyber incidents are explicitly considered.</li>
+        <li><strong>DORA (Digital Operational Resilience Act)</strong> — from January 2025, DORA applies to financial entities operating in or serving the EU, with detailed requirements for ICT risk management, incident reporting, resilience testing, and third-party risk management.</li>
+        <li><strong>UK GDPR and Data Protection Act 2018</strong> — financial data is personal data. Breaches must be reported to the ICO within 72 hours where there is risk to individuals.</li>
+        <li><strong>FCA SYSC requirements</strong> — the Senior Managers and Certification Regime makes named individuals personally accountable for operational and cyber resilience failures.</li>
+        <li><strong>PCI DSS</strong> — any firm handling payment card data must comply with the Payment Card Industry Data Security Standard.</li>
+      </ul>
+
+      <div class="callout">
+        <p>Under SMCR, a senior manager designated as responsible for operational resilience can face personal regulatory action if a cyber incident reveals inadequate preparation. Cybersecurity is no longer a purely technical matter in financial services — it is a named individual's personal responsibility.</p>
+      </div>
+
+      <h2>The specific threats financial services firms face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Authorised push payment fraud</h4>
+          <p>Criminals manipulate clients or staff into authorising payments to fraudulent accounts — through impersonation of the firm, impersonation of a client, or business email compromise. APP fraud accounts for the majority of financial fraud losses in the UK, and financial services firms are both targets and inadvertent conduits.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Market-sensitive data theft</h4>
+          <p>Sophisticated attackers — including nation-states and organised criminal groups — target financial services firms for market-sensitive information: M&A plans, earnings forecasts, trading strategies, and client portfolios. This data can be used for insider trading or sold to competitors.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Ransomware targeting critical systems</h4>
+          <p>Ransomware that encrypts trading systems, client portfolio management platforms, or back-office infrastructure can trigger FCA operational resilience obligations and cause immediate, measurable client harm. The reputational and regulatory consequences of extended downtime are severe.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Third-party and supply chain risk</h4>
+          <p>Financial services firms increasingly rely on third-party technology providers — cloud platforms, data feeds, payment processors, and portfolio management systems. A breach or outage at a key supplier can cascade into your own operations, triggering both client impact and regulatory notification obligations.</p>
+        </div>
+      </div>
+
+      <h2>Client money and assets — the highest stakes</h2>
+      <p>For firms that hold client money or assets, a cyber incident is not just a data protection or operational problem. It is a potential client money risk. Systems that hold or process client money must be protected with the strongest available controls, monitored continuously, and segregated from general business systems.</p>
+      <p>Any system or process that can initiate payments, transfer assets, or modify client records must require multi-factor authentication, maintain detailed audit logs, and be subject to regular access reviews. The principle of least privilege is essential — no staff member should have broader access to client money systems than their role absolutely requires.</p>
+
+      <div class="warning">
+        <strong>⚠ Dual authorisation for significant transactions</strong>
+        <p>Any transfer of client money above a defined threshold should require independent authorisation from a second named individual — not just approval by the initiating employee. This control is a fundamental safeguard against both external fraud and insider threat, and is expected by the FCA for firms holding client assets.</p>
+      </div>
+
+      <h2>Operational resilience — the FCA's priority</h2>
+      <p>The FCA's operational resilience framework requires firms to identify their important business services — those whose disruption would cause intolerable harm to clients or markets — and demonstrate they can continue to deliver them within defined impact tolerances during severe disruption.</p>
+      <p>For most financial services firms, this means having tested, documented plans for continuing to serve clients during a cyber incident, communicating clearly with clients when services are disrupted, and recovering within a timeframe that does not cause unacceptable harm.</p>
+
+      <div class="callout">
+        <p>The FCA expects firms to have tested their operational resilience plans — not just documented them. A plan that has never been exercised is not evidence of resilience. Tabletop exercises and scenario testing are expected as standard.</p>
+      </div>
+
+      <h2>Third-party risk management</h2>
+      <p>Financial services firms must understand and manage the cybersecurity risks posed by their technology suppliers and service providers. Under DORA and FCA guidance, this means conducting due diligence on critical suppliers, maintaining contracts that include security and notification obligations, and having contingency plans for supplier failure.</p>
+
+      <ul>
+        <li><strong>Maintain a register</strong> of all critical third-party technology providers</li>
+        <li><strong>Conduct annual due diligence</strong> on key suppliers — security certifications, incident history, financial stability</li>
+        <li><strong>Include security obligations</strong> in supplier contracts — incident notification timeframes, audit rights, minimum security standards</li>
+        <li><strong>Have exit and substitution plans</strong> for critical suppliers — what happens if a key provider fails or is compromised?</li>
+      </ul>
+
+      <hr>
+
+      <h2>Financial services cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>FCA operational resilience important business services identified and impact tolerances set</li>
+        <li>Operational resilience plans tested — not just documented</li>
+        <li>MFA enabled on all systems — particularly those with access to client money or data</li>
+        <li>Dual authorisation in place for significant client money transfers</li>
+        <li>Access to client money systems restricted by role — least privilege applied</li>
+        <li>Audit logs maintained for all access to client money and data systems</li>
+        <li>Critical third-party suppliers registered and subject to annual due diligence</li>
+        <li>SMCR accountability for cybersecurity and operational resilience clearly assigned</li>
+        <li>DORA compliance assessed for EU-connected operations</li>
+        <li>Incident response plan covering FCA, ICO, and client notification obligations</li>
+        <li>Staff training on APP fraud, BEC, and social engineering specific to financial services</li>
+      </ul>
+
+      <p>Financial services cybersecurity operates at the intersection of technology, regulation, and fiduciary duty. The firms that manage it best treat it not as a compliance exercise but as a fundamental part of how they protect their clients — which is, after all, the purpose of financial services regulation in the first place.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
