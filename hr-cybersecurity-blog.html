@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for HR Teams | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 28, 2026 &nbsp;·&nbsp; HR Security</div>
+    <h1>Cybersecurity for HR teams — protecting employee data and preventing people-focused attacks</h1>
+    <p class="post-lead">HR teams hold the most sensitive personal data in any organisation — salaries, health records, disciplinary files, home addresses, and bank details. They are also the most targeted department for social engineering attacks. Understanding both risks is essential.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Human resources sits at a unique intersection of data sensitivity and social vulnerability. HR professionals handle information that employees share in confidence — health conditions, personal circumstances, financial details, and employment history. At the same time, HR teams are routinely approached with urgent, emotionally pressured requests from employees, managers, and job applicants — exactly the conditions that social engineering attacks exploit.</p>
+      <p>For business owners and HR managers, understanding and addressing both the data protection and the human vulnerability dimensions of HR security is essential — and more achievable than many assume.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">82%</div>
+          <div class="stat-d">of HR departments have been targeted by phishing or social engineering in the past year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£6,400</div>
+          <div class="stat-d">average cost per employee of an HR data breach — including regulatory fines and remediation</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">more likely than other departments to be targeted by payroll diversion fraud</div>
+        </div>
+      </div>
+
+      <h2>What HR data is at risk — and why it matters</h2>
+      <p>HR holds a concentration of special category personal data under GDPR — data that requires the highest level of protection. This includes health and medical information, racial or ethnic origin, criminal records, trade union membership, and data about employees' personal circumstances. A breach of this data is not just a regulatory incident. It can cause real and lasting harm to the individuals affected.</p>
+      <p>Beyond special category data, HR holds information that enables financial fraud: bank account details for payroll, national insurance numbers, salary information, and home addresses. This data is valuable to criminals for identity theft, targeted fraud, and payroll diversion attacks.</p>
+
+      <div class="callout">
+        <p>Under GDPR, special category data — health information, disability records, and disciplinary files — requires explicit justification for processing, stronger access controls, and heightened care in storage and transmission. A breach involving this data is taken more seriously by the ICO and carries higher potential fines.</p>
+      </div>
+
+      <h2>The specific threats HR teams face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Payroll diversion fraud</h4>
+          <p>An employee — or someone impersonating an employee — emails HR or payroll to request a change of bank account details before the next pay run. The salary is paid to the criminal. This is one of the most common HR-targeted frauds and is frequently successful because the request seems entirely routine.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Fake job applicant attacks</h4>
+          <p>Criminals submit fake job applications containing malicious attachments — CVs or portfolios in formats that exploit vulnerabilities when opened. HR teams regularly open attachments from unknown individuals, making recruitment processes a vector for malware delivery.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>CEO or manager impersonation</h4>
+          <p>Emails appearing to come from the CEO or a senior manager request urgent action from HR — sharing an employee's salary information, processing an emergency payment, or providing personal contact details. The authority implied by the sender and the urgency of the request are designed to bypass normal verification habits.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>HR system and payroll platform compromise</h4>
+          <p>HR software, payroll platforms, and applicant tracking systems hold large volumes of sensitive employee data. A compromised HR system can expose the entire workforce's personal and financial information simultaneously, triggering GDPR notification obligations and significant reputational damage.</p>
+        </div>
+      </div>
+
+      <h2>Payroll diversion — the most important defence</h2>
+      <p>Payroll diversion fraud is preventable with a single, consistently applied control: any request to change an employee's bank account details must be verified by a phone call to the employee using a number already held on file — not a number provided in the request.</p>
+      <p>This verification call must happen regardless of how legitimate the email looks, how urgently it is framed, or whether it appears to come from the employee themselves. One phone call is all it takes to prevent a fraud that can cost an employee their entire monthly salary.</p>
+
+      <div class="warning">
+        <strong>⚠ Document your verification policy — and follow it every time</strong>
+        <p>Payroll diversion fraud often works because the request is plausible and the HR team is busy. A written policy requiring verbal verification for all bank detail changes — with no exceptions — removes the decision from individuals under pressure. The policy must be followed every time, including for senior staff, because attackers specifically target cases where the normal process might be skipped.</p>
+      </div>
+
+      <h2>Protecting against malicious attachments from applicants</h2>
+      <p>Recruitment processes require HR teams to open files from people they do not know. This is an unavoidable part of the job — and a genuine security risk. Several practical controls significantly reduce that risk.</p>
+
+      <ul>
+        <li><strong>Use a recruitment platform or ATS</strong> that accepts CVs in a controlled environment rather than email attachments opened directly on HR computers</li>
+        <li><strong>Open attachments in a sandboxed environment</strong> — some email security tools preview attachments safely before they are opened</li>
+        <li><strong>Restrict which file types are accepted</strong> — PDFs and Word documents are the most commonly weaponised; ask applicants to submit via a form where possible</li>
+        <li><strong>Keep HR computers updated</strong> — vulnerabilities in PDF and document readers are frequently exploited; current software significantly reduces risk</li>
+      </ul>
+
+      <h2>Access controls for HR data</h2>
+      <p>HR data should be accessible only to the people who need it for their specific role. A line manager reviewing an employee's leave record does not need access to their disciplinary history. A recruiter reviewing applications does not need access to existing employees' salary data. Payroll staff do not need access to health records.</p>
+      <p>Most HR platforms and payroll systems support role-based access controls. Configuring these correctly — and reviewing them regularly as roles change — limits the damage of any single compromised account and reduces insider threat risk.</p>
+
+      <div class="callout">
+        <p>When an HR team member leaves the organisation, their access to all HR systems, payroll platforms, and employee data must be revoked on their last day — not when IT gets around to it. HR data is among the most sensitive in the business; former employees should have no ongoing access to it.</p>
+      </div>
+
+      <h2>Secure handling of employee data</h2>
+      <p>Employee personal data must be handled with the same care as customer data — perhaps more, given the special category information involved. Practical controls include:</p>
+
+      <ul>
+        <li><strong>Encrypt HR files</strong> at rest and in transit — never send payslips, contracts, or medical letters as unencrypted email attachments</li>
+        <li><strong>Use a secure document sharing platform</strong> for sensitive HR communications rather than plain email</li>
+        <li><strong>Apply a data retention policy</strong> — delete employee data when retention periods expire; data you do not hold cannot be breached</li>
+        <li><strong>Never store HR data in personal email accounts or personal devices</strong> — all HR data must be held on managed, secured systems</li>
+        <li><strong>Lock screens when stepping away</strong> — HR offices handle sensitive conversations and documents; an unlocked screen visible to others is a data protection risk</li>
+      </ul>
+
+      <hr>
+
+      <h2>HR cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>Written policy requiring verbal verification for all bank detail changes — no exceptions</li>
+        <li>Payroll diversion awareness training for all HR and payroll staff</li>
+        <li>HR system and payroll platform access controlled by role</li>
+        <li>MFA enabled on all HR systems, payroll platforms, and email accounts</li>
+        <li>Recruitment attachments opened in a controlled or sandboxed environment</li>
+        <li>Employee data encrypted at rest and in transit</li>
+        <li>Secure document platform used for sensitive HR communications</li>
+        <li>Data retention policy in place — employee data deleted when period expires</li>
+        <li>Leaver process includes immediate revocation of all HR system access</li>
+        <li>Special category data identified and protected with highest available controls</li>
+        <li>ICO breach notification obligations understood and documented</li>
+      </ul>
+
+      <p>HR teams carry a dual responsibility — protecting the personal data of employees who trust the organisation with their most sensitive information, and defending themselves against attacks that specifically target the human and procedural vulnerabilities of people-focused work. Both responsibilities are manageable with the right policies, controls, and awareness.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

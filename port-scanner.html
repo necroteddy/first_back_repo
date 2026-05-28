@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Port Scanner</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0c0f; --surface: #0f1318; --surface2: #161b22;
+    --border: #21262d; --text: #e6edf3; --muted: #7d8590; --faint: #30363d;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149; --cyan: #58a6ff;
+    --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 13px; line-height: 1.6; min-height: 100vh; padding: 2rem 1.5rem 4rem; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-family: var(--sans); font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
+  h1 span { color: var(--cyan); }
+  .sub { font-size: 13px; color: var(--muted); margin-bottom: 2rem; }
+
+  .how { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+  .how h3 { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+  .how ol { padding-left: 1.25rem; }
+  .how li { font-size: 13px; color: var(--muted); margin-bottom: 0.4rem; line-height: 1.6; }
+  .how code { background: var(--faint); border-radius: 3px; padding: 1px 6px; color: var(--cyan); font-size: 12px; }
+
+  #paste-box { width: 100%; min-height: 160px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-family: var(--mono); font-size: 12px; color: var(--text); resize: vertical; outline: none; line-height: 1.6; }
+  #paste-box:focus { border-color: var(--cyan); }
+  #paste-box::placeholder { color: var(--faint); }
+
+  .btn-row { display: flex; gap: 8px; margin: 0.75rem 0 2rem; }
+  #parse-btn { background: var(--cyan); color: var(--bg); border: none; border-radius: 6px; padding: 0.6rem 1.5rem; font-family: var(--sans); font-size: 13px; font-weight: 700; cursor: pointer; }
+  #parse-btn:hover { opacity: 0.85; }
+  #clear-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 0.6rem 1rem; font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; }
+  #clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+  #status { font-size: 12px; margin-bottom: 1rem; min-height: 16px; }
+  #status.err { color: var(--red); }
+
+  /* SUMMARY BAR */
+  #summary-bar { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+  .sum-row { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .sum-item { display: flex; flex-direction: column; gap: 2px; }
+  .sum-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .sum-val { font-family: var(--sans); font-size: 22px; font-weight: 700; }
+  .sum-val.green { color: var(--green); }
+  .sum-val.cyan  { color: var(--cyan); }
+  .sum-val.muted { color: var(--muted); }
+
+  /* PORT GRID */
+  #port-panel { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+  .ph { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  .ph span { color: var(--text); }
+  .port-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1px; background: var(--border); }
+  .port-card { background: var(--surface); padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.75rem; }
+  .port-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; box-shadow: 0 0 6px rgba(63,185,80,0.5); }
+  .port-num { font-weight: 700; color: var(--text); font-size: 13px; }
+  .port-name { font-size: 11px; color: var(--muted); }
+
+  /* SCAN DETAILS */
+  #details-panel { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+  .dr { display: grid; grid-template-columns: 110px 1fr; gap: 8px; padding: 0.35rem 1rem; border-bottom: 1px solid var(--faint); }
+  .dr:last-child { border-bottom: none; }
+  .dk { color: var(--muted); font-size: 12px; }
+  .dv { color: var(--text); font-size: 12px; }
+
+  /* NO PORTS */
+  #no-ports { display: none; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; text-align: center; color: var(--muted); font-size: 14px; margin-bottom: 1rem; }
+
+  @media (max-width: 500px) { .port-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Port <span>Scanner</span></h1>
+  <p class="sub">Paste your <code style="background:var(--faint);border-radius:3px;padding:1px 6px;color:var(--cyan)">port_scanner.py</code> output below to visualise open ports.</p>
+
+  <div class="how">
+    <h3>How to use</h3>
+    <ol>
+      <li>Edit <code>TARGET</code> in the script — use <code>127.0.0.1</code> for your own machine</li>
+      <li>Run: <code>python port_scanner.py</code></li>
+      <li>Select all output — <code>Ctrl+A</code> then <code>Ctrl+C</code></li>
+      <li>Paste below and click <strong>Render</strong></li>
+    </ol>
+  </div>
+
+  <textarea id="paste-box" placeholder="Paste your port_scanner.py output here…
+
+Scanning 127.0.0.1 ...
+Ports 1 to 1024
+Please wait.
+
+Port 22 is OPEN
+Port 80 is OPEN
+Port 443 is OPEN
+
+Done.
+Open ports: [22, 80, 443]"></textarea>
+
+  <div class="btn-row">
+    <button id="parse-btn">Render</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+
+  <div id="status"></div>
+
+  <div id="summary-bar">
+    <div class="sum-row">
+      <div class="sum-item">
+        <span class="sum-label">Target</span>
+        <span class="sum-val cyan" id="sum-target">—</span>
+      </div>
+      <div class="sum-item">
+        <span class="sum-label">Ports scanned</span>
+        <span class="sum-val muted" id="sum-range">—</span>
+      </div>
+      <div class="sum-item">
+        <span class="sum-label">Open ports</span>
+        <span class="sum-val green" id="sum-open">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="details-panel">
+    <div class="ph">📋 Scan Details</div>
+    <div id="details-body"></div>
+  </div>
+
+  <div id="port-panel">
+    <div class="ph">🟢 Open Ports <span id="port-count"></span></div>
+    <div class="port-grid" id="port-grid"></div>
+  </div>
+
+  <div id="no-ports">No open ports found in this scan.</div>
+
+</div>
+<script>
+(function () {
+
+  // Common port names
+  var PORT_NAMES = {
+    20: 'FTP Data', 21: 'FTP', 22: 'SSH', 23: 'Telnet',
+    25: 'SMTP', 53: 'DNS', 67: 'DHCP', 68: 'DHCP',
+    69: 'TFTP', 80: 'HTTP', 110: 'POP3', 111: 'RPC',
+    119: 'NNTP', 123: 'NTP', 135: 'RPC', 137: 'NetBIOS',
+    138: 'NetBIOS', 139: 'NetBIOS', 143: 'IMAP',
+    161: 'SNMP', 162: 'SNMP', 194: 'IRC',
+    389: 'LDAP', 443: 'HTTPS', 445: 'SMB',
+    465: 'SMTPS', 514: 'Syslog', 515: 'LPD',
+    587: 'SMTP', 631: 'IPP', 636: 'LDAPS',
+    993: 'IMAPS', 995: 'POP3S', 1080: 'SOCKS',
+    1194: 'OpenVPN', 1433: 'MSSQL', 1521: 'Oracle',
+    1723: 'PPTP', 2049: 'NFS', 3306: 'MySQL',
+    3389: 'RDP', 5432: 'PostgreSQL', 5900: 'VNC',
+    5985: 'WinRM', 6379: 'Redis', 8080: 'HTTP-Alt',
+    8443: 'HTTPS-Alt', 8888: 'HTTP-Alt', 9200: 'Elasticsearch',
+    27017: 'MongoDB'
+  };
+
+  function setStatus(msg, cls) {
+    var el = document.getElementById('status');
+    el.textContent = msg;
+    el.className = cls || '';
+  }
+
+  function stripAnsi(s) {
+    return s.replace(/\x1B\[[0-9;]*m/g, '').replace(/\033\[[0-9;]*m/g, '');
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function dr(k, v) {
+    return '<div class="dr"><span class="dk">' + k + '</span><span class="dv">' + v + '</span></div>';
+  }
+
+  function parseAndRender() {
+    var raw = document.getElementById('paste-box').value;
+    if (!raw.trim()) { setStatus('Paste some output first.', 'err'); return; }
+
+    var text = stripAnsi(raw);
+    var lines = text.split('\n').map(function(l){ return l.trim(); });
+
+    // Extract target
+    var target = null;
+    var startPort = null;
+    var endPort = null;
+
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i];
+
+      // "Scanning 127.0.0.1 ..."
+      var tm = l.match(/Scanning\s+([\d.a-zA-Z\-]+)/i);
+      if (tm) target = tm[1];
+
+      // "Ports 1 to 1024"
+      var pm = l.match(/Ports?\s+(\d+)\s+to\s+(\d+)/i);
+      if (pm) { startPort = pm[1]; endPort = pm[2]; }
+    }
+
+    // Extract open ports — "Port 22 is OPEN" style
+    var openPorts = [];
+    for (var i = 0; i < lines.length; i++) {
+      var m = lines[i].match(/Port\s+(\d+)\s+is\s+OPEN/i);
+      if (m) openPorts.push(parseInt(m[1], 10));
+    }
+
+    // Also try summary line: "Open ports: [22, 80, 443]"
+    if (openPorts.length === 0) {
+      for (var i = 0; i < lines.length; i++) {
+        var m2 = lines[i].match(/Open ports?:\s*\[([^\]]+)\]/i);
+        if (m2) {
+          openPorts = m2[1].split(',').map(function(p){ return parseInt(p.trim(), 10); }).filter(function(p){ return !isNaN(p); });
+          break;
+        }
+      }
+    }
+
+    // Deduplicate and sort
+    openPorts = openPorts.filter(function(p, i, a){ return a.indexOf(p) === i; });
+    openPorts.sort(function(a,b){ return a-b; });
+
+    if (!target && openPorts.length === 0) {
+      setStatus("Couldn't find scanner output — paste the full output from port_scanner.py.", 'err');
+      return;
+    }
+
+    // SUMMARY BAR
+    document.getElementById('sum-target').textContent = target || '—';
+    var rangeStr = (startPort && endPort) ? startPort + ' – ' + endPort : '—';
+    document.getElementById('sum-range').textContent = rangeStr;
+    document.getElementById('sum-open').textContent = openPorts.length;
+    document.getElementById('summary-bar').style.display = 'block';
+
+    // DETAILS PANEL
+    var dh = '';
+    if (target)    dh += dr('Target', esc(target));
+    if (startPort) dh += dr('Port range', esc(startPort) + ' to ' + esc(endPort));
+    dh += dr('Ports open', openPorts.length);
+    dh += dr('Ports closed', (startPort && endPort) ? ((parseInt(endPort)-parseInt(startPort)+1) - openPorts.length) : '—');
+    document.getElementById('details-body').innerHTML = dh;
+    document.getElementById('details-panel').style.display = 'block';
+
+    // PORT GRID
+    if (openPorts.length > 0) {
+      document.getElementById('port-count').textContent = '— ' + openPorts.length + ' found';
+      var html = '';
+      for (var i = 0; i < openPorts.length; i++) {
+        var p = openPorts[i];
+        var name = PORT_NAMES[p] || '';
+        html += '<div class="port-card">' +
+          '<div class="port-dot"></div>' +
+          '<div>' +
+            '<div class="port-num">' + p + '</div>' +
+            (name ? '<div class="port-name">' + esc(name) + '</div>' : '') +
+          '</div>' +
+        '</div>';
+      }
+      document.getElementById('port-grid').innerHTML = html;
+      document.getElementById('port-panel').style.display = 'block';
+      document.getElementById('no-ports').style.display = 'none';
+    } else {
+      document.getElementById('port-panel').style.display = 'none';
+      document.getElementById('no-ports').style.display = 'block';
+    }
+
+    setStatus('');
+  }
+
+  function clearAll() {
+    document.getElementById('paste-box').value = '';
+    document.getElementById('summary-bar').style.display = 'none';
+    document.getElementById('details-panel').style.display = 'none';
+    document.getElementById('port-panel').style.display = 'none';
+    document.getElementById('no-ports').style.display = 'none';
+    setStatus('');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('parse-btn').addEventListener('click', parseAndRender);
+    document.getElementById('clear-btn').addEventListener('click', clearAll);
+    document.getElementById('paste-box').addEventListener('keydown', function (e) {
+      if (e.ctrlKey && e.key === 'Enter') parseAndRender();
+    });
+  });
+
+}());
+</script>
+</body>
+</html>
