@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Logistics and Transport | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 29, 2026 &nbsp;·&nbsp; Logistics Security</div>
+    <h1>Cybersecurity for logistics and transport — protecting fleets, data, and supply chains</h1>
+    <p class="post-lead">Logistics and transport businesses are the backbone of the economy — and increasingly, a prime target for cybercriminals. Connected fleets, digital freight platforms, and complex supply chains have created new vulnerabilities that the sector is only beginning to address.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Modern logistics is a digital operation. Fleet management systems track vehicles in real time. Route optimisation software connects drivers to dispatch. Warehouse management systems coordinate stock across multiple sites. Customer portals provide visibility into shipments. And electronic proof of delivery has replaced paper across most of the industry.</p>
+      <p>Every one of these digital systems is a potential target — and the disruption that follows a successful attack on a logistics business is immediate and highly visible. Deliveries stop. Customers lose visibility. Warehouses cannot operate. And in a sector built on tight margins and time-critical commitments, downtime costs mount quickly.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">62%</div>
+          <div class="stat-d">of logistics and transport firms experienced a cyber incident in the past two years</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£2.1M</div>
+          <div class="stat-d">average cost of a ransomware attack on a logistics firm — including operational downtime</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">11 days</div>
+          <div class="stat-d">average operational disruption from a successful attack on a logistics business</div>
+        </div>
+      </div>
+
+      <h2>Why logistics is an attractive target</h2>
+      <p>Logistics businesses sit at the centre of supply chains — connecting manufacturers, retailers, and consumers. An attacker who disrupts a logistics firm does not just harm that firm. They disrupt every business that depends on it. That ripple effect makes logistics a high-value target for ransomware operators who want maximum pressure to pay quickly.</p>
+      <p>The sector also handles significant flows of commercial information — shipment manifests, customer data, freight contracts, and in some cases, information about what high-value goods are being moved and when. This data has value both commercially and operationally to criminals.</p>
+
+      <div class="callout">
+        <p>The 2017 NotPetya attack on Maersk — one of the world's largest shipping companies — cost an estimated $300 million and required the reinstallation of 45,000 PCs and 4,000 servers. It demonstrated that logistics firms are not collateral damage in cyberattacks — they are primary targets.</p>
+      </div>
+
+      <h2>The specific threats logistics firms face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Ransomware targeting operational systems</h4>
+          <p>Ransomware that encrypts transport management systems, warehouse management systems, or fleet tracking platforms brings operations to a standstill. With deliveries to meet and SLA penalties at stake, the pressure to pay and restore operations quickly is enormous — exactly what attackers count on.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Freight and invoice fraud</h4>
+          <p>Criminals intercept or spoof communications between logistics firms and their customers or subcontractors, redirecting payments or submitting fraudulent freight invoices. The volume of transactions in logistics — and the involvement of multiple parties — creates many opportunities for this type of fraud to go undetected.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Fleet telematics and GPS manipulation</h4>
+          <p>Connected fleet management systems and GPS tracking devices are increasingly targeted. Attackers can gain access to real-time vehicle locations — enabling theft of high-value cargo — or manipulate telematics data to conceal driver behaviour, bypass compliance checks, or disrupt route management.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Supply chain partner compromise</h4>
+          <p>Logistics businesses connect digitally with dozens of partners — clients, subcontractors, port authorities, customs systems, and freight exchanges. A compromised partner with system access, or a malicious actor posing as a trusted partner, can use that connection to reach your systems or your data.</p>
+        </div>
+      </div>
+
+      <h2>Protecting fleet and telematics systems</h2>
+      <p>Fleet management and telematics systems have historically been designed for operational efficiency rather than security. Many devices use default credentials, unencrypted communications, and firmware that is rarely updated. As these systems become more connected — and more central to operations — securing them becomes a priority.</p>
+
+      <ul>
+        <li><strong>Change default credentials</strong> on all fleet management consoles, telematics devices, and vehicle tracking systems immediately on installation</li>
+        <li><strong>Segment fleet management systems</strong> from general business networks — a compromised telematics device should not provide a route to your finance systems</li>
+        <li><strong>Apply firmware updates</strong> to telematics hardware when available — contact your provider if you are unsure whether updates are being applied</li>
+        <li><strong>Monitor for unusual access patterns</strong> — logins from unexpected locations, bulk data downloads, or configuration changes outside maintenance windows</li>
+        <li><strong>Review third-party access</strong> from fleet software vendors — remote access for maintenance must be controlled, logged, and time-limited</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ High-value cargo movements are intelligence</strong>
+        <p>Details of high-value shipments — pharmaceutical goods, electronics, precious metals — are operationally sensitive. Access to your transport management system can reveal what is being moved, when, and by which route. This information has direct value to cargo theft operations. Restrict access to shipment details on a need-to-know basis and audit access logs regularly.</p>
+      </div>
+
+      <h2>Protecting transport management and warehouse systems</h2>
+      <p>Transport management systems (TMS) and warehouse management systems (WMS) are the operational core of most logistics businesses. They are also, in many cases, older systems that were designed before cybersecurity was a priority and that integrate with a wide range of external platforms.</p>
+
+      <ul>
+        <li><strong>Apply the principle of least privilege</strong> — warehouse staff do not need access to customer billing data; drivers do not need access to inventory management</li>
+        <li><strong>Enable MFA on all TMS and WMS logins</strong> — particularly for remote access and administrator accounts</li>
+        <li><strong>Maintain tested backups</strong> of all operational data — a ransomware attack that encrypts your TMS must not result in permanent loss of shipment records</li>
+        <li><strong>Review integrations regularly</strong> — every API connection to a freight exchange, customs system, or customer portal is a potential attack vector</li>
+      </ul>
+
+      <h2>Managing supply chain partner risk</h2>
+      <p>The logistics sector is deeply interconnected. Your security is only as strong as the weakest link in your digital supply chain. Managing partner risk does not require auditing every subcontractor — but it does require setting expectations and applying basic controls to the connections you share.</p>
+
+      <ul>
+        <li><strong>Include security requirements in subcontractor and partner agreements</strong></li>
+        <li><strong>Verify payment details out of band</strong> before paying any freight invoice with changed bank details</li>
+        <li><strong>Restrict what data partners can access</strong> via shared systems — give the minimum necessary for operational purposes</li>
+        <li><strong>Have a plan for partner compromise</strong> — what would you do if a key partner's systems were taken offline by ransomware?</li>
+      </ul>
+
+      <div class="callout">
+        <p>Freight fraud often exploits the urgency of logistics operations. A shipment arriving tonight, a driver waiting, a customer chasing — these pressures are exactly what criminals rely on to bypass verification. A two-minute phone call to confirm changed payment details is always worth the operational delay.</p>
+      </div>
+
+      <hr>
+
+      <h2>Logistics cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>Default credentials changed on all fleet management and telematics systems</li>
+        <li>Fleet management systems segmented from general business network</li>
+        <li>MFA enabled on all TMS, WMS, and customer portal logins</li>
+        <li>Access to shipment and cargo data restricted by role</li>
+        <li>Tested backups of all operational and customer data in place</li>
+        <li>Payment verification procedure in place — verbal confirmation for invoice bank detail changes</li>
+        <li>Partner and subcontractor access to shared systems reviewed and limited</li>
+        <li>Telematics and fleet software firmware updates applied regularly</li>
+        <li>Staff trained on freight fraud and phishing — particularly dispatch and finance teams</li>
+        <li>Incident response plan covering operational system outage scenarios</li>
+        <li>Cyber insurance reviewed for business interruption coverage specific to logistics</li>
+      </ul>
+
+      <p>Logistics is one of the most operationally dependent sectors in the economy — which makes it one of the most vulnerable to cyberattack and one of the most motivated to invest in prevention. The businesses that protect themselves best are those that treat their digital systems with the same discipline they apply to their physical operations: maintained, monitored, and resilient by design.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
