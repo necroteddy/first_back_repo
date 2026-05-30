@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity on a Budget | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* FREE TOOLS TABLE */
+  .tools-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .tools-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .tools-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; font-size: 14px; }
+  .tools-table tr:last-child td { border-bottom: none; }
+  .tools-table td:first-child { font-weight: 500; white-space: nowrap; }
+  .tag-free { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-freemium { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .tools-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 30, 2026 &nbsp;·&nbsp; Budget Security</div>
+    <h1>Cybersecurity on a budget — maximum protection for minimum spend</h1>
+    <p class="post-lead">Good cybersecurity does not require a large budget. The most effective controls are either free or cost very little — and the businesses that use them consistently are far better protected than those spending ten times as much on the wrong things.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>One of the most persistent myths about cybersecurity is that it is expensive. That it requires specialist staff, enterprise software, and significant ongoing investment. For large organisations with complex infrastructure, that is sometimes true. For most small businesses, it is not.</p>
+      <p>The vast majority of successful cyberattacks exploit basic vulnerabilities — unpatched software, weak passwords, no multi-factor authentication, poor backups. Fixing these costs almost nothing. The challenge is not money. It is consistency.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">£0</div>
+          <div class="stat-d">cost of enabling MFA — the single most effective security control available to any business</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">91%</div>
+          <div class="stat-d">of attacks could be prevented by basic security hygiene alone — no enterprise tools required</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£800</div>
+          <div class="stat-d">typical annual spend that gives a small business solid baseline protection</div>
+        </div>
+      </div>
+
+      <h2>Start with what is completely free</h2>
+      <p>Before spending a penny, there is a substantial amount of highly effective security available at no cost. These are not compromises or second-best options — they are the same controls that form the foundation of security at organisations of every size.</p>
+
+      <ul>
+        <li><strong>Multi-factor authentication</strong> — built into Google Workspace, Microsoft 365, and almost every business tool. Enable it on every account. Free.</li>
+        <li><strong>Automatic software updates</strong> — enabling automatic updates on all devices and applications closes the majority of exploitable vulnerabilities. Free.</li>
+        <li><strong>NCSC Cyber Essentials guidance</strong> — a free, government-backed framework that covers the five most important security controls and significantly reduces your risk. Free.</li>
+        <li><strong>Have I Been Pwned</strong> — check whether any email address associated with your business has appeared in a known data breach. Free.</li>
+        <li><strong>Google Workspace or Microsoft 365 security features</strong> — both platforms include substantial built-in security tools — secure email, MFA, device management basics, audit logging — that most businesses never enable. Free within your existing subscription.</li>
+        <li><strong>Bitwarden</strong> — a fully featured, open-source password manager with a free tier that covers most small business needs. Free.</li>
+      </ul>
+
+      <h2>Low-cost tools that make a significant difference</h2>
+      <p>Beyond the free tier, a small monthly investment in the right tools provides a level of protection that would previously have required enterprise-grade spending. The following tools represent strong value for small businesses with limited budgets.</p>
+
+      <table class="tools-table">
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>What it does</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bitwarden Teams</td>
+            <td>Password manager for your whole team — shared vaults, admin controls</td>
+            <td><span class="tag-free">~£3/user/mo</span></td>
+          </tr>
+          <tr>
+            <td>Cloudflare free</td>
+            <td>DDoS protection, WAF basics, DNSSEC, email security for your domain</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Malwarebytes for Teams</td>
+            <td>Endpoint protection — detects and removes malware across all devices</td>
+            <td><span class="tag-freemium">~£4/device/mo</span></td>
+          </tr>
+          <tr>
+            <td>Backblaze B2</td>
+            <td>Offsite cloud backup — cheap, reliable, simple to configure</td>
+            <td><span class="tag-free">~£5/TB/mo</span></td>
+          </tr>
+          <tr>
+            <td>Proton Mail</td>
+            <td>End-to-end encrypted email — for sensitive communications</td>
+            <td><span class="tag-freemium">Free / £4/mo</span></td>
+          </tr>
+          <tr>
+            <td>NCSC Exercise in a Box</td>
+            <td>Free simulated cyber incident exercises for your team</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Cyber Essentials certification</td>
+            <td>Government-backed baseline certification — insurers and clients increasingly expect it</td>
+            <td><span class="tag-freemium">~£300</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>The £800 baseline — what it buys and why it works</h2>
+      <p>A typical small business of five to ten people can achieve solid baseline protection for approximately £800 per year. That breaks down roughly as: a password manager for the team (£180), endpoint protection on all devices (£240), offsite cloud backup (£60), and Cyber Essentials certification (£300). Everything else — MFA, updates, Cloudflare, NCSC guidance — is free.</p>
+      <p>That £800 addresses the five most common attack vectors: weak passwords, malware, credential theft, ransomware without backups, and missing basic security hygiene. It does not address every possible threat — but it closes the doors that the vast majority of attackers use.</p>
+
+      <div class="callout">
+        <p>The return on investment of the £800 baseline is extraordinary. A single ransomware incident costs on average £150,000. The probability of a successful attack drops dramatically with these controls in place. The maths are not close.</p>
+      </div>
+
+      <h2>Prioritise ruthlessly — not everything matters equally</h2>
+      <p>With a limited budget, prioritisation is everything. Not all security controls have equal impact. Focus first on the things that prevent the most common, most damaging attacks — and do those consistently before adding anything else.</p>
+
+      <p>The priority order for budget-constrained businesses:</p>
+
+      <ul>
+        <li><strong>First:</strong> Enable MFA on all accounts — email, cloud tools, finance platforms, remote access. This single control stops the majority of account takeover attacks at zero cost.</li>
+        <li><strong>Second:</strong> Deploy a password manager across the team. Unique passwords everywhere. This addresses credential theft and reuse.</li>
+        <li><strong>Third:</strong> Enable automatic updates on all devices and software. This closes the known vulnerability window that most attacks exploit.</li>
+        <li><strong>Fourth:</strong> Set up automated offsite backups. This transforms a ransomware attack from a potential existential event into a recoverable incident.</li>
+        <li><strong>Fifth:</strong> Install basic endpoint protection. Detects and blocks most common malware before it executes.</li>
+        <li><strong>Sixth:</strong> Train your team. Short, regular awareness — phishing recognition, reporting procedures, basic hygiene. The human layer amplifies everything else.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Consistency beats sophistication</strong>
+        <p>A business that consistently does six basic things well is more secure than one that has expensive tools deployed inconsistently. MFA that is enabled on most accounts but not all, backups that run sometimes but are never tested, software updates that are applied eventually — these gaps are what attackers find and exploit. Doing the basics completely is more valuable than doing complex things partially.</p>
+      </div>
+
+      <h2>Free resources worth knowing</h2>
+      <ul>
+        <li><strong>NCSC Small Business Guide</strong> — ncsc.gov.uk — practical, plain-language guidance for businesses of any size</li>
+        <li><strong>NCSC Cyber Essentials</strong> — the five controls framework, free to implement, £300 to certify</li>
+        <li><strong>NCSC Exercise in a Box</strong> — free simulated incident exercises you can run with your team in an afternoon</li>
+        <li><strong>Have I Been Pwned</strong> — haveibeenpwned.com — free breach monitoring for your email domains</li>
+        <li><strong>Cloudflare Radar</strong> — free insight into threats targeting your domain</li>
+        <li><strong>Action Fraud</strong> — actionfraud.police.uk — UK's national fraud and cybercrime reporting centre</li>
+      </ul>
+
+      <hr>
+
+      <h2>Budget security checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all accounts — email, cloud tools, finance, remote access</li>
+        <li>Password manager deployed across the team — unique passwords everywhere</li>
+        <li>Automatic updates enabled on all devices and business software</li>
+        <li>Offsite automated backups in place and tested</li>
+        <li>Endpoint protection installed on all business devices</li>
+        <li>Domain checked on Have I Been Pwned — alerts set up</li>
+        <li>Cloudflare configured on business domain — email security enabled</li>
+        <li>NCSC Cyber Essentials guidance reviewed and implemented</li>
+        <li>Staff training scheduled — short and regular, not annual and forgotten</li>
+        <li>Incident reporting process communicated — staff know who to contact</li>
+      </ul>
+
+      <p>Cybersecurity on a budget is not about compromise. It is about focus. The businesses that get the most from limited spending are those that understand which controls actually matter, implement them completely, and maintain them consistently. That approach — not a large budget — is what makes a business genuinely hard to attack.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
