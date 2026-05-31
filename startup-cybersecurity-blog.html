@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Startups | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* STAGE STEPS */
+  .stages { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stage { background: var(--surface); padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .stage-n { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.2; min-width: 28px; }
+  .stage-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .stage-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">May 31, 2026 &nbsp;·&nbsp; Startup Security</div>
+    <h1>Cybersecurity for startups — building security in from day one</h1>
+    <p class="post-lead">The best time to build security into a business is at the beginning — before bad habits become entrenched, before the codebase grows without security considerations, and before a breach destroys the trust you have just started building with customers and investors.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Startups face a particular cybersecurity challenge. They are moving fast, resources are scarce, and security can feel like something to address later — after product-market fit, after the next funding round, after the team grows. But the decisions made in the early days of a business have an outsized impact on its long-term security posture. Technical debt and security debt accumulate quickly, and retrofitting security into a system built without it is significantly harder and more expensive than building it in from the start.</p>
+      <p>The good news is that for a startup at the early stages, getting the fundamentals right is genuinely achievable — and creates a foundation that scales as the business grows.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">43%</div>
+          <div class="stat-d">of cyberattacks target small businesses and startups — the assumption of safety in obscurity is wrong</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">60%</div>
+          <div class="stat-d">of startups that suffer a significant data breach close within six months</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">more expensive to fix a security issue after launch than to address it during development</div>
+        </div>
+      </div>
+
+      <h2>Why startups are targeted — and why "we are too small" is wrong</h2>
+      <p>Startups often assume that their size makes them invisible to attackers. This is one of the most dangerous assumptions in cybersecurity. Automated attack tools do not distinguish by company size — they scan the internet continuously for vulnerable systems, weak credentials, and misconfigured cloud environments. A two-person startup with a misconfigured AWS bucket is just as exposed as a company of two thousand.</p>
+      <p>Startups also hold data that has real value — early customer information, intellectual property, investor communications, and in many cases access to systems that will eventually be much larger targets. Compromise early, when defences are minimal, is a rational attacker strategy.</p>
+
+      <div class="callout">
+        <p>The majority of successful attacks on startups exploit the same vulnerabilities: weak or reused passwords, no MFA, misconfigured cloud storage, and unpatched software. None of these require expensive solutions. They require consistent habits.</p>
+      </div>
+
+      <h2>Security by stage — what to prioritise as you grow</h2>
+
+      <div class="stages">
+        <div class="stage">
+          <div class="stage-n">1</div>
+          <div class="stage-body">
+            <h4>Pre-launch (founding team)</h4>
+            <p>Set up a password manager from day one. Enable MFA on every account — email, cloud, code repository, and any SaaS tool. Use a business email domain rather than personal accounts. Choose a cloud provider and understand their shared responsibility model before you deploy anything.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <div class="stage-n">2</div>
+          <div class="stage-body">
+            <h4>Early product (first hires, first customers)</h4>
+            <p>Implement role-based access from the start. Write a basic security policy — even one page — that sets expectations for all team members. Set up automated backups. Make sure your first customer data is handled with GDPR compliance built in, not added later. Enable logging on critical systems.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <div class="stage-n">3</div>
+          <div class="stage-body">
+            <h4>Growth (scaling team and product)</h4>
+            <p>Formalise your onboarding and offboarding security processes. Achieve Cyber Essentials certification — investors and enterprise customers increasingly expect it. Conduct your first vulnerability scan. Consider a basic penetration test on your product. Appoint someone responsible for security, even if it is not their full-time role.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <div class="stage-n">4</div>
+          <div class="stage-body">
+            <h4>Scale (Series A and beyond)</h4>
+            <p>Invest in a proper security programme — a dedicated resource, a formal risk assessment, vendor security reviews, and regular penetration testing. Enterprise customers will conduct security due diligence. Investors will ask. The cost of getting this wrong at scale is existential.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Cloud security from the start</h2>
+      <p>Most startups build on cloud infrastructure — AWS, GCP, or Azure. Cloud environments are powerful but require deliberate security configuration. The default settings are rarely secure by design, and misconfigurations are among the most common causes of startup data breaches.</p>
+
+      <ul>
+        <li><strong>Never store credentials in code</strong> — use environment variables, secrets managers, or your cloud provider's secrets service. Credentials committed to a public GitHub repository are found within minutes by automated scanners.</li>
+        <li><strong>Apply least privilege to all cloud IAM roles</strong> — every service and user should have only the permissions they need. Avoid using root accounts for day-to-day operations.</li>
+        <li><strong>Audit your S3 buckets or cloud storage</strong> — ensure nothing is publicly accessible that should not be. A misconfigured storage bucket is one of the most common and most embarrassing data breach vectors.</li>
+        <li><strong>Enable logging and monitoring from day one</strong> — CloudTrail, Cloud Audit Logs, or equivalent. You cannot detect what you cannot see.</li>
+        <li><strong>Use a staging environment</strong> — never test with production data. Keep production and development environments cleanly separated.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Public repositories are permanently public</strong>
+        <p>Any credentials, API keys, or secrets accidentally pushed to a public GitHub repository should be treated as permanently compromised — even if deleted immediately. Automated scanners harvest these within seconds. Rotate the credentials immediately and audit what access they provided. Consider all repositories private by default unless there is a specific reason to make them public.</p>
+      </div>
+
+      <h2>Building a security culture early</h2>
+      <p>The security culture of a startup is set by its founders. If founders treat security as a priority — using a password manager, enabling MFA, taking data handling seriously — that culture becomes the default for every subsequent hire. If security is treated as an afterthought, that attitude embeds itself in the team and the product.</p>
+      <p>Early-stage security culture does not require formal programmes or large investments. It requires visible habits, clear expectations, and a no-blame environment where people report mistakes rather than hide them.</p>
+
+      <h2>Security as a product feature — and a competitive advantage</h2>
+      <p>For B2B startups especially, security is not just a protection — it is a sales tool. Enterprise customers conduct security due diligence before signing contracts. Investors at later stages ask detailed security questions. A startup that can demonstrate mature security practices — Cyber Essentials certification, a clear privacy policy, evidence of secure development practices — has a genuine competitive advantage over peers who cannot.</p>
+      <p>Building security in from the start means that when those conversations happen — and they will — you have straightforward, honest answers rather than uncomfortable gaps to explain.</p>
+
+      <div class="callout">
+        <p>Cyber Essentials certification costs around £300 and takes a day or two of effort for a small team. For B2B startups, it is one of the highest-ROI investments available — opening doors to government contracts, enterprise customers, and investors who require it as a baseline.</p>
+      </div>
+
+      <hr>
+
+      <h2>Startup security checklist — day one essentials</h2>
+      <ul class="checklist">
+        <li>Password manager set up — every team member using it from day one</li>
+        <li>MFA enabled on all accounts — email, cloud, code repositories, SaaS tools</li>
+        <li>Business email domain used — no personal accounts for business operations</li>
+        <li>Cloud storage buckets and permissions audited — nothing publicly accessible</li>
+        <li>Credentials and API keys never stored in code or public repositories</li>
+        <li>Cloud logging and monitoring enabled</li>
+        <li>Role-based access implemented — least privilege from the start</li>
+        <li>Automated backups configured and tested</li>
+        <li>GDPR data handling considered for any customer data</li>
+        <li>Basic security policy written and shared with all team members</li>
+        <li>Cyber Essentials certification on the roadmap</li>
+        <li>Offboarding checklist includes full access revocation</li>
+      </ul>
+
+      <p>Security is significantly easier to build in than to bolt on. The startup that establishes these habits in its first weeks operates from a fundamentally stronger position than one that defers security until it feels urgent — which is usually after the incident that makes it so.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
