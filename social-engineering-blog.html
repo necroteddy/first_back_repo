@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Engineering | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* TACTICS */
+  .tactics { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .tactic { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .tactic-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .tactic h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .tactic p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  /* PRINCIPLES TABLE */
+  .principles { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .principle { background: var(--surface); padding: 1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .p-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .principle h4 { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .principle p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 1, 2026 &nbsp;·&nbsp; Social Engineering</div>
+    <h1>Social engineering — how criminals manipulate people, and how to stop them</h1>
+    <p class="post-lead">The most sophisticated security systems in the world can be bypassed by a single well-crafted phone call. Social engineering attacks target human psychology rather than technology — and they are responsible for the majority of the most damaging breaches ever recorded.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Cybersecurity is often discussed as a technical problem — vulnerabilities in software, weaknesses in networks, flaws in configurations. But the most consistently effective attack vector is not technical at all. It is human. Social engineering is the art of manipulating people into doing things they would not otherwise do — handing over credentials, transferring money, granting access, or divulging confidential information.</p>
+      <p>Understanding how these attacks work is the first step to building the awareness and habits that defend against them.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">98%</div>
+          <div class="stat-d">of cyberattacks rely on social engineering at some point in the attack chain</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£35K</div>
+          <div class="stat-d">average direct loss from a successful social engineering attack on a small business</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">82%</div>
+          <div class="stat-d">of breaches involve a human element — an employee tricked, manipulated, or pressured</div>
+        </div>
+      </div>
+
+      <h2>The psychological principles attackers exploit</h2>
+      <p>Social engineering attacks do not succeed through technical sophistication. They succeed because they exploit predictable features of human psychology — features that exist for good reasons but that can be turned against us under the right conditions.</p>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="p-icon">⚡</div>
+          <div>
+            <h4>Urgency</h4>
+            <p>Time pressure bypasses careful thinking. "Your account will be suspended in 2 hours" or "the payment must go out today" forces quick action before verification.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-icon">👔</div>
+          <div>
+            <h4>Authority</h4>
+            <p>People comply with authority figures. Impersonating a CEO, a bank fraud team, HMRC, or IT support increases the likelihood of compliance without question.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-icon">🤝</div>
+          <div>
+            <h4>Social proof</h4>
+            <p>"Everyone else has already done this" or "other departments have confirmed" lowers resistance. If others have complied, it feels safe to do the same.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-icon">😰</div>
+          <div>
+            <h4>Fear</h4>
+            <p>"You have been hacked" or "you owe a penalty" creates anxiety that overrides rational evaluation. Fear drives action — often the wrong action.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-icon">💛</div>
+          <div>
+            <h4>Liking and familiarity</h4>
+            <p>We comply more readily with people we like or feel we know. Attackers study targets on LinkedIn and social media to reference shared contacts, interests, or experiences.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-icon">🔄</div>
+          <div>
+            <h4>Reciprocity</h4>
+            <p>When someone does something for us, we feel obligated to return the favour. Attackers may offer help — solving a problem, providing information — before making their real request.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>The most common social engineering attacks</h2>
+
+      <div class="tactics">
+        <div class="tactic">
+          <div class="tactic-label">Tactic 01</div>
+          <h4>Phishing</h4>
+          <p>Fraudulent emails designed to trick recipients into clicking malicious links, opening infected attachments, or entering credentials on fake websites. The most common social engineering vector — billions of phishing emails are sent every day.</p>
+        </div>
+        <div class="tactic">
+          <div class="tactic-label">Tactic 02</div>
+          <h4>Vishing (voice phishing)</h4>
+          <p>Fraudulent phone calls in which the attacker impersonates a trusted authority — a bank fraud team, IT support, HMRC, or a government agency — to extract information or action. Often more effective than email because the personal interaction creates stronger pressure to comply.</p>
+        </div>
+        <div class="tactic">
+          <div class="tactic-label">Tactic 03</div>
+          <h4>Pretexting</h4>
+          <p>The attacker creates a fabricated scenario — a pretext — to justify their request. "I am calling from the IT department and need your login to fix a critical issue." The scenario is designed to make the request seem legitimate and reasonable.</p>
+        </div>
+        <div class="tactic">
+          <div class="tactic-label">Tactic 04</div>
+          <h4>Baiting</h4>
+          <p>Leaving infected USB drives in car parks or reception areas, trusting that curiosity or helpfulness will lead someone to plug them in. Simple, effective, and still widely used. An infected USB inserted into a business computer can give an attacker immediate network access.</p>
+        </div>
+        <div class="tactic">
+          <div class="tactic-label">Tactic 05</div>
+          <h4>Tailgating and physical access</h4>
+          <p>Following an authorised person through a secure door — carrying boxes, acting distracted, exploiting politeness. Physical social engineering to gain access to premises, systems, or documents without authorisation.</p>
+        </div>
+        <div class="tactic">
+          <div class="tactic-label">Tactic 06</div>
+          <h4>Quid pro quo</h4>
+          <p>Offering a service in exchange for information or access. "I can fix that IT issue for you — just give me your password for a moment." The offer of help lowers defences and creates the reciprocity dynamic that makes compliance feel natural.</p>
+        </div>
+      </div>
+
+      <h2>Why AI has made social engineering more dangerous</h2>
+      <p>Artificial intelligence has significantly raised the quality and scale of social engineering attacks. AI tools can generate highly convincing emails in any language and tone, with no spelling errors, perfect mimicry of an individual's writing style, and contextual references drawn from publicly available information.</p>
+      <p>Voice cloning now allows criminals to replicate a CEO's voice from a few seconds of audio — enough for a convincing phone call to a finance team. Deepfake video has been used to impersonate executives in video calls. The traditional advice of "look for bad grammar" no longer applies. The tell-tale signs of social engineering have changed.</p>
+
+      <div class="warning">
+        <strong>⚠ The new rule: verify through a separate channel</strong>
+        <p>In an era of AI-generated voices, deepfake video, and perfectly crafted emails, the only reliable defence against social engineering is out-of-band verification. Any unusual request — regardless of how convincing it looks or sounds — must be confirmed through a second, independent channel. Call back on a number you already have. Walk to the person's office. Do not use contact details provided in the suspicious communication itself.</p>
+      </div>
+
+      <h2>Building defences — technical and human</h2>
+      <p>Defending against social engineering requires both technical controls and human awareness. Neither alone is sufficient — a well-trained team is still vulnerable without the right technical backstops, and good technical controls are bypassed by attacks that never touch them.</p>
+
+      <ul>
+        <li><strong>Multi-factor authentication</strong> — the most important technical defence. Even when credentials are stolen through social engineering, MFA prevents them being used without the second factor.</li>
+        <li><strong>Email security</strong> — DMARC, DKIM, and SPF prevent domain spoofing. Email filtering catches many phishing attempts before they reach inboxes.</li>
+        <li><strong>Clear verification procedures</strong> — written policies requiring out-of-band verification for sensitive requests remove the decision from individuals under pressure.</li>
+        <li><strong>Regular awareness training</strong> — short, frequent training on current social engineering tactics keeps recognition skills sharp.</li>
+        <li><strong>Simulated phishing tests</strong> — testing your team with realistic simulations identifies who needs additional training and builds recognition muscle memory.</li>
+        <li><strong>A no-blame reporting culture</strong> — people who spot or fall for social engineering must feel safe reporting it. Early reports contain damage. Blame silences them.</li>
+      </ul>
+
+      <div class="callout">
+        <p>The single most protective habit against social engineering is a simple pause. Before responding to any unusual request — however urgent, however authoritative the source — stop. Take a breath. Ask: does this feel right? Then verify through a channel you trust before taking action.</p>
+      </div>
+
+      <hr>
+
+      <h2>Social engineering defence checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all accounts — stolen credentials alone cannot be used</li>
+        <li>DMARC, DKIM, and SPF configured on your email domain</li>
+        <li>Written verification policy for sensitive requests — out-of-band confirmation required</li>
+        <li>Staff trained on the six psychological triggers attackers exploit</li>
+        <li>Team aware of current tactics — vishing, pretexting, deepfakes</li>
+        <li>Simulated phishing tests run regularly</li>
+        <li>No-blame reporting culture established — people report without fear</li>
+        <li>Physical access controls in place — visitor management, tailgating awareness</li>
+        <li>USB device policy — unknown devices never inserted into business computers</li>
+        <li>Unusual requests always verified by calling a known number — not one provided in the request</li>
+      </ul>
+
+      <p>Social engineering will always be effective to some degree — because the psychological principles it exploits are fundamental to how humans function in social and professional contexts. The goal is not to eliminate vulnerability but to reduce it: to build the habits, the culture, and the technical backstops that make your business a significantly harder target than the one without them.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
