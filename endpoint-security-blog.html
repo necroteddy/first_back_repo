@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endpoint Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* COMPARISON TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .compare-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .compare-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; font-size: 14px; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { font-weight: 500; }
+  .tag-yes { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-partial { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-no { display: inline-block; background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .compare-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 2, 2026 &nbsp;·&nbsp; Endpoint Security</div>
+    <h1>Endpoint security — protecting every device in your business</h1>
+    <p class="post-lead">Every laptop, phone, tablet, and desktop in your business is an endpoint — a potential entry point for attackers. Endpoint security is how you ensure that each of those devices is protected, managed, and monitored, wherever it is used.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>The perimeter of the traditional business network has disappeared. Staff work from home, from cafés, from client sites. They use laptops and phones that connect to dozens of different networks every week. The attack surface of the modern business is distributed across every device used by every employee — and securing it requires a different approach to the old model of protecting a single office network.</p>
+      <p>Endpoint security is the discipline of protecting individual devices — and ensuring that a compromised device cannot become a gateway to everything else.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">68%</div>
+          <div class="stat-d">of organisations experienced one or more endpoint attacks that successfully compromised data or infrastructure</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">42%</div>
+          <div class="stat-d">of employees use personal devices for work without their employer's knowledge or approval</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£1.8M</div>
+          <div class="stat-d">average cost of an endpoint-related breach for a mid-sized business</div>
+        </div>
+      </div>
+
+      <h2>What is an endpoint?</h2>
+      <p>An endpoint is any device that connects to your business network or accesses your business data. That includes:</p>
+      <ul>
+        <li>Laptops and desktop computers — company-owned and personal</li>
+        <li>Smartphones and tablets — including personal devices used for work email</li>
+        <li>Servers — physical and virtual</li>
+        <li>Printers and network devices</li>
+        <li>Point-of-sale terminals</li>
+        <li>Smart building systems, IoT devices, and connected equipment</li>
+      </ul>
+      <p>Every one of these is a potential attack surface. Endpoint security ensures each device is protected, configured correctly, monitored for threats, and manageable in the event of compromise or loss.</p>
+
+      <h2>The layers of endpoint protection</h2>
+      <p>Effective endpoint security is not a single tool — it is several overlapping layers that together make a device significantly harder to compromise and easier to recover from if something goes wrong.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>What it does</th>
+            <th>Essential?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Antivirus / anti-malware</td>
+            <td>Detects and removes known malware — the baseline of endpoint protection</td>
+            <td><span class="tag-yes">Essential</span></td>
+          </tr>
+          <tr>
+            <td>EDR (Endpoint Detection and Response)</td>
+            <td>Goes beyond antivirus — monitors behaviour, detects suspicious activity, enables investigation and response</td>
+            <td><span class="tag-partial">Recommended</span></td>
+          </tr>
+          <tr>
+            <td>Full disk encryption</td>
+            <td>Encrypts all data on the device — a lost or stolen laptop cannot be read without the decryption key</td>
+            <td><span class="tag-yes">Essential</span></td>
+          </tr>
+          <tr>
+            <td>Automatic OS and software updates</td>
+            <td>Closes known vulnerabilities before attackers can exploit them</td>
+            <td><span class="tag-yes">Essential</span></td>
+          </tr>
+          <tr>
+            <td>Screen lock and strong authentication</td>
+            <td>Prevents physical access to an unattended or lost device</td>
+            <td><span class="tag-yes">Essential</span></td>
+          </tr>
+          <tr>
+            <td>MDM (Mobile Device Management)</td>
+            <td>Central management, remote wipe, policy enforcement across all devices</td>
+            <td><span class="tag-partial">Recommended</span></td>
+          </tr>
+          <tr>
+            <td>Application allowlisting</td>
+            <td>Only approved applications can run — blocks unapproved or malicious software</td>
+            <td><span class="tag-partial">For higher-risk environments</span></td>
+          </tr>
+          <tr>
+            <td>VPN</td>
+            <td>Encrypts network traffic on untrusted connections — essential for remote work</td>
+            <td><span class="tag-yes">Essential for remote workers</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Antivirus versus EDR — what is the difference?</h2>
+      <p>Traditional antivirus software works by comparing files against a database of known malware signatures. It is effective against known threats but can miss new, unknown, or fileless malware that has no signature to match against.</p>
+      <p>Endpoint Detection and Response (EDR) takes a different approach. Instead of just looking for known bad files, it monitors device behaviour — watching what processes are running, what files are being accessed, what network connections are being made — and flags activity that looks suspicious, even if it has never been seen before.</p>
+
+      <div class="callout">
+        <p>For most small businesses, a modern security suite that combines antivirus with behavioural detection — Microsoft Defender (included in Windows), Malwarebytes, or CrowdStrike Falcon Go — provides effective protection without requiring enterprise-grade investment or specialist management.</p>
+      </div>
+
+      <h2>Full disk encryption — the essential safeguard for portable devices</h2>
+      <p>Every laptop used for work must have full disk encryption enabled. A laptop left on a train or stolen from a car contains everything stored on it — customer data, financial records, login credentials, emails — unless that data is encrypted. Without encryption, a thief or finder has immediate access to everything. With encryption, the data is unreadable without the decryption key.</p>
+      <p>BitLocker (Windows) and FileVault (macOS) are built into their respective operating systems and free to enable. There is no technical barrier to full disk encryption on any modern laptop. It simply needs to be turned on and verified — and many businesses have never checked.</p>
+
+      <div class="warning">
+        <strong>⚠ Check right now — is encryption enabled?</strong>
+        <p>On Windows: search for "BitLocker" in the Start menu. On Mac: go to System Settings → Privacy and Security → FileVault. If encryption is not enabled on your business laptops, enabling it should be your first action after reading this article.</p>
+      </div>
+
+      <h2>Mobile Device Management for distributed teams</h2>
+      <p>When your team works across multiple locations and devices, Mobile Device Management (MDM) gives you centralised visibility and control. With MDM, you can enforce security policies across all devices, push software updates, remotely wipe a lost or stolen device, and ensure that every device meets your security baseline before it can access business systems.</p>
+      <p>Microsoft Intune, Jamf (for Apple devices), and Google Endpoint Management are the most widely used MDM platforms. Microsoft Intune is included in Microsoft 365 Business Premium — if you already pay for that subscription, you may already have access to it without using it.</p>
+
+      <h2>The personal device problem</h2>
+      <p>The majority of businesses have employees using personal devices for at least some work activity — checking email, approving documents, joining video calls. Each of these devices is outside your visibility and control, and each represents a potential security gap.</p>
+      <p>A clear personal device policy — defining what work activity is permitted on personal devices, what security requirements must be met, and what data must not be accessed on personal devices — significantly reduces this risk. MDM solutions can also manage a personal device mode that applies work security policies to the work partition of a personal phone without affecting personal data.</p>
+
+      <hr>
+
+      <h2>Endpoint security checklist</h2>
+      <ul class="checklist">
+        <li>Antivirus or security suite installed and active on all devices</li>
+        <li>Full disk encryption enabled on all laptops — BitLocker or FileVault verified</li>
+        <li>Automatic OS and software updates enabled on all devices</li>
+        <li>Screen lock with strong PIN, password, or biometric on all devices</li>
+        <li>VPN required for remote work on untrusted networks</li>
+        <li>Remote wipe capability configured for all mobile devices</li>
+        <li>MDM deployed or in progress for distributed teams</li>
+        <li>Personal device policy written and communicated to all staff</li>
+        <li>Device inventory maintained — all endpoints known and accounted for</li>
+        <li>Endpoint security software monitored — alerts reviewed regularly</li>
+        <li>Offboarding checklist includes device return and remote wipe</li>
+      </ul>
+
+      <p>Endpoint security is foundational — it is the layer that protects the devices your business runs on, wherever they are. The businesses that get this right are those that treat every device as a potential target, apply consistent controls across all of them, and maintain visibility into their status. In a world where the perimeter is gone, the endpoint is the new frontier.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
