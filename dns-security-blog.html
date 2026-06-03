@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNS Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* DNS RESOLVER TABLE */
+  .resolver-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .resolver-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .resolver-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; font-size: 14px; }
+  .resolver-table tr:last-child td { border-bottom: none; }
+  .resolver-table td:first-child { font-weight: 500; }
+  .tag-free { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-paid { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .resolver-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 3, 2026 &nbsp;·&nbsp; DNS Security</div>
+    <h1>DNS security — protecting the internet's address book</h1>
+    <p class="post-lead">DNS is the system that translates domain names into the addresses computers use to connect. It is the foundation of almost everything your business does online — and it is one of the most consistently overlooked security controls available.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Every time someone in your business visits a website, sends an email, or connects to a cloud service, a DNS lookup happens first. Your computer asks a DNS resolver: where is this service located? The resolver answers, and the connection proceeds. This process happens billions of times a day, so quietly and automatically that most business owners never think about it.</p>
+      <p>But DNS is also a significant attack surface — used by attackers to redirect traffic, deliver malware, and exfiltrate data. And it is one of the few security controls where a simple configuration change can provide significant protection at no cost.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">88%</div>
+          <div class="stat-d">of malware uses DNS at some point during an attack — to communicate with command-and-control servers or to exfiltrate data</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">72%</div>
+          <div class="stat-d">of organisations experienced a DNS attack in the past year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£850K</div>
+          <div class="stat-d">average cost of a DNS attack — including downtime, remediation, and reputational damage</div>
+        </div>
+      </div>
+
+      <h2>What DNS actually does — plainly explained</h2>
+      <p>Think of DNS as the internet's phone book. When you type <em>yourbank.com</em> into a browser, your computer does not know where that is. It asks a DNS resolver — usually provided by your internet service provider — which looks up the address and returns a number (an IP address) that your computer uses to connect.</p>
+      <p>This lookup happens for every domain your business interacts with — websites, email servers, cloud services, APIs, and every other internet-connected tool. The resolver your business uses is a critical piece of infrastructure, and the security properties of that resolver matter enormously.</p>
+
+      <div class="callout">
+        <p>Most businesses use the default DNS resolver provided by their internet service provider — which typically provides no security filtering, no threat blocking, and no logging. Switching to a security-focused resolver is one of the fastest and cheapest security improvements available.</p>
+      </div>
+
+      <h2>How attackers exploit DNS</h2>
+
+      <p><strong>DNS hijacking</strong> involves changing your DNS settings — either on your router, your domain registrar, or through malware — to redirect lookups to an attacker-controlled resolver. When a staff member tries to connect to your bank or email, they are silently directed to a fake site instead. Credentials entered there go straight to the attacker.</p>
+
+      <p><strong>DNS cache poisoning</strong> is an attack in which fake DNS records are inserted into a resolver's cache. When anyone using that resolver tries to reach a legitimate domain, they are directed to a malicious address. This attack can affect everyone using a compromised resolver without any action on their part.</p>
+
+      <p><strong>DNS tunnelling</strong> exploits the fact that DNS traffic is often unmonitored. Malware that is already inside a network can use DNS queries to communicate with its command-and-control server or to slowly exfiltrate data — encoding information in DNS requests that look like normal traffic and pass undetected through firewalls that block other outbound connections.</p>
+
+      <p><strong>Typosquatting and lookalike domains</strong> involve registering domains that closely resemble legitimate ones — <em>paypa1.com</em> or <em>microsofft.com</em> — and using them for phishing. DNS filtering can block known malicious domains before a connection is ever made.</p>
+
+      <div class="warning">
+        <strong>⚠ Check your domain registrar's security settings</strong>
+        <p>Your domain name — yourcompany.com — is the address of your entire online presence. If an attacker gains control of your domain registrar account, they can redirect your website, intercept your email, and impersonate your business entirely. Enable two-factor authentication on your domain registrar account and consider registrar lock — a feature that prevents unauthorised transfers of your domain.</p>
+      </div>
+
+      <h2>DNS filtering — blocking threats before they connect</h2>
+      <p>A security-focused DNS resolver does something your ISP's default resolver does not: it checks every domain lookup against a database of known malicious, phishing, and malware-distributing sites, and blocks the connection before it is made.</p>
+      <p>If an employee clicks a phishing link, a DNS filtering service can block the connection to the phishing site before any page loads, before any credentials are entered, and before any malware is downloaded. It is a last-resort safety net that operates automatically, with no action required from the user.</p>
+
+      <h2>DNS resolvers worth considering</h2>
+
+      <table class="resolver-table">
+        <thead>
+          <tr>
+            <th>Resolver</th>
+            <th>Security features</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cloudflare 1.1.1.1 for Families</td>
+            <td>Blocks malware and adult content; fast; privacy-focused</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Quad9 (9.9.9.9)</td>
+            <td>Blocks known malicious domains using threat intelligence from 20+ partners</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Google Safe Browsing DNS</td>
+            <td>Basic malware and phishing blocking</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Cloudflare Gateway</td>
+            <td>Full DNS filtering with logging, custom block lists, and policy control</td>
+            <td><span class="tag-free">Free for small teams</span></td>
+          </tr>
+          <tr>
+            <td>Cisco Umbrella</td>
+            <td>Enterprise DNS security with detailed reporting and policy management</td>
+            <td><span class="tag-paid">Paid</span></td>
+          </tr>
+          <tr>
+            <td>DNSFilter</td>
+            <td>Business-focused filtering with category blocking and analytics</td>
+            <td><span class="tag-paid">~£2/user/mo</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Protecting your own domain — DNSSEC and email authentication</h2>
+      <p>As well as protecting your outbound DNS queries, you should protect the DNS records associated with your own domain. Several DNS-based standards significantly improve the security of email sent from and to your domain.</p>
+
+      <ul>
+        <li><strong>DNSSEC</strong> — digitally signs your DNS records so that resolvers can verify they have not been tampered with. Prevents cache poisoning attacks against your domain. Enable this through your domain registrar if supported.</li>
+        <li><strong>SPF (Sender Policy Framework)</strong> — a DNS record that specifies which mail servers are authorised to send email on behalf of your domain. Prevents others from spoofing your domain in email.</li>
+        <li><strong>DKIM (DomainKeys Identified Mail)</strong> — adds a digital signature to emails from your domain, allowing recipients to verify the message has not been tampered with in transit.</li>
+        <li><strong>DMARC</strong> — builds on SPF and DKIM, specifying what should happen to email that fails those checks, and providing reports on who is sending email claiming to be from your domain.</li>
+      </ul>
+
+      <div class="callout">
+        <p>SPF, DKIM, and DMARC together make it significantly harder for criminals to impersonate your domain in phishing emails sent to your customers, partners, and suppliers. Configuring them correctly is one of the most important DNS security actions any business can take — and it is free.</p>
+      </div>
+
+      <h2>Quick wins — what to do this week</h2>
+      <ul>
+        <li><strong>Switch your router's DNS to Quad9 (9.9.9.9)</strong> — log into your router admin panel and change the DNS server. Every device on your network immediately benefits. Takes five minutes.</li>
+        <li><strong>Enable 2FA on your domain registrar account</strong> — prevents unauthorised changes to your domain's DNS records.</li>
+        <li><strong>Check your email DNS records</strong> — use the free tool at mxtoolbox.com to check whether SPF, DKIM, and DMARC are correctly configured for your domain.</li>
+        <li><strong>Consider registrar lock</strong> — prevents your domain being transferred away without an additional verification step.</li>
+      </ul>
+
+      <hr>
+
+      <h2>DNS security checklist</h2>
+      <ul class="checklist">
+        <li>Router DNS changed to a security-focused resolver — Quad9 or Cloudflare</li>
+        <li>DNS filtering in place — malicious domains blocked before connection</li>
+        <li>2FA enabled on domain registrar account</li>
+        <li>Registrar lock enabled on your domain</li>
+        <li>SPF record correctly configured for your email domain</li>
+        <li>DKIM signing enabled for outbound email</li>
+        <li>DMARC policy configured — at minimum in monitoring mode</li>
+        <li>DNSSEC enabled if supported by your registrar</li>
+        <li>DNS records monitored for unauthorised changes</li>
+      </ul>
+
+      <p>DNS security is one of the highest-value, lowest-effort security improvements available to any business. Switching a DNS resolver takes minutes. Configuring email authentication records takes a few hours with guidance. Together, they close attack vectors that most businesses leave entirely open — and they do so at minimal or no cost.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
