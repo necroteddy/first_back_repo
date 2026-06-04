@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vulnerability Scanner</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0c0f; --surface: #0f1318; --surface2: #161b22;
+    --border: #21262d; --text: #e6edf3; --muted: #7d8590; --faint: #30363d;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149; --cyan: #58a6ff;
+    --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 13px; line-height: 1.6; min-height: 100vh; padding: 2rem 1.5rem 4rem; }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  h1 { font-family: var(--sans); font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
+  h1 span { color: var(--cyan); }
+  .sub { font-size: 13px; color: var(--muted); margin-bottom: 2rem; }
+
+  .how { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+  .how h3 { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+  .how ol { padding-left: 1.25rem; }
+  .how li { font-size: 13px; color: var(--muted); margin-bottom: 0.4rem; line-height: 1.6; }
+  .how code { background: var(--faint); border-radius: 3px; padding: 1px 6px; color: var(--cyan); font-size: 12px; }
+
+  #paste-box { width: 100%; min-height: 160px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-family: var(--mono); font-size: 12px; color: var(--text); resize: vertical; outline: none; line-height: 1.6; }
+  #paste-box:focus { border-color: var(--cyan); }
+  #paste-box::placeholder { color: var(--faint); }
+
+  .btn-row { display: flex; gap: 8px; margin: 0.75rem 0 2rem; }
+  #parse-btn { background: var(--cyan); color: var(--bg); border: none; border-radius: 6px; padding: 0.6rem 1.5rem; font-family: var(--sans); font-size: 13px; font-weight: 700; cursor: pointer; }
+  #parse-btn:hover { opacity: 0.85; }
+  #clear-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 0.6rem 1rem; font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; }
+  #clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+  #status { font-size: 12px; margin-bottom: 1rem; min-height: 16px; }
+  #status.err { color: var(--red); }
+
+  /* GRADE CARD */
+  #grade-card { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; display: none; }
+  .grade-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .grade-letter { font-family: var(--sans); font-size: 60px; font-weight: 800; line-height: 1; }
+  .grade-meta h3 { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .grade-meta p { font-size: 13px; color: var(--muted); margin: 0; }
+  .sev-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .pill { padding: 3px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; border: 1px solid; }
+  .pill-high   { background: rgba(248,81,73,0.1);  color: var(--red);    border-color: rgba(248,81,73,0.3); }
+  .pill-medium { background: rgba(210,153,34,0.1); color: var(--yellow); border-color: rgba(210,153,34,0.3); }
+  .pill-low    { background: rgba(88,166,255,0.1); color: var(--cyan);   border-color: rgba(88,166,255,0.3); }
+
+  /* PANELS */
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 1rem; display: none; }
+  .ph { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 0.6rem 1rem; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  .ph span { color: var(--text); font-size: 12px; }
+
+  /* PORT BLOCK */
+  .port-block { border-bottom: 1px solid var(--border); padding: 1rem; }
+  .port-block:last-child { border-bottom: none; }
+  .port-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+  .port-num { font-weight: 700; color: var(--cyan); font-size: 14px; }
+  .port-svc { font-size: 12px; color: var(--muted); }
+  .port-sw  { font-size: 12px; color: var(--text); background: var(--faint); border-radius: 4px; padding: 1px 7px; }
+  .banner { font-size: 11px; color: var(--faint); margin-bottom: 6px; word-break: break-all; }
+  .issue { display: flex; gap: 8px; align-items: flex-start; padding: 4px 0; border-top: 1px solid var(--faint); font-size: 13px; }
+  .issue:first-child { border-top: none; }
+  .sev-dot { flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; }
+  .dot-high   { background: var(--red); }
+  .dot-medium { background: var(--yellow); }
+  .dot-low    { background: var(--cyan); }
+  .issue-body .type { font-weight: 700; font-size: 12px; }
+  .issue-body .detail { font-size: 12px; color: var(--muted); }
+  .source-tag { font-size: 10px; color: var(--faint); margin-left: 4px; }
+
+  /* WEB FINDINGS */
+  .web-issue { padding: 0.6rem 1rem; border-bottom: 1px solid var(--faint); display: flex; gap: 10px; align-items: flex-start; }
+  .web-issue:last-child { border-bottom: none; }
+
+  /* RECOMMENDATIONS */
+  .rec { padding: 0.75rem 1rem; border-bottom: 1px solid var(--faint); display: flex; gap: 10px; align-items: flex-start; }
+  .rec:last-child { border-bottom: none; }
+  .rec-text { font-size: 13px; color: var(--text); }
+  .rec-sev { font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .rs-high   { color: var(--red); }
+  .rs-medium { color: var(--yellow); }
+  .rs-low    { color: var(--cyan); }
+
+  .empty { padding: 1rem; font-size: 13px; color: var(--faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Vulnerability <span>Scanner</span></h1>
+  <p class="sub">Paste your <code style="background:var(--faint);border-radius:3px;padding:1px 6px;color:var(--cyan)">scan_report.json</code> output to visualise findings.</p>
+
+  <div class="how">
+    <h3>How to use</h3>
+    <ol>
+      <li>Run: <code>python vuln_scanner_cve.py 127.0.0.1 --top --web</code></li>
+      <li>Open the generated <code>scan_report.json</code> file</li>
+      <li>Select all — <code>Ctrl+A</code> then <code>Ctrl+C</code></li>
+      <li>Paste below and click <strong>Render</strong></li>
+    </ol>
+  </div>
+
+  <textarea id="paste-box" placeholder='Paste scan_report.json here…
+
+{
+  "target": "127.0.0.1",
+  "ip": "127.0.0.1",
+  "open_ports": [...],
+  "web_findings": [...],
+  "summary": { "high": 1, "medium": 2, "low": 3, "grade": "C" },
+  ...
+}'></textarea>
+
+  <div class="btn-row">
+    <button id="parse-btn">Render</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+
+  <div id="status"></div>
+
+  <!-- GRADE -->
+  <div id="grade-card"></div>
+
+  <!-- OPEN PORTS -->
+  <div class="panel" id="ports-panel">
+    <div class="ph">🔍 Open Ports <span id="ports-count"></span></div>
+    <div id="ports-body"></div>
+  </div>
+
+  <!-- WEB FINDINGS -->
+  <div class="panel" id="web-panel">
+    <div class="ph">🌐 Web / SSL Checks <span id="web-count"></span></div>
+    <div id="web-body"></div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="panel" id="rec-panel">
+    <div class="ph">📋 Recommendations <span id="rec-count"></span></div>
+    <div id="rec-body"></div>
+  </div>
+
+</div>
+<script>
+(function () {
+
+  var GRADE_COLOR = { A: '#3fb950', B: '#9ad84f', C: '#d29922', D: '#ff8c42', F: '#f85149' };
+  var GRADE_TEXT  = {
+    A: 'No problems found. Looks good.',
+    B: 'Almost clean — minor things to check.',
+    C: 'Some problems worth fixing.',
+    D: 'Several problems — fix them soon.',
+    F: 'Serious problems — fix them now.'
+  };
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function setStatus(msg, cls) {
+    var el = document.getElementById('status');
+    el.textContent = msg;
+    el.className = cls || '';
+  }
+
+  function sevDot(sev) {
+    var cls = { HIGH: 'dot-high', MEDIUM: 'dot-medium', LOW: 'dot-low' }[sev] || 'dot-low';
+    return '<span class="sev-dot ' + cls + '"></span>';
+  }
+
+  function renderIssue(issue) {
+    var src = issue.source ? '<span class="source-tag">[' + esc(issue.source) + ']</span>' : '';
+    return '<div class="issue">' + sevDot(issue.severity) +
+      '<div class="issue-body">' +
+        '<div class="type">' + esc(issue.type) + src + '</div>' +
+        '<div class="detail">' + esc(issue.detail) + '</div>' +
+      '</div></div>';
+  }
+
+  function parseAndRender() {
+    var raw = document.getElementById('paste-box').value.trim();
+    if (!raw) { setStatus('Paste your scan_report.json first.', 'err'); return; }
+
+    var data;
+    try {
+      data = JSON.parse(raw);
+    } catch (e) {
+      setStatus('Invalid JSON — make sure you paste the full scan_report.json file.', 'err');
+      return;
+    }
+
+    var s = data.summary || {};
+    var grade = s.grade || '?';
+    var gc = GRADE_COLOR[grade] || '#7d8590';
+
+    // GRADE CARD
+    var gc_card = document.getElementById('grade-card');
+    gc_card.innerHTML =
+      '<div class="grade-row">' +
+        '<div class="grade-letter" style="color:' + gc + ';text-shadow:0 0 28px ' + gc + '44">' + esc(grade) + '</div>' +
+        '<div class="grade-meta">' +
+          '<h3>' + esc(data.target || '') + ' &nbsp;<span style="color:var(--muted);font-size:13px;font-weight:400">' + esc(data.ip || '') + '</span></h3>' +
+          '<p>' + esc(GRADE_TEXT[grade] || '') + '</p>' +
+          '<div class="sev-pills">' +
+            '<span class="pill pill-high">' + (s.high || 0) + ' High</span>' +
+            '<span class="pill pill-medium">' + (s.medium || 0) + ' Medium</span>' +
+            '<span class="pill pill-low">' + (s.low || 0) + ' Low</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    gc_card.style.display = 'block';
+
+    // OPEN PORTS
+    var ports = data.open_ports || [];
+    var pb = document.getElementById('ports-body');
+    document.getElementById('ports-count').textContent = '— ' + ports.length + ' open';
+    if (ports.length) {
+      var html = '';
+      for (var i = 0; i < ports.length; i++) {
+        var p = ports[i];
+        var sw = (p.detected_software ? p.detected_software + (p.detected_version ? ' ' + p.detected_version : '') : '');
+        html += '<div class="port-block">';
+        html += '<div class="port-head">';
+        html += '<span class="port-num">:' + p.port + '</span>';
+        html += '<span class="port-svc">' + esc(p.service || '') + '</span>';
+        if (sw) html += '<span class="port-sw">' + esc(sw) + '</span>';
+        html += '</div>';
+        if (p.banner) html += '<div class="banner">' + esc(p.banner) + '</div>';
+        var issues = p.issues || [];
+        for (var j = 0; j < issues.length; j++) {
+          html += renderIssue(issues[j]);
+        }
+        if (!issues.length) html += '<div style="font-size:12px;color:var(--faint)">No issues detected</div>';
+        html += '</div>';
+      }
+      pb.innerHTML = html;
+    } else {
+      pb.innerHTML = '<div class="empty">No open ports found.</div>';
+    }
+    document.getElementById('ports-panel').style.display = 'block';
+
+    // WEB FINDINGS
+    var web = data.web_findings || [];
+    var wb = document.getElementById('web-body');
+    document.getElementById('web-count').textContent = '— ' + web.length + ' finding(s)';
+    if (web.length) {
+      var whtml = '';
+      for (var k = 0; k < web.length; k++) {
+        var w = web[k];
+        whtml += '<div class="web-issue">' + sevDot(w.severity) +
+          '<div class="issue-body">' +
+            '<div class="type">' + esc(w.type) + '</div>' +
+            '<div class="detail">' + esc(w.detail) + '</div>' +
+          '</div></div>';
+      }
+      wb.innerHTML = whtml;
+    } else {
+      wb.innerHTML = '<div class="empty">No web checks run. Use --web flag to enable.</div>';
+    }
+    document.getElementById('web-panel').style.display = 'block';
+
+    // RECOMMENDATIONS
+    var recs = data.recommendations || [];
+    var rb = document.getElementById('rec-body');
+    document.getElementById('rec-count').textContent = '— ' + recs.length;
+    if (recs.length) {
+      var rhtml = '';
+      for (var m = 0; m < recs.length; m++) {
+        var r = recs[m];
+        var sc = { HIGH: 'rs-high', MEDIUM: 'rs-medium', LOW: 'rs-low' }[r.severity] || 'rs-low';
+        rhtml += '<div class="rec">' +
+          '<span class="rec-sev ' + sc + '">' + esc(r.severity) + '</span>' +
+          '<span class="rec-text">' + esc(r.detail) + '</span>' +
+          '</div>';
+      }
+      rb.innerHTML = rhtml;
+    } else {
+      rb.innerHTML = '<div class="empty">No recommendations.</div>';
+    }
+    document.getElementById('rec-panel').style.display = 'block';
+
+    setStatus('');
+  }
+
+  function clearAll() {
+    document.getElementById('paste-box').value = '';
+    document.getElementById('grade-card').style.display = 'none';
+    document.getElementById('ports-panel').style.display = 'none';
+    document.getElementById('web-panel').style.display = 'none';
+    document.getElementById('rec-panel').style.display = 'none';
+    setStatus('');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('parse-btn').addEventListener('click', parseAndRender);
+    document.getElementById('clear-btn').addEventListener('click', clearAll);
+    document.getElementById('paste-box').addEventListener('keydown', function (e) {
+      if (e.ctrlKey && e.key === 'Enter') parseAndRender();
+    });
+  });
+
+}());
+</script>
+</body>
+</html>

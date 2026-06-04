@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* LAYERS TABLE */
+  .layers { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .layer { background: var(--surface); padding: 1.1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .layer-n { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
+  .layer-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .layer-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 4, 2026 &nbsp;·&nbsp; Email Security</div>
+    <h1>Email security — locking down your most attacked channel</h1>
+    <p class="post-lead">More than ninety percent of cyberattacks begin with an email. It is the most targeted channel in business communications and the one most businesses have secured least thoroughly. A layered approach to email security is not optional — it is foundational.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Email is the primary communication channel for almost every business. It is also the primary attack vector for phishing, malware delivery, business email compromise, and account takeover. The same properties that make email so useful — open, universal, immediate — are the properties that make it so dangerous when left unsecured.</p>
+      <p>Good email security is not a single control. It is a stack of overlapping protections that together make it significantly harder for attackers to reach your team, impersonate your domain, or compromise your accounts.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">91%</div>
+          <div class="stat-d">of all cyberattacks start with a phishing email</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3.4B</div>
+          <div class="stat-d">phishing emails sent every single day — automated, targeted, increasingly convincing</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£14K</div>
+          <div class="stat-d">average cost of a successful phishing attack on a small business — before BEC losses are counted</div>
+        </div>
+      </div>
+
+      <h2>The email security stack — layered protection</h2>
+      <p>No single control secures email completely. Each layer addresses different threats, and together they create a defence in depth that significantly reduces risk at every stage — from the email arriving in the first place to what happens if an account is compromised.</p>
+
+      <div class="layers">
+        <div class="layer">
+          <div class="layer-n">1</div>
+          <div class="layer-body">
+            <h4>Multi-factor authentication on every email account</h4>
+            <p>The most important single control. Even if credentials are stolen through phishing, MFA prevents the attacker from accessing the inbox. Enable it on every account — no exceptions.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-n">2</div>
+          <div class="layer-body">
+            <h4>SPF, DKIM, and DMARC on your domain</h4>
+            <p>These three DNS-based authentication standards prevent criminals from spoofing your domain in emails to others — protecting your customers, partners, and suppliers from impersonation attacks in your name.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-n">3</div>
+          <div class="layer-body">
+            <h4>Spam and phishing filtering</h4>
+            <p>Microsoft 365 and Google Workspace both include spam and phishing filtering that catches a large proportion of malicious email before it reaches inboxes. Ensure filtering is enabled and configured — do not rely on defaults.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-n">4</div>
+          <div class="layer-body">
+            <h4>Safe links and safe attachments</h4>
+            <p>Microsoft Defender for Office 365 and Google Workspace's advanced protection scan links at click time and scan attachments before delivery — catching malicious content that was clean when the email arrived but became dangerous later.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-n">5</div>
+          <div class="layer-body">
+            <h4>External email banners and warnings</h4>
+            <p>Adding a visible banner to emails from outside your organisation alerts staff when an email did not originate internally — a simple, effective visual cue that reduces the success of impersonation attacks.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-n">6</div>
+          <div class="layer-body">
+            <h4>Audit logs and inbox rule monitoring</h4>
+            <p>Attackers who compromise an email account often create forwarding rules to silently copy all emails to an external address. Regular review of inbox rules and login audit logs catches these compromises before they cause lasting damage.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-n">7</div>
+          <div class="layer-body">
+            <h4>Staff awareness training</h4>
+            <p>Technical controls catch most attacks. Staff awareness catches the rest. Regular, short training on recognising phishing, spotting spoofed senders, and reporting suspicious emails is the final layer of a complete email security stack.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>SPF, DKIM, and DMARC — why they matter for your outbound email</h2>
+      <p>These three standards protect the email your domain sends — not just the email you receive. Without them, anyone can send an email that appears to come from your domain. Criminals use this to send phishing emails to your customers that appear to be from you, invoice fraud attempts that appear to come from your accounts team, and CEO fraud attempts that appear to come from your leadership.</p>
+
+      <ul>
+        <li><strong>SPF</strong> specifies which mail servers are authorised to send email from your domain. Receiving mail servers check this record and flag or reject email from unauthorised sources.</li>
+        <li><strong>DKIM</strong> adds a digital signature to outgoing emails, allowing receiving servers to verify the message came from your domain and has not been modified in transit.</li>
+        <li><strong>DMARC</strong> tells receiving servers what to do with email that fails SPF or DKIM checks — quarantine it, reject it, or deliver it with a report. It also provides reports to you about who is sending email in your name.</li>
+      </ul>
+
+      <div class="callout">
+        <p>Google now requires DMARC to be configured before emails from your domain will be delivered to Gmail accounts without filtering. Microsoft has similar requirements for Outlook. If your DMARC policy is not set, your legitimate emails may be filtered as spam by a growing number of recipients.</p>
+      </div>
+
+      <h2>Account compromise — what to watch for</h2>
+      <p>Business email accounts are compromised more often than most business owners realise — and the compromise often goes undetected for weeks. An attacker with access to a business email account can read confidential correspondence, intercept payment instructions, impersonate the account holder to colleagues and clients, and set up forwarding rules to maintain access even after the password is changed.</p>
+      <p>Signs that an email account may be compromised:</p>
+
+      <ul>
+        <li>Unexpected login notifications or MFA prompts you did not initiate</li>
+        <li>Emails in the Sent folder that you did not send</li>
+        <li>Inbox rules you did not create — particularly forwarding rules to external addresses</li>
+        <li>Colleagues or clients reporting unusual emails from your address</li>
+        <li>Login activity from unusual locations or times in the audit log</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Check inbox rules on every email account now</strong>
+        <p>In Microsoft 365: Settings → View all Outlook settings → Mail → Rules. In Gmail: Settings → Filters and Blocked Addresses, and Settings → Forwarding and POP/IMAP. Any rule forwarding email to an address you do not recognise should be deleted immediately and the account treated as compromised — change the password, enable MFA if not already done, and review audit logs for other suspicious activity.</p>
+      </div>
+
+      <h2>Email security in Microsoft 365 and Google Workspace</h2>
+      <p>Both major business email platforms include significant security capabilities that many businesses never enable. If you pay for Microsoft 365 Business Premium or Google Workspace Business Plus, you have access to advanced threat protection tools — safe links, safe attachments, advanced anti-phishing policies, and detailed audit logging — that provide substantially better protection than the default configuration.</p>
+      <p>Reviewing and configuring these settings in your admin console is one of the most valuable security actions you can take without any additional spend. Many businesses are already paying for protection they have not switched on.</p>
+
+      <div class="callout">
+        <p>Microsoft's Secure Score in the Microsoft 365 admin centre provides a prioritised list of security improvements you can make, with clear instructions for each. If you have not visited it, start there — it is free, built in, and directly actionable.</p>
+      </div>
+
+      <hr>
+
+      <h2>Email security checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on every email account — no exceptions</li>
+        <li>SPF record correctly configured for your domain</li>
+        <li>DKIM signing enabled for outbound email</li>
+        <li>DMARC policy configured — at minimum in reporting mode, ideally enforcing</li>
+        <li>Spam and phishing filtering enabled and reviewed in admin console</li>
+        <li>Safe links and safe attachments enabled (Microsoft 365 / Google Workspace)</li>
+        <li>External email banners enabled — incoming external email clearly labelled</li>
+        <li>Inbox rules audited on all accounts — no unexpected forwarding rules</li>
+        <li>Login audit logs reviewed — unusual access investigated</li>
+        <li>Microsoft Secure Score or Google Workspace security health reviewed</li>
+        <li>Staff trained on recognising phishing and reporting suspicious emails</li>
+      </ul>
+
+      <p>Email is the attack surface that keeps giving. The volume of attacks, the sophistication of the best ones, and the central role email plays in business operations makes securing it a continuous priority — not a one-time configuration. Work through the stack, layer by layer, and you will have addressed the entry point for the vast majority of cyber incidents.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
