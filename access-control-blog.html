@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Control and Identity Management | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* PRINCIPLES */
+  .principles { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .principle { background: var(--surface); padding: 1.1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .p-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
+  .p-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .p-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 5, 2026 &nbsp;·&nbsp; Identity Management</div>
+    <h1>Access control and identity management — who can see what, and why it matters</h1>
+    <p class="post-lead">One of the most consistent findings in security breaches is that attackers get access to far more than they should — because the organisation gave its own people far more access than they needed. Controlling who can see and do what is one of the most powerful security controls available.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Access control is the practice of ensuring that people — and systems — can access only the resources they genuinely need, and nothing more. It sounds simple. In practice, most businesses have access sprawl: historical permissions that were never removed, admin rights granted for convenience and never revoked, shared accounts where accountability is impossible, and former employees whose access was never fully closed down.</p>
+      <p>Every excess permission is a risk. Every account with more access than it needs is a potential blast radius amplifier. When an account is compromised — through phishing, credential theft, or insider action — the damage it can do is directly proportional to the access it holds.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">74%</div>
+          <div class="stat-d">of organisations say excessive user privileges significantly contributed to their most serious breach</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">80%</div>
+          <div class="stat-d">of breaches involve compromised credentials — access control limits what those credentials can reach</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£0</div>
+          <div class="stat-d">cost of removing unnecessary access — one of the highest-ROI security improvements available</div>
+        </div>
+      </div>
+
+      <h2>The core principles of access control</h2>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="p-num">1</div>
+          <div class="p-body">
+            <h4>Least privilege</h4>
+            <p>Every user, system, and application should have only the minimum access required to do its job — nothing more. A sales person does not need access to payroll. A junior developer does not need production database access. A contractor does not need access to all client files.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">2</div>
+          <div class="p-body">
+            <h4>Need to know</h4>
+            <p>Access to sensitive information should be restricted to those who need it for a specific, current purpose. Information that is not needed for a role should not be accessible to that role — regardless of seniority.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">3</div>
+          <div class="p-body">
+            <h4>Separation of duties</h4>
+            <p>No single person should have enough access to complete a sensitive action alone — particularly in financial processes. The same person who requests a payment should not be able to approve it. The developer who writes code should not be the only person who can deploy it to production.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">4</div>
+          <div class="p-body">
+            <h4>Time-limited access</h4>
+            <p>Access granted for a specific purpose — a project, a contract, a temporary role — should be revoked when that purpose ends. Permanent access should be the exception, not the default.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">5</div>
+          <div class="p-body">
+            <h4>Regular review</h4>
+            <p>Access permissions drift over time as roles change, projects end, and staff move. Regular access reviews — quarterly for high-sensitivity systems, annually for general systems — ensure permissions remain appropriate.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Identity management — the foundation</h2>
+      <p>Identity management is the practice of ensuring that every user has one clearly defined identity in your systems, that identity is properly authenticated, and that it can be managed centrally. The alternative — multiple accounts per person, shared credentials, local admin accounts with no central oversight — creates gaps that are exploited consistently.</p>
+
+      <ul>
+        <li><strong>Single sign-on (SSO)</strong> — one identity, one authentication event, access to multiple systems. SSO through Microsoft Entra ID or Google Workspace centralises identity management and makes it possible to disable all of a user's access in one action when they leave.</li>
+        <li><strong>No shared accounts</strong> — shared credentials mean no accountability. When something goes wrong with a shared account, you cannot tell who did what or when. Every person needs their own account.</li>
+        <li><strong>Separate admin accounts</strong> — staff who need administrative privileges should have a separate account used only for administrative tasks, distinct from their day-to-day account. If their regular account is compromised, admin privileges are not automatically in scope.</li>
+        <li><strong>Service accounts</strong> — automated systems and applications that need access to other systems should use dedicated service accounts with the minimum necessary permissions, not shared human accounts.</li>
+      </ul>
+
+      <div class="callout">
+        <p>Microsoft Entra ID (formerly Azure AD) and Google Workspace both provide centralised identity management, SSO, and access governance for small businesses at a reasonable cost. If your business already uses Microsoft 365 or Google Workspace, you likely have access to these capabilities without additional spend.</p>
+      </div>
+
+      <h2>Role-based access control</h2>
+      <p>Rather than assigning permissions to individuals directly — which becomes unmanageable as teams grow — role-based access control (RBAC) assigns permissions to roles, and people are assigned to roles. A "Finance Manager" role has access to the finance system, payroll, and expense management. A "Customer Support" role has access to the CRM and ticketing system. When someone joins, changes role, or leaves, their access changes with their role.</p>
+      <p>Most modern business software — Microsoft 365, Google Workspace, Salesforce, Xero, and hundreds of others — supports RBAC. The challenge is usually not the technology but the discipline of defining roles clearly, keeping them current, and reviewing them regularly.</p>
+
+      <h2>The offboarding problem</h2>
+      <p>One of the most consistently exploited access control failures is incomplete offboarding. When a staff member leaves, their accounts must be fully disabled — not just their email, but every system they had access to. Cloud tools they signed up for independently. Shared passwords they may have known. Remote access credentials. VPN certificates.</p>
+      <p>Research consistently finds that a significant proportion of data breaches and insider incidents involve former employees who retained access after leaving. The window is often weeks or months — because offboarding was handled ad hoc rather than through a formal, comprehensive process.</p>
+
+      <div class="warning">
+        <strong>⚠ Offboarding must be a security event</strong>
+        <p>When someone leaves your business — for any reason, on any terms — their access should be revoked on their last day, not when IT gets around to it. Maintain a list of every system each person can access. When they leave, work through that list systematically. If you use SSO, a single action disables access across all connected systems — this is one of the clearest practical benefits of centralised identity management.</p>
+      </div>
+
+      <h2>Privileged access management</h2>
+      <p>Admin accounts are the highest-value targets in any organisation. An attacker with administrative access to your systems can read everything, modify anything, and cover their tracks. Privileged access management (PAM) is the practice of applying the highest level of control specifically to those powerful accounts.</p>
+
+      <ul>
+        <li><strong>Limit the number of admin accounts</strong> — only those with a genuine need for administrative privileges should have them</li>
+        <li><strong>Require MFA for all admin accounts</strong> — never allow admin access with just a password</li>
+        <li><strong>Log and monitor admin activity</strong> — all actions taken with privileged accounts should be logged and regularly reviewed</li>
+        <li><strong>Use just-in-time access</strong> — rather than permanent admin rights, some tools allow time-limited elevation: admin access is requested, approved, used for a specific task, and then automatically revoked</li>
+      </ul>
+
+      <hr>
+
+      <h2>Access control checklist</h2>
+      <ul class="checklist">
+        <li>Least privilege applied — every user has only the access their role requires</li>
+        <li>No shared accounts — every person has their own named account</li>
+        <li>Admin accounts separated from day-to-day accounts</li>
+        <li>SSO configured — centralised identity management in place</li>
+        <li>Role-based access control defined and implemented in key systems</li>
+        <li>Access permissions reviewed quarterly for high-sensitivity systems</li>
+        <li>Offboarding checklist covers all systems — access revoked on last day</li>
+        <li>Former employee access audited — no lingering active accounts</li>
+        <li>MFA required for all admin and privileged accounts</li>
+        <li>Admin account activity logged and monitored</li>
+        <li>Contractor and temporary worker access time-limited and promptly revoked</li>
+      </ul>
+
+      <p>Access control is foundational security — not because it stops every attack, but because it limits what any successful attack can reach. The most sophisticated ransomware in the world can only encrypt what the compromised account can access. A well-designed access control structure turns a potential catastrophe into a contained incident. That is the value of getting this right.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
