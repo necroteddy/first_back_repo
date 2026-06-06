@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity Metrics | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  /* METRICS TABLE */
+  .metrics-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .metrics-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .metrics-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.55; font-size: 14px; }
+  .metrics-table tr:last-child td { border-bottom: none; }
+  .metrics-table td:first-child { font-weight: 500; }
+  .tag-green { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; white-space: nowrap; }
+  .tag-amber { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; white-space: nowrap; }
+  .tag-red { display: inline-block; background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; white-space: nowrap; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .article-card { padding: 1.5rem 1.25rem; } .metrics-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 6, 2026 &nbsp;·&nbsp; Security Metrics</div>
+    <h1>Cybersecurity metrics — how to measure if your security is actually working</h1>
+    <p class="post-lead">Most businesses invest in cybersecurity without any way of knowing whether it is working. Measuring security does not require a large team or expensive tools — it requires asking the right questions and tracking the answers over time.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>You cannot manage what you cannot measure. That principle applies as much to cybersecurity as it does to any other area of business. Yet most small businesses have no way of answering a basic question: is our security getting better or worse over time?</p>
+      <p>Cybersecurity metrics do not need to be complex. A small set of meaningful, regularly reviewed numbers tells you far more than an elaborate dashboard nobody reads. The goal is not to produce reports — it is to make better decisions and catch deterioration before it becomes a problem.</p>
+
+      <div class="callout">
+        <p>A metric that nobody acts on is not a metric — it is theatre. The value of measuring security comes entirely from what you do with the information. Start small, be consistent, and connect every metric to a decision or an action.</p>
+      </div>
+
+      <h2>The metrics that actually matter for small businesses</h2>
+      <p>Many cybersecurity frameworks describe dozens of metrics. For most small businesses, a focused set of eight to ten measures covers the most important ground without creating measurement overhead that consumes more resource than it provides value.</p>
+
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>What it tells you</th>
+            <th>Good / Concern / Action needed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MFA coverage</td>
+            <td>% of accounts with MFA enabled</td>
+            <td><span class="tag-green">100%</span> <span class="tag-amber">90–99%</span> <span class="tag-red">&lt;90%</span></td>
+          </tr>
+          <tr>
+            <td>Patch lag</td>
+            <td>Average days from patch release to deployment on critical systems</td>
+            <td><span class="tag-green">&lt;7 days</span> <span class="tag-amber">7–30</span> <span class="tag-red">&gt;30 days</span></td>
+          </tr>
+          <tr>
+            <td>Phishing click rate</td>
+            <td>% of staff who click in simulated phishing tests</td>
+            <td><span class="tag-green">&lt;5%</span> <span class="tag-amber">5–15%</span> <span class="tag-red">&gt;15%</span></td>
+          </tr>
+          <tr>
+            <td>Backup test success rate</td>
+            <td>% of backup restore tests that complete successfully</td>
+            <td><span class="tag-green">100%</span> <span class="tag-amber">80–99%</span> <span class="tag-red">&lt;80%</span></td>
+          </tr>
+          <tr>
+            <td>Leavers access revoked</td>
+            <td>% of departing staff with access fully revoked within 24hrs</td>
+            <td><span class="tag-green">100%</span> <span class="tag-amber">90–99%</span> <span class="tag-red">&lt;90%</span></td>
+          </tr>
+          <tr>
+            <td>Open critical vulnerabilities</td>
+            <td>Number of known critical vulnerabilities unpatched on business systems</td>
+            <td><span class="tag-green">0</span> <span class="tag-amber">1–3</span> <span class="tag-red">4+</span></td>
+          </tr>
+          <tr>
+            <td>Mean time to detect (MTTD)</td>
+            <td>Average time from incident start to detection — tracked across any incidents</td>
+            <td><span class="tag-green">Hours</span> <span class="tag-amber">Days</span> <span class="tag-red">Weeks+</span></td>
+          </tr>
+          <tr>
+            <td>Security training completion</td>
+            <td>% of staff who have completed security awareness training in the last 12 months</td>
+            <td><span class="tag-green">100%</span> <span class="tag-amber">80–99%</span> <span class="tag-red">&lt;80%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Why trends matter more than snapshots</h2>
+      <p>A single measurement tells you where you are. A series of measurements over time tells you whether you are getting better or worse. The most important question in security metrics is not "what is our MFA coverage today?" but "is our MFA coverage improving or declining over the past six months?"</p>
+      <p>A business with 85% MFA coverage that is trending upward is in a better position than one with 95% coverage that is trending downward. Trends reveal whether your security programme has momentum — or whether it is quietly deteriorating while nobody is watching.</p>
+
+      <div class="callout">
+        <p>Review your security metrics monthly and track them over time — even a simple spreadsheet with monthly entries is enough to reveal trends that would otherwise go unnoticed until they cause an incident.</p>
+      </div>
+
+      <h2>The phishing click rate — your human risk indicator</h2>
+      <p>The phishing click rate from simulated tests is one of the most useful indicators of human security awareness in a business. It measures the percentage of staff who click a link in a simulated phishing email — a direct proxy for how likely an attacker's real phishing attempt is to succeed.</p>
+      <p>Industry benchmarks suggest that without any training, average click rates are around 30%. With regular, well-designed training, businesses consistently achieve rates below 5%. Tracking this metric over time shows whether your training programme is working — and which teams or departments need additional attention.</p>
+
+      <div class="warning">
+        <strong>⚠ Do not use click rates to punish individuals</strong>
+        <p>Phishing simulation results should be used to improve training and identify where awareness is weakest — not to discipline or embarrass staff who click. A punitive approach to simulation results damages the security culture you are trying to build. People who feel blamed for clicking are less likely to report real incidents, which is far more damaging than the click itself.</p>
+      </div>
+
+      <h2>Measuring what you cannot directly observe</h2>
+      <p>Some of the most important security properties are not directly observable. You cannot easily measure how well your staff would respond to a real social engineering attempt, or whether your incident response plan would work under pressure. Proxy metrics — measurements that correlate with the underlying property — help here.</p>
+
+      <ul>
+        <li><strong>Tabletop exercise completion rate</strong> — whether the business has rehearsed its incident response plan in the past 12 months</li>
+        <li><strong>Policy review date</strong> — whether security policies have been reviewed and updated in the past year</li>
+        <li><strong>Third-party security assessment completion</strong> — whether key suppliers have been assessed for security in the past year</li>
+        <li><strong>Security debt age</strong> — the average age of known security issues that have not yet been addressed</li>
+      </ul>
+
+      <h2>Reporting to leadership — making metrics meaningful</h2>
+      <p>Security metrics have value only if decision-makers see them and act on them. Reporting security metrics to business leadership — even informally, even briefly — ensures that security receives appropriate attention and that deterioration is caught before it becomes a crisis.</p>
+      <p>For small businesses, a monthly one-page summary showing your core metrics, trend direction, and any items requiring attention is sufficient. The format matters less than the consistency — a simple, regular update builds the habit of security visibility that larger organisations achieve through dedicated teams and dashboards.</p>
+
+      <div class="callout">
+        <p>Frame security metrics in business terms. "Our phishing click rate dropped from 18% to 6% after training" means more to a business owner than "we improved our social engineering resistance posture." The numbers are the same — the framing determines whether they drive action.</p>
+      </div>
+
+      <h2>Starting simply — a one-month baseline</h2>
+      <p>If you have no security metrics today, the place to start is a one-month baseline exercise. In one session, answer these questions as accurately as you can:</p>
+
+      <ul>
+        <li>What percentage of your business accounts have MFA enabled?</li>
+        <li>When did you last successfully restore from a backup?</li>
+        <li>How many critical software vulnerabilities are currently unpatched?</li>
+        <li>What percentage of staff completed security training in the last year?</li>
+        <li>Are there any former employees whose access has not been fully revoked?</li>
+      </ul>
+
+      <p>These five questions give you an immediate picture of your security posture and create a baseline against which you can measure improvement. Review the same questions in three months. The change — positive or negative — is your first security trend data.</p>
+
+      <hr>
+
+      <h2>Security metrics checklist</h2>
+      <ul class="checklist">
+        <li>Core security metrics defined — MFA coverage, patch lag, phishing rate, backup success, leavers</li>
+        <li>Baseline measurements recorded for all core metrics</li>
+        <li>Monthly review scheduled — metrics tracked over time in a simple spreadsheet</li>
+        <li>Phishing simulation tests run quarterly — results tracked by team</li>
+        <li>Backup restore tests run quarterly — success or failure recorded</li>
+        <li>Patch lag monitored — critical patches applied within target timeframe</li>
+        <li>Security metrics reported to business leadership monthly</li>
+        <li>Deteriorating metrics trigger action — not just observation</li>
+        <li>Tabletop exercise completed in the past 12 months</li>
+      </ul>
+
+      <p>Security metrics are not about proving compliance or filling in dashboards. They are about knowing whether your investment in security is actually working — and catching the things that are quietly getting worse before they become the incident you read about in the news. Start simple, be consistent, and act on what you find.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
