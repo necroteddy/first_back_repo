@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cybersecurity Audit | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1d24;
+    --muted: #52576a;
+    --faint: #9aa0b4;
+    --bg: #eef0f4;
+    --surface: #f7f8fa;
+    --surface2: #e5e8ee;
+    --border: #d4d8e2;
+    --accent: #dc2626;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* AUDIT AREAS */
+  .areas { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .area { background: var(--surface); padding: 1.1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .area-n { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
+  .area-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .area-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  /* SELF-AUDIT TABLE */
+  .audit-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .audit-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .audit-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.55; font-size: 14px; }
+  .audit-table tr:last-child td { border-bottom: none; }
+  .audit-table td:first-child { font-weight: 500; min-width: 160px; }
+  .tag-free { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-paid { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .audit-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 7, 2026 &nbsp;·&nbsp; Security Audit</div>
+    <h1>The cybersecurity audit — how to review your own security posture</h1>
+    <p class="post-lead">A cybersecurity audit does not have to mean expensive consultants and lengthy reports. A structured self-assessment, conducted honestly and regularly, reveals the gaps that matter most — and creates the roadmap to close them.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+
+    <div class="body">
+
+      <p>Most businesses know they should review their cybersecurity periodically. Few actually do — and when they do, it is often in response to an incident, a customer requirement, or a regulatory deadline rather than a proactive decision. A self-conducted audit, done well, changes that. It gives you a clear picture of where you stand, what your highest risks are, and what to address first.</p>
+      <p>This article walks through how to conduct a practical self-audit — structured enough to be rigorous, simple enough to complete without specialist help.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">56%</div>
+          <div class="stat-d">of small businesses have never conducted any form of cybersecurity review or self-assessment</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3×</div>
+          <div class="stat-d">more likely to detect a vulnerability before it is exploited if you run regular self-assessments</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">£0</div>
+          <div class="stat-d">cost of the NCSC's free Cyber Essentials self-assessment tool — the best starting point for any business</div>
+        </div>
+      </div>
+
+      <h2>What a self-audit covers</h2>
+      <p>A thorough self-audit reviews eight key areas. None requires specialist tools or deep technical knowledge to assess at the level most small businesses need. What it does require is honesty — the willingness to record a gap accurately rather than assume it is probably fine.</p>
+
+      <div class="areas">
+        <div class="area">
+          <div class="area-n">1</div>
+          <div class="area-body">
+            <h4>Accounts and authentication</h4>
+            <p>Are all accounts protected by MFA? Are there shared accounts? Are former employees' accounts fully disabled? Are admin accounts separated from day-to-day accounts?</p>
+          </div>
+        </div>
+        <div class="area">
+          <div class="area-n">2</div>
+          <div class="area-body">
+            <h4>Devices and endpoints</h4>
+            <p>Is encryption enabled on all laptops? Is endpoint protection installed on all devices? Are operating systems and software up to date? Are personal devices that access business data covered by a policy?</p>
+          </div>
+        </div>
+        <div class="area">
+          <div class="area-n">3</div>
+          <div class="area-body">
+            <h4>Network security</h4>
+            <p>Is the business network protected by a firewall? Is guest Wi-Fi separated from business systems? Are remote access connections secured with MFA and VPN? Are default credentials changed on all network devices?</p>
+          </div>
+        </div>
+        <div class="area">
+          <div class="area-n">4</div>
+          <div class="area-body">
+            <h4>Data and backups</h4>
+            <p>What data does the business hold and where is it stored? Are backups automated, offsite, and tested? Is sensitive data encrypted at rest? Is there a data retention policy?</p>
+          </div>
+        </div>
+        <div class="area">
+          <div class="area-n">5</div>
+          <div class="area-body">
+            <h4>Email and communications</h4>
+            <p>Are SPF, DKIM, and DMARC configured on your domain? Is spam and phishing filtering enabled? Are external email banners in place? Have email accounts been checked for unexpected forwarding rules?</p>
+          </div>
+        </div>
+        <div class="area">
+          <div class="area-n">6</div>
+          <div class="area-body">
+            <h4>Access control</h4>
+            <p>Does each person have access only to what their role requires? Is access reviewed when roles change? Are departing staff fully offboarded across all systems? Are contractor and third-party access permissions current?</p>
+          </div>
+        </div>
+        <div class="area">
+          <div class="area-n">7</div>
+          <div class="area-body">
+            <h4>People and awareness</h4>
+            <p>Have all staff received security awareness training in the past year? Do staff know how to report a suspicious email or incident? Is there a no-blame culture around reporting mistakes?</p>
+          </div>
+        </div>
+        <div class="area">
+          <div class="area-n">8</div>
+          <div class="area-body">
+            <h4>Incident response</h4>
+            <p>Is there a documented plan for what to do if a cyberattack occurs? Do staff know who to contact? Has the plan been tested in the past 12 months? Are ICO and insurance notification obligations understood?</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Free tools that help the audit</h2>
+      <p>Several free tools make specific parts of the self-audit more rigorous — providing objective assessments of areas that are hard to evaluate manually.</p>
+
+      <table class="audit-table">
+        <thead>
+          <tr><th>Tool</th><th>What it checks</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>NCSC Cyber Essentials self-assessment</td>
+            <td>Structured questionnaire covering the five most important control areas</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>MXToolbox</td>
+            <td>Checks SPF, DKIM, DMARC, and email blacklist status for your domain</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Have I Been Pwned</td>
+            <td>Checks whether your email addresses appear in known data breaches</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>SSL Labs (Qualys)</td>
+            <td>Grades your website's SSL/TLS configuration</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>SecurityHeaders.com</td>
+            <td>Checks HTTP security headers on your public website</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Microsoft Secure Score</td>
+            <td>Prioritised security improvements for Microsoft 365 environments</td>
+            <td><span class="tag-free">Free (M365)</span></td>
+          </tr>
+          <tr>
+            <td>NCSC Exercise in a Box</td>
+            <td>Simulated incident exercises to test your response plan</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Tenable Nessus Essentials</td>
+            <td>Vulnerability scanning for up to 16 internal IP addresses</td>
+            <td><span class="tag-free">Free (16 IPs)</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p>The NCSC Cyber Essentials self-assessment is the single best starting point for any business conducting its first security review. It is free, well-structured, and focuses on the controls that prevent the most common attacks. Completing it gives you a clear gap analysis and, if you pay £300 to certify, an externally recognised credential.</p>
+      </div>
+
+      <h2>Scoring your findings — prioritising what to fix first</h2>
+      <p>A self-audit will almost always reveal more issues than you can address immediately. Prioritisation is essential. The right order is impact and exploitability — how damaging would this be if exploited, and how easy is it for an attacker to exploit it?</p>
+      <p>Fix in this order: anything that gives an attacker access to your systems with minimal effort (no MFA, default credentials, unpatched critical vulnerabilities); then anything that could cause catastrophic data loss or business disruption (no tested backups, no encryption on laptops); then configuration and policy gaps that increase risk over time.</p>
+
+      <div class="warning">
+        <strong>⚠ Record gaps honestly — even uncomfortable ones</strong>
+        <p>The value of a self-audit is proportional to its honesty. A gap you record accurately is a gap you can close. A gap you paper over because it is embarrassing or inconvenient is a vulnerability that remains open. Treat the audit as a diagnostic, not a report card. The findings are for your benefit — not for judgement.</p>
+      </div>
+
+      <h2>How often to audit</h2>
+      <p>For most small businesses, a full self-audit annually and a lighter review of the highest-risk areas quarterly is appropriate. Trigger an unscheduled review after any significant change — a new cloud platform, a major staff change, a security incident, or a change in the regulatory environment. Security posture changes as the business changes, and the audit should track those changes.</p>
+
+      <hr>
+
+      <h2>Self-audit action checklist</h2>
+      <ul class="checklist">
+        <li>All eight audit areas reviewed and findings recorded honestly</li>
+        <li>NCSC Cyber Essentials self-assessment completed</li>
+        <li>Email domain checked on MXToolbox — SPF, DKIM, DMARC verified</li>
+        <li>Business email addresses checked on Have I Been Pwned</li>
+        <li>Website SSL grade checked on SSL Labs</li>
+        <li>Microsoft Secure Score reviewed (if using Microsoft 365)</li>
+        <li>Findings prioritised — highest impact and easiest to exploit fixed first</li>
+        <li>Remediation plan written with owners and deadlines assigned</li>
+        <li>Next audit date scheduled — annual full review, quarterly lighter check</li>
+        <li>Findings reported to business leadership with remediation progress tracked</li>
+      </ul>
+
+      <p>A self-audit is not a substitute for a professional penetration test or an external security assessment — but it is the foundation that makes those investments worthwhile. A business that knows its own security posture is better prepared, better protected, and better positioned to make the right decisions about where to invest next.</p>
+
+    </div>
+  </article>
+  </div>
+
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
