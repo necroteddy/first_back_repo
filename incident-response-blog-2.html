@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incident Response Planning | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .phases { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .phase { background: var(--surface); padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .phase-n { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.2; min-width: 28px; }
+  .phase-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .phase-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 8, 2026 &nbsp;·&nbsp; Incident Response</div>
+    <h1>Incident response planning — what to do when things go wrong</h1>
+    <p class="post-lead">Every business will eventually face a cybersecurity incident. The difference between a manageable disruption and an existential crisis is almost always preparation. A clear, tested plan made in advance is worth more than any amount of expertise improvised under pressure.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>A cyberattack is one of the worst moments to make important decisions for the first time. Under pressure, with systems down, customers calling, and the clock ticking on regulatory notification deadlines, decision-making quality deteriorates sharply. Businesses that have a plan respond faster, contain damage more effectively, recover more completely, and fare significantly better in any subsequent regulatory or insurance scrutiny.</p>
+      <p>An incident response plan does not need to be lengthy or complex. It needs to be clear, accessible, and tested — so that the people who need it can find it, read it, and follow it when everything else is going wrong.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">74 days</div><div class="stat-d">average time saved in containment when a business has a tested incident response plan</div></div>
+        <div class="stat"><div class="stat-n">58%</div><div class="stat-d">lower average breach cost for organisations with a mature incident response plan</div></div>
+        <div class="stat"><div class="stat-n">72hrs</div><div class="stat-d">ICO notification deadline for personal data breaches — the clock starts when you become aware</div></div>
+      </div>
+
+      <h2>The five phases of incident response</h2>
+      <div class="phases">
+        <div class="phase"><div class="phase-n">1</div><div class="phase-body"><h4>Preparation</h4><p>Build the plan before you need it. Document contact lists, define roles, establish communication channels, and run tabletop exercises. Preparation is the only phase that happens before an incident.</p></div></div>
+        <div class="phase"><div class="phase-n">2</div><div class="phase-body"><h4>Detection and identification</h4><p>Recognise that something has gone wrong and establish what has happened, what systems are affected, and how far the incident has spread. Resist acting before you understand — a misdiagnosis wastes time and can make things worse.</p></div></div>
+        <div class="phase"><div class="phase-n">3</div><div class="phase-body"><h4>Containment</h4><p>Stop the incident spreading further. Isolate affected systems, revoke compromised credentials, block malicious connections. Short-term containment stops the bleeding; longer-term containment prepares for recovery without creating new risks.</p></div></div>
+        <div class="phase"><div class="phase-n">4</div><div class="phase-body"><h4>Eradication and recovery</h4><p>Remove the attacker, the malware, or the compromised component. Restore systems from known-good backups, verify integrity, and return to normal operations in a controlled, phased way — not all at once.</p></div></div>
+        <div class="phase"><div class="phase-n">5</div><div class="phase-body"><h4>Post-incident review</h4><p>Once the crisis is over, conduct a structured review. What happened? How was it detected? What worked? What failed? What must change to prevent recurrence or improve the response next time?</p></div></div>
+      </div>
+
+      <h2>What your plan must include</h2>
+      <ul>
+        <li><strong>Key contacts</strong> — names and phone numbers for your IT provider, cyber insurer's 24/7 hotline, and legal adviser. Printed copies stored offline.</li>
+        <li><strong>Decision authority</strong> — who is authorised to take systems offline, engage external help, communicate with customers, and notify regulators.</li>
+        <li><strong>Escalation thresholds</strong> — what triggers escalation to senior leadership, external incident response support, or regulatory notification.</li>
+        <li><strong>Communication templates</strong> — pre-drafted holding statements for customers, staff, and media. Writing from scratch under pressure is slow and error-prone.</li>
+        <li><strong>Regulatory obligations</strong> — the ICO's 72-hour window, your insurer's notification requirements, and any sector-specific obligations.</li>
+        <li><strong>Evidence preservation guidance</strong> — what logs and artefacts to protect before any remediation, to support investigation and legal proceedings.</li>
+      </ul>
+
+      <div class="callout">
+        <p>Your incident response plan must be accessible when your systems are not. Store a printed copy in a secure physical location, a copy in a personal email account outside your business domain, and a copy with your IT provider. An IRP that lives only on systems encrypted by ransomware is useless.</p>
+      </div>
+
+      <h2>The ICO 72-hour notification rule</h2>
+      <p>Under UK GDPR, if a personal data breach is likely to result in a risk to individuals' rights and freedoms, you must notify the ICO within 72 hours of becoming aware. The clock starts when you have reasonable awareness — not when you have full details. You do not need a complete picture before notifying. Prompt notification with incomplete information is treated far better than delayed notification with full details.</p>
+
+      <div class="warning">
+        <strong>⚠ Do not wait for the full picture before notifying</strong>
+        <p>The most common mistake in data breach response is waiting until the investigation is complete before notifying the ICO. Notify within 72 hours based on what you know, clearly stating what is confirmed and what is still under investigation. Late notification without good reason is an aggravating factor in any regulatory response.</p>
+      </div>
+
+      <h2>Testing your plan</h2>
+      <p>A plan that has never been tested is an untested hypothesis. Tabletop exercises — structured discussions in which the team walks through a simulated incident — reveal gaps and decision-making bottlenecks that are invisible on paper. The NCSC's free Exercise in a Box programme provides ready-made scenarios covering ransomware, data breach, and more. A two-hour session once a year identifies the most significant gaps and builds the response muscle memory that makes real incidents faster and less chaotic.</p>
+
+      <h2>Ransomware — the most common serious incident</h2>
+      <p>When ransomware strikes, the immediate priorities are: isolate affected systems to stop spread; do not pay without expert advice and insurer approval; contact your cyber insurer immediately; preserve evidence before remediation begins; begin recovery from known-good backups. Whether to pay a ransom should involve your insurer, a legal adviser, and an incident response specialist. Payment does not guarantee recovery, funds criminal activity, and may breach sanctions regulations.</p>
+
+      <hr>
+
+      <h2>Incident response planning checklist</h2>
+      <ul class="checklist">
+        <li>Incident response plan documented — clear, accessible, and up to date</li>
+        <li>Key contact list printed and stored offline — insurer, IT provider, legal, ICO</li>
+        <li>Decision authority defined — who can isolate systems, engage help, notify regulators</li>
+        <li>Communication templates prepared for customers, staff, and media</li>
+        <li>ICO 72-hour notification obligations understood and process documented</li>
+        <li>Evidence preservation guidance included before any remediation</li>
+        <li>IRP stored outside business systems — printed, personal email, IT provider</li>
+        <li>Tabletop exercise completed in the past 12 months</li>
+        <li>Cyber insurer 24/7 contact number saved and accessible offline</li>
+        <li>Backup restore tested — confirmed recovery is possible before an incident</li>
+        <li>Post-incident review process defined — lessons captured and acted on</li>
+      </ul>
+
+      <p>No plan survives first contact with reality unchanged — but businesses with a plan respond faster, make better decisions, limit damage more effectively, and recover more completely than those improvising. The time to build an incident response plan is now, not in the middle of the incident that reveals you needed one.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
