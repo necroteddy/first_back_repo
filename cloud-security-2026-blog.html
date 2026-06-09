@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 9, 2026 &nbsp;·&nbsp; Cloud Security</div>
+    <h1>Cloud security — protecting your data where your business actually runs</h1>
+    <p class="post-lead">Most businesses now run primarily in the cloud — email, documents, finance, CRM, HR. The cloud provides extraordinary convenience and capability. It also introduces security responsibilities that many businesses have never fully understood or addressed.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>The shift to cloud services is one of the most significant changes in how businesses operate over the past decade. For most small businesses, the cloud is no longer a supplement to on-premise infrastructure — it is the infrastructure. Microsoft 365, Google Workspace, Xero, Salesforce, Dropbox, Slack — the average small business uses dozens of cloud services, each holding data that is essential to operations.</p>
+      <p>Cloud security is not the provider's problem alone. Every major cloud provider makes clear that security is a shared responsibility — the provider secures the infrastructure; the customer is responsible for their data, their user accounts, and their configuration choices. Most breaches involving cloud services are not caused by failures in the cloud infrastructure. They are caused by the customer's misconfiguration, weak credentials, or inadequate access controls.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">82%</div><div class="stat-d">of cloud security breaches are caused by customer misconfiguration — not cloud provider failures</div></div>
+        <div class="stat"><div class="stat-n">45%</div><div class="stat-d">of organisations have sensitive data stored in cloud services with no access controls applied</div></div>
+        <div class="stat"><div class="stat-n">£3.1M</div><div class="stat-d">average cost of a cloud-related data breach — higher than the average for on-premise breaches</div></div>
+      </div>
+
+      <h2>The shared responsibility model — what you own</h2>
+      <p>Every cloud provider operates a shared responsibility model. The exact division varies by service type, but the principle is consistent: the provider is responsible for the security of the cloud — the infrastructure, the physical data centres, the underlying platform. The customer is responsible for security in the cloud — the data, the identities, the access configuration, and the applications built on top.</p>
+      <p>For SaaS services like Microsoft 365 or Google Workspace, your responsibilities are primarily around identity and access management, data classification, and configuration of the security features the platform provides. For IaaS services like AWS EC2 or Azure VMs, your responsibilities extend to the operating system, the applications running on it, and the network configuration.</p>
+
+      <div class="callout">
+        <p>The shared responsibility model does not mean the provider takes care of security. It means the provider takes care of their part and you take care of yours. Assuming the provider handles everything is one of the most common and most expensive misunderstandings in cloud security.</p>
+      </div>
+
+      <h2>The most common cloud security failures</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Publicly accessible storage</h4>
+          <p>Cloud storage buckets — AWS S3, Azure Blob Storage, Google Cloud Storage — misconfigured as publicly accessible have exposed sensitive data in thousands of breaches. A single configuration checkbox, left on default or changed without understanding, can make a company's entire document store readable by anyone on the internet.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Weak or no MFA on cloud accounts</h4>
+          <p>Cloud service accounts without MFA are compromised through credential stuffing, phishing, and brute force constantly. A compromised Microsoft 365 or Google Workspace account gives an attacker access to email, documents, calendar, contacts, and often connected applications — the core of most businesses.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Over-permissive IAM policies</h4>
+          <p>Cloud identity and access management policies that grant more access than necessary — particularly admin or full-access roles assigned broadly — mean that a single compromised account can reach everything. Least privilege in cloud IAM is just as important as in any other context.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Credentials in code and repositories</h4>
+          <p>API keys, database passwords, and cloud access credentials committed to code repositories — particularly public GitHub repositories — are harvested within minutes by automated scanners. This remains one of the most prevalent and entirely preventable causes of cloud data breaches.</p>
+        </div>
+      </div>
+
+      <h2>Securing your SaaS applications</h2>
+      <p>For most small businesses, the most important cloud security work is in their SaaS applications — Microsoft 365, Google Workspace, and the dozens of other tools the team uses every day. These platforms include powerful security capabilities that many businesses have never enabled.</p>
+
+      <ul>
+        <li><strong>Enable MFA on every account</strong> — the single most important control. Microsoft and Google both support conditional access policies that can enforce MFA based on device, location, and risk level.</li>
+        <li><strong>Review third-party app connections</strong> — every application that asks for permission to connect to your Microsoft 365 or Google Workspace account receives some level of access to your data. Review connected applications regularly and revoke those that are no longer used or whose permissions are excessive.</li>
+        <li><strong>Configure data loss prevention policies</strong> — both Microsoft and Google offer DLP features that can detect and block sensitive data being shared externally without authorisation.</li>
+        <li><strong>Enable audit logging</strong> — ensure audit logs are enabled and retained for an appropriate period. Logs are essential for detecting compromise and for incident investigation.</li>
+        <li><strong>Review sharing settings</strong> — check what your default sharing settings are for documents and drives. "Anyone with the link" is convenient but creates risk that is difficult to audit or control.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Check third-party app permissions now</strong>
+        <p>In Microsoft 365: admin centre → Azure Active Directory → Enterprise Applications. In Google Workspace: admin console → Security → API controls → Manage third-party app access. You are likely to find applications that have been granted access and are no longer used, or whose permissions are broader than their function requires. Revoke access for anything unnecessary.</p>
+      </div>
+
+      <h2>Securing cloud infrastructure (IaaS)</h2>
+      <p>If your business uses cloud infrastructure — virtual machines, databases, storage buckets, or containers on AWS, Azure, or GCP — the security responsibilities extend significantly further than for SaaS. The most critical controls are configuration management, identity and access management, and network security.</p>
+
+      <ul>
+        <li><strong>Never use root or administrator accounts for day-to-day operations</strong> — create named IAM users or roles with the minimum necessary permissions for each task</li>
+        <li><strong>Audit storage bucket permissions</strong> — run automated checks to identify any storage that is publicly accessible; there should be no public buckets unless there is a specific, deliberate reason</li>
+        <li><strong>Enable cloud security posture management</strong> — AWS Security Hub, Azure Security Centre, and Google Security Command Centre provide free or low-cost automated checks of your configuration against security best practices</li>
+        <li><strong>Encrypt data at rest and in transit</strong> — enable server-side encryption on all storage; ensure all connections use TLS; manage encryption keys appropriately</li>
+        <li><strong>Enable CloudTrail, Azure Monitor, or Cloud Audit Logs</strong> — comprehensive logging of all API calls and configuration changes is essential for detecting and investigating incidents</li>
+      </ul>
+
+      <div class="callout">
+        <p>AWS Security Hub, Azure Security Centre, and Google Security Command Centre each provide a free security score and a prioritised list of misconfigurations across your cloud environment. If you run cloud infrastructure and have not activated these tools, doing so is one of the highest-value, lowest-effort cloud security improvements available.</p>
+      </div>
+
+      <hr>
+
+      <h2>Cloud security checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all cloud service accounts — Microsoft 365, Google Workspace, AWS, and every other platform</li>
+        <li>Third-party app connections reviewed — unnecessary or excessive permissions revoked</li>
+        <li>Document and drive sharing settings reviewed — default sharing restricted appropriately</li>
+        <li>Audit logging enabled on all cloud platforms and retained for investigation</li>
+        <li>Storage buckets audited — no unintentional public access</li>
+        <li>IAM roles and permissions reviewed — least privilege applied</li>
+        <li>Credentials and API keys not stored in code or repositories</li>
+        <li>Cloud security posture tool activated — AWS Security Hub, Azure Security Centre, or GCP SCC</li>
+        <li>Data encrypted at rest and in transit on all cloud storage</li>
+        <li>Leaver offboarding includes revocation of all cloud service access</li>
+        <li>Shared responsibility model understood — your obligations clearly defined for each platform</li>
+      </ul>
+
+      <p>The cloud has transformed what small businesses can do with limited resources. It has also transformed where data lives, who can access it, and what can go wrong. The businesses that use the cloud most safely are those that understand that convenience and security are not mutually exclusive — they are a configuration choice.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
