@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Remote-First Companies | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 10, 2026 &nbsp;·&nbsp; Remote Work Security</div>
+    <h1>Cybersecurity for remote-first companies — securing a distributed team</h1>
+    <p class="post-lead">A remote-first company has no walls, no single network, and no physical perimeter. Every employee is a remote access point, every home broadband connection is a potential attack surface, and the security controls that worked in a shared office need to be completely rethought.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Remote-first working has moved from emergency measure to permanent operating model for a significant proportion of businesses. The security implications are profound. When everyone worked in the same office, on the same network, security teams could rely on a defined perimeter — protect the edge, and the inside is relatively safe. That model is obsolete.</p>
+      <p>In a remote-first company, the perimeter is each individual — their device, their home network, their habits, and their awareness. Security must follow the person, not the location.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">3×</div><div class="stat-d">increase in cyberattacks targeting remote workers compared to office-based employees</div></div>
+        <div class="stat"><div class="stat-n">67%</div><div class="stat-d">of remote employees use personal devices for work — often without any corporate security controls</div></div>
+        <div class="stat"><div class="stat-n">£18K</div><div class="stat-d">average additional cost of a data breach when remote working is a factor in the incident</div></div>
+      </div>
+
+      <h2>The specific risks of remote-first working</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Unsecured home networks</h4>
+          <p>Home routers are rarely updated, frequently use default credentials, and provide no security monitoring. A compromised home router can intercept traffic, redirect DNS queries, or provide a foothold for an attacker to reach any device connected to it — including the one your employee is using for work.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Personal devices used for work</h4>
+          <p>A personal laptop used for work is outside the visibility and control of the business. It may run outdated software, lack endpoint protection, store work data alongside personal files, and be used by other family members. When it is compromised, the business has no way of knowing.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Video call and collaboration tool risks</h4>
+          <p>Zoom bombing, meeting link sharing, and misconfigured collaboration tool permissions have exposed sensitive business conversations and documents. The convenience of sharing a meeting link without a password or lobby creates real security and confidentiality risks.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Reduced visibility and monitoring</h4>
+          <p>In a remote-first environment, the business has significantly less visibility into what is happening on devices and networks. Anomalies that would be obvious on a managed office network — unusual traffic patterns, new device connections — are invisible without the right tools and processes.</p>
+        </div>
+      </div>
+
+      <h2>Identity is the new perimeter</h2>
+      <p>In a remote-first company, the most important security layer is identity — who is accessing what, from where, on what device, and in what context. Strong identity management is the foundation that makes everything else possible.</p>
+
+      <ul>
+        <li><strong>MFA on every account, every time</strong> — no exceptions for remote workers. Phishing-resistant MFA — hardware keys or passkeys — provides the strongest protection for accounts accessed from diverse locations and networks.</li>
+        <li><strong>Conditional access policies</strong> — Microsoft Entra ID and Google Workspace both support policies that evaluate each login based on device compliance, location, and risk level before granting access. A login from an unmanaged device in an unusual location can be blocked or require additional verification automatically.</li>
+        <li><strong>Single sign-on</strong> — centralised identity management means one set of credentials, one place to revoke access, and consistent policy enforcement across all tools.</li>
+        <li><strong>Zero trust principles</strong> — treat every access request as potentially hostile regardless of where it comes from. Verify explicitly, grant minimum necessary access, assume breach.</li>
+      </ul>
+
+      <div class="callout">
+        <p>Conditional access is one of the most powerful tools available to remote-first businesses. It allows you to enforce that only managed, compliant devices can access sensitive systems — without requiring a VPN or a physical office network. It is included in Microsoft 365 Business Premium and Google Workspace Business Plus.</p>
+      </div>
+
+      <h2>Device security without a corporate network</h2>
+      <p>In a remote-first model, endpoint security must be deployable, manageable, and enforceable without relying on the employee being on a corporate network. Mobile Device Management (MDM) is the tool that makes this possible — providing central visibility, policy enforcement, remote wipe capability, and software deployment across all devices regardless of location.</p>
+
+      <ul>
+        <li><strong>Require managed devices for access to sensitive systems</strong> — enforce that only enrolled, compliant devices can access business email, documents, and applications</li>
+        <li><strong>Deploy endpoint protection remotely</strong> — antivirus, EDR, and disk encryption can be deployed and monitored centrally through MDM without the employee needing to be in the office</li>
+        <li><strong>Enforce disk encryption</strong> — BitLocker and FileVault can be enforced through MDM policy; verify compliance through the management console rather than trusting self-reporting</li>
+        <li><strong>Enable remote wipe</strong> — a lost or stolen device in a remote-first model is particularly risky; remote wipe capability is essential</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Define your BYOD policy clearly</strong>
+        <p>If employees use personal devices for work, your acceptable use policy must clearly define what data can be accessed on personal devices, what security controls the device must have, and what the business can and cannot do to that device — including whether MDM can be installed. Ambiguity creates both security risk and legal exposure. If a personal device enrolled in your MDM is wiped, the employee's personal data goes with it. Get legal advice on your BYOD policy before implementing MDM on personal devices.</p>
+      </div>
+
+      <h2>Securing remote communications</h2>
+      <p>Remote-first teams communicate constantly through video calls, messaging platforms, and collaboration tools. Each of these represents both a productivity tool and a potential attack surface.</p>
+
+      <ul>
+        <li><strong>Require passwords or waiting rooms on all external meetings</strong> — uninvited attendees in sensitive business calls are a real confidentiality risk</li>
+        <li><strong>Control external sharing in collaboration tools</strong> — Slack, Teams, Notion, and similar platforms can share data externally by default; audit and restrict what can be shared outside the organisation</li>
+        <li><strong>Use end-to-end encrypted messaging for sensitive communications</strong> — for particularly sensitive conversations, Signal or equivalent provides stronger confidentiality than standard messaging platforms</li>
+        <li><strong>Ensure screen sharing does not expose sensitive information</strong> — notifications, other applications, and background windows can reveal information unintentionally during screen shares</li>
+      </ul>
+
+      <h2>Building a security culture without physical presence</h2>
+      <p>Security culture in a remote-first company requires deliberate effort. The informal conversations, visible behaviours, and ambient awareness that reinforce security in a shared office environment do not happen naturally when the team is distributed. Security awareness must be built into the rhythm of remote working.</p>
+      <p>Brief, regular security communications — a monthly security tip in the team newsletter, a quarterly awareness session, a no-blame Slack channel for reporting suspicious emails — build the habit of security awareness without requiring significant time investment or formal training programmes.</p>
+
+      <hr>
+
+      <h2>Remote-first security checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all accounts — phishing-resistant MFA for highest-risk accounts</li>
+        <li>Conditional access policies enforcing device compliance for sensitive systems</li>
+        <li>MDM deployed — all business devices enrolled and monitored centrally</li>
+        <li>Disk encryption enforced and verified through MDM on all laptops</li>
+        <li>Remote wipe configured for all enrolled devices</li>
+        <li>BYOD policy written and communicated — personal device security requirements defined</li>
+        <li>VPN or Zero Trust Network Access deployed for access to internal resources</li>
+        <li>External meeting passwords or waiting rooms required by default</li>
+        <li>Collaboration tool external sharing audited and restricted</li>
+        <li>Endpoint protection deployed remotely on all devices</li>
+        <li>Security awareness built into remote team rhythm — regular, brief, no-blame</li>
+      </ul>
+
+      <p>Remote-first working does not have to mean less secure working. The companies that get this right are those that accept the perimeter has gone and build their security around identity, devices, and behaviour rather than location and network. That model is not just appropriate for remote work — it is more resilient than the perimeter model it replaces.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
