@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patch Management | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  /* TIMELINE */
+  .timeline { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .tl-row { background: var(--surface); padding: 1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .tl-day { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--faint); flex-shrink: 0; min-width: 60px; line-height: 1.3; }
+  .tl-body h4 { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .tl-body p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.55; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 11, 2026 &nbsp;·&nbsp; Patch Management</div>
+    <h1>Patch management — why keeping software updated is your most powerful defence</h1>
+    <p class="post-lead">The majority of successful cyberattacks exploit vulnerabilities that already had patches available. Attackers do not wait for defences to improve — they scan for businesses running outdated software and strike before the window closes. Patching is not maintenance. It is defence.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>In the aftermath of almost every major data breach, the same finding appears: a known vulnerability, a patch that was available, and a system that had not been updated. The WannaCry ransomware attack in 2017 — which caused billions in damage globally — exploited a Windows vulnerability for which a patch had been available for two months. The organisations that were protected had simply applied it. The organisations that were compromised had not.</p>
+      <p>Patch management is the practice of ensuring that software and firmware updates are applied promptly, consistently, and verifiably across every device and system in a business. It is unglamorous, repetitive, and frequently deprioritised. It is also one of the most effective security controls available — and one of the five controls required by the NCSC's Cyber Essentials framework.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">60%</div><div class="stat-d">of breaches in the past year involved a vulnerability for which a patch had already been released</div></div>
+        <div class="stat"><div class="stat-n">14 days</div><div class="stat-d">median time from vulnerability disclosure to active exploitation — the window to patch is narrow</div></div>
+        <div class="stat"><div class="stat-n">£0</div><div class="stat-d">additional cost of applying a security patch — the cheapest control available</div></div>
+      </div>
+
+      <h2>How the window of exposure works</h2>
+      <p>When a vulnerability is publicly disclosed, the race begins. Security researchers and attackers both analyse the patch to understand what it fixes — and therefore what the underlying vulnerability is. Within days, proof-of-concept exploit code is typically available. Within two weeks, active exploitation in the wild is common for high-severity vulnerabilities.</p>
+
+      <div class="timeline">
+        <div class="tl-row">
+          <div class="tl-day">Day 0</div>
+          <div class="tl-body"><h4>Vulnerability disclosed and patch released</h4><p>The vendor publishes the patch and a security advisory. The details are public. Attackers begin analysis.</p></div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-day">Day 1–3</div>
+          <div class="tl-body"><h4>Proof-of-concept code appears</h4><p>Security researchers — and attackers — reverse-engineer the patch to understand the vulnerability. Working exploit code appears on public forums and dark web markets.</p></div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-day">Day 7–14</div>
+          <div class="tl-body"><h4>Active exploitation begins at scale</h4><p>Automated scanning tools probe the internet for vulnerable systems. Businesses that have not patched become easy targets. The window is closing fast.</p></div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-day">Day 30+</div>
+          <div class="tl-body"><h4>Vulnerability incorporated into attack toolkits</h4><p>The vulnerability is packaged into automated attack frameworks used by less sophisticated attackers. An unpatched system months later is still at serious risk.</p></div>
+        </div>
+      </div>
+
+      <h2>What needs to be patched — and in what order</h2>
+      <p>Everything running software needs to be patched — operating systems, applications, browsers, plugins, firmware on routers and network devices, and cloud-hosted software where updates are the customer's responsibility. The practical challenge for most businesses is not knowing this but doing it consistently across every device.</p>
+      <p>Priority order for patching:</p>
+      <ul>
+        <li><strong>Critical severity patches for internet-facing systems</strong> — apply within 24–48 hours. Web servers, VPNs, firewalls, and email gateways that are directly reachable from the internet are the highest priority targets for attackers.</li>
+        <li><strong>Critical severity patches for internal systems</strong> — apply within 7 days. Operating systems, browsers, and commonly exploited applications like Office and PDF readers.</li>
+        <li><strong>High severity patches</strong> — apply within 14 days.</li>
+        <li><strong>Medium and low severity patches</strong> — include in regular monthly patching cycles.</li>
+      </ul>
+
+      <div class="callout">
+        <p>The NCSC's Cyber Essentials certification requires that all software is patched within 14 days of a security update being released, and that unsupported software is removed. These targets are achievable for most small businesses and represent a significant reduction in exploitable attack surface.</p>
+      </div>
+
+      <h2>Automating patch management</h2>
+      <p>Manual patching does not scale and is reliably inconsistent. The most effective patch management programmes automate the deployment of updates across all devices, reducing the human effort required and eliminating the gaps that occur when updates are left to individuals to apply at their discretion.</p>
+
+      <ul>
+        <li><strong>Windows Update for Business</strong> — configurable through Microsoft Intune or Group Policy to automatically apply updates on a defined schedule, with reporting on compliance across all enrolled devices</li>
+        <li><strong>Apple MDM with Software Update policies</strong> — forces macOS and iOS updates through an MDM platform, ensuring all Apple devices remain current</li>
+        <li><strong>Third-party patching tools</strong> — Patch My PC, NinjaRMM, and similar tools automate patching of third-party applications (browsers, Adobe products, Zoom, etc.) that Windows Update does not cover</li>
+        <li><strong>Cloud software</strong> — most SaaS applications update automatically; verify that auto-update is not disabled and that you are on a supported version</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Browsers and plugins are consistently overlooked</strong>
+        <p>Operating system patches receive the most attention but browsers — Chrome, Firefox, Edge, Safari — and their extensions are among the most frequently exploited software in targeted attacks. Browsers should be configured to update automatically and silently. Check right now whether every browser on your business devices is on the current version. In Chrome, go to Help → About Google Chrome. In Edge, go to Help and Feedback → About Microsoft Edge.</p>
+      </div>
+
+      <h2>Handling legacy and unsupported software</h2>
+      <p>Unsupported software — software for which the vendor no longer releases security patches — is a persistent risk that many businesses carry without fully understanding the implications. Windows 10 reached end of support in October 2025. Many businesses still run older versions of Office, custom line-of-business applications on outdated platforms, or specialist software that has not been updated for years.</p>
+      <p>Every piece of unsupported software is a vulnerability that cannot be patched. The options are: upgrade to a supported version; isolate the system from the internet and from sensitive data; or accept the risk explicitly and consciously rather than by default. The NCSC's Cyber Essentials certification requires the removal of unsupported software.</p>
+
+      <div class="callout">
+        <p>If your business runs software that cannot be updated — because the vendor no longer supports it, or because updates break a critical workflow — that software should be isolated on a network segment with no internet access and no connection to systems holding sensitive data. Isolation does not fix the vulnerability, but it significantly limits the damage if it is exploited.</p>
+      </div>
+
+      <hr>
+
+      <h2>Patch management checklist</h2>
+      <ul class="checklist">
+        <li>Automatic updates enabled on all operating systems — Windows, macOS, iOS, Android</li>
+        <li>Browsers configured to update automatically on all devices</li>
+        <li>Critical patches applied within 14 days — internet-facing systems within 48 hours</li>
+        <li>Third-party application patching in place — browsers, Office, PDF readers, Zoom</li>
+        <li>MDM used to enforce and verify update compliance across all enrolled devices</li>
+        <li>Firmware updates applied on routers, firewalls, and network devices</li>
+        <li>Unsupported software identified — upgraded, isolated, or risk explicitly accepted</li>
+        <li>Patch compliance reported monthly — gaps investigated and remediated</li>
+        <li>End-of-support dates tracked for all key software — upgrade plans in place</li>
+      </ul>
+
+      <p>Patching is the unglamorous foundation of cybersecurity — less interesting than AI-powered threat detection, less visible than a new security tool, and less exciting than a post-incident review. It is also consistently the most effective preventive control available. The businesses that patch promptly and completely are the ones that are not in next year's breach statistics.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
