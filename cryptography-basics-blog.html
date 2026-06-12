@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cryptography Basics | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  /* CONCEPT CARDS */
+  .concepts { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .concept { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .concept-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .concept h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .concept p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  /* WHERE YOU USE IT */
+  .uses { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .use { background: var(--surface2); padding: 1rem 1.25rem; }
+  .use-icon { font-size: 20px; margin-bottom: 6px; }
+  .use h4 { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+  .use p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.55; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .uses { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 12, 2026 &nbsp;·&nbsp; Encryption</div>
+    <h1>Cryptography basics — how encryption actually protects your data</h1>
+    <p class="post-lead">Encryption is the invisible layer underneath almost every security control you rely on. Understanding what it does — and what it does not do — helps you make better decisions about where your data is protected and where it is not.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>You do not need to understand the mathematics of cryptography to make good decisions about data protection. But you do need to understand what encryption is, what it protects against, and what it does not protect against — because those gaps are where data breaches actually happen.</p>
+      <p>Encryption is used everywhere in your business: when you visit a website, when you send an email, when you store files on a laptop, when your staff connect to your cloud systems. In each case, the underlying technology is different, but the purpose is the same — to make data unreadable to anyone who does not hold the key.</p>
+
+      <h2>Three types of encryption every business owner should understand</h2>
+
+      <div class="concepts">
+        <div class="concept">
+          <div class="concept-label">Type 01</div>
+          <h4>Encryption in transit</h4>
+          <p>Protects data as it travels between systems — from your browser to a website, from your email client to a mail server, from a mobile app to a cloud service. HTTPS (the padlock in your browser), TLS, and VPNs all provide encryption in transit. Without it, anyone on the same network can read the data passing through. With it, they see only encrypted noise.</p>
+        </div>
+        <div class="concept">
+          <div class="concept-label">Type 02</div>
+          <h4>Encryption at rest</h4>
+          <p>Protects data stored on a device or server. BitLocker (Windows), FileVault (Mac), and server-side encryption in cloud storage all encrypt data at rest. Without it, a stolen laptop or a breached storage bucket exposes all the data stored there. With it, the data is unreadable without the decryption key — even if the physical device is in an attacker's hands.</p>
+        </div>
+        <div class="concept">
+          <div class="concept-label">Type 03</div>
+          <h4>End-to-end encryption</h4>
+          <p>Protects data from sender to recipient, such that not even the service provider can read it. WhatsApp, Signal, and iMessage use end-to-end encryption. Standard email does not — your email provider can read your emails unless additional encryption (like PGP or S/MIME) is applied. End-to-end encryption is essential for the most sensitive communications.</p>
+        </div>
+      </div>
+
+      <h2>Where encryption actually protects you — and where it does not</h2>
+      <p>Encryption is one of the most powerful security tools available — but it protects against specific threats, not all threats. Understanding the distinction prevents a false sense of security.</p>
+      <p><strong>Encryption protects data from:</strong> interception in transit (network eavesdropping, man-in-the-middle attacks), physical theft of a device (a stolen encrypted laptop reveals nothing), breaches of storage systems (an encrypted database dump is useless without the key), and service provider access to your data (end-to-end encryption prevents even the platform from reading it).</p>
+      <p><strong>Encryption does not protect data from:</strong> an attacker who already has valid credentials to your systems, malware running on a device that has access to the decrypted data, a user who has legitimate access and misuses it, or data that is not encrypted because someone forgot to enable it.</p>
+
+      <div class="callout">
+        <p>The most common encryption failure is not broken cryptography — it is encryption that was not applied. A laptop with no disk encryption, a cloud storage bucket with encryption disabled, an application transmitting data over HTTP instead of HTTPS. Strong encryption standards are useless if they are not switched on.</p>
+      </div>
+
+      <h2>The padlock — what HTTPS actually means</h2>
+      <p>The padlock in a browser's address bar indicates that the connection to the website is encrypted using TLS — Transport Layer Security. It means that data transmitted between your browser and that website cannot be read by someone intercepting the connection on the network between you.</p>
+      <p>What the padlock does <em>not</em> mean: that the website is legitimate, that the organisation behind it is trustworthy, or that the data stored on their servers is safe. Phishing sites routinely use HTTPS with a valid padlock. The encryption is real — the problem is that the site you are connected to is fraudulent. The padlock verifies the connection; it does not verify the destination.</p>
+
+      <div class="warning">
+        <strong>⚠ A padlock does not mean the site is safe</strong>
+        <p>Years of public messaging taught people to "look for the padlock" as a safety signal. That guidance is now counterproductive — phishing sites use HTTPS too, making them visually indistinguishable from legitimate sites. The padlock confirms the connection is encrypted. It says nothing about whether the site belongs to who you think it does. Check the domain carefully. Rely on security awareness, not the padlock alone.</p>
+      </div>
+
+      <h2>Where encryption operates in your business right now</h2>
+
+      <div class="uses">
+        <div class="use">
+          <div class="use-icon">💻</div>
+          <h4>Laptop hard drives</h4>
+          <p>BitLocker (Windows) and FileVault (Mac) encrypt the entire drive. A stolen laptop cannot be read without the password. Enable and verify.</p>
+        </div>
+        <div class="use">
+          <div class="use-icon">📧</div>
+          <h4>Email in transit</h4>
+          <p>Microsoft 365 and Google Workspace encrypt email between servers (TLS). End-to-end encryption requires additional configuration or tools.</p>
+        </div>
+        <div class="use">
+          <div class="use-icon">☁️</div>
+          <h4>Cloud storage</h4>
+          <p>AWS S3, Azure, and Google Cloud encrypt data at rest by default. OneDrive and Google Drive encrypt stored files. Verify encryption settings are enabled.</p>
+        </div>
+        <div class="use">
+          <div class="use-icon">🔒</div>
+          <h4>Websites (HTTPS)</h4>
+          <p>Your business website should serve exclusively over HTTPS. HTTP traffic is unencrypted. Check your site has a valid TLS certificate and redirects HTTP to HTTPS.</p>
+        </div>
+        <div class="use">
+          <div class="use-icon">📱</div>
+          <h4>Mobile devices</h4>
+          <p>Modern iPhones and Android devices encrypt storage by default when a PIN or passcode is set. Ensure all business mobile devices have a passcode.</p>
+        </div>
+        <div class="use">
+          <div class="use-icon">🔑</div>
+          <h4>Passwords</h4>
+          <p>Passwords are stored as hashes — one-way cryptographic functions. A properly hashed password database cannot be reversed, even if stolen. Weak hashing (MD5, SHA1) can be cracked; modern systems use bcrypt or Argon2.</p>
+        </div>
+      </div>
+
+      <h2>Key management — the weak point in encryption</h2>
+      <p>Encryption is only as strong as the protection of its keys. A perfectly encrypted database is compromised if the encryption key is stored in the same breached system. A perfectly encrypted laptop is compromised if the recovery key is written on a sticky note attached to it.</p>
+      <p>Key management — the practice of securely generating, storing, rotating, and destroying encryption keys — is the operational side of cryptography that most businesses pay too little attention to. For most small businesses, this means: store BitLocker recovery keys in Microsoft Entra ID or your MDM platform; store cloud encryption keys in the provider's key management service; and never store keys alongside the data they protect.</p>
+
+      <h2>Practical actions for business owners</h2>
+      <ul>
+        <li><strong>Verify disk encryption on all laptops</strong> — BitLocker on Windows, FileVault on Mac. This takes two minutes per device and provides substantial protection against physical theft.</li>
+        <li><strong>Check your website serves HTTPS only</strong> — use SSL Labs (ssllabs.com/ssltest) to grade your TLS configuration and identify any issues.</li>
+        <li><strong>Confirm cloud storage encryption is enabled</strong> — most providers enable it by default, but verify it is not disabled in your configuration.</li>
+        <li><strong>Use a password manager</strong> — password managers encrypt your stored credentials, protecting them even if the device is compromised.</li>
+        <li><strong>Use Signal or equivalent for the most sensitive communications</strong> — standard email and SMS are not end-to-end encrypted.</li>
+      </ul>
+
+      <hr>
+
+      <h2>Encryption checklist</h2>
+      <ul class="checklist">
+        <li>Disk encryption enabled and verified on all business laptops — BitLocker or FileVault</li>
+        <li>Recovery keys stored securely — not on the device or in unprotected documents</li>
+        <li>Business website serving HTTPS only — TLS certificate current and valid</li>
+        <li>Cloud storage encryption verified as enabled</li>
+        <li>All business mobile devices protected by a passcode or biometric</li>
+        <li>Email transmitted over TLS between servers — configured in Microsoft 365 or Google Workspace</li>
+        <li>Password manager used by all staff — passwords stored encrypted</li>
+        <li>End-to-end encrypted messaging used for the most sensitive communications</li>
+      </ul>
+
+      <p>Cryptography is the foundation that makes digital trust possible. Every secure website, every protected file, every private message depends on it. You do not need to understand the mathematics — but understanding what encryption protects, where it applies in your business, and where the gaps might be gives you the knowledge to make decisions that keep your data safe.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
