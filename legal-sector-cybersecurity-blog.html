@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for the Legal Sector | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 13, 2026 &nbsp;·&nbsp; Legal Sector Security</div>
+    <h1>Cybersecurity for the legal sector — protecting privileged information and client trust</h1>
+    <p class="post-lead">Legal professionals hold some of the most sensitive data that exists — legally privileged communications, commercial secrets, personal information, and details of disputes that could move markets or destroy reputations. That makes the legal sector one of the most targeted — and one of the most exposed.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>The legal sector sits at the intersection of confidentiality, high-value transactions, and adversarial proceedings — a combination that makes it extraordinarily attractive to a wide range of threat actors. Law firms are targeted by criminal organisations seeking to intercept client funds, by commercial rivals seeking insider intelligence on deals and disputes, and by nation-state actors pursuing litigation strategy and privileged communications.</p>
+      <p>At the same time, the legal profession's culture — built on trust, confidentiality, and relationship — has historically made it slow to adopt the technical controls that the sensitivity of its data warrants. That gap between data sensitivity and security investment is exactly what attackers exploit.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">73%</div><div class="stat-d">of law firms with more than 100 lawyers reported a security breach in the past year — up from 45% five years ago</div></div>
+        <div class="stat"><div class="stat-n">£4M</div><div class="stat-d">average direct loss from a successful cyberattack on a UK law firm — not including regulatory fines or reputational damage</div></div>
+        <div class="stat"><div class="stat-n">72hrs</div><div class="stat-d">the ICO notification deadline for personal data breaches — legal firms face this obligation constantly given the data they hold</div></div>
+      </div>
+
+      <h2>What makes the legal sector uniquely exposed</h2>
+      <p>Three characteristics of legal practice create distinctive cybersecurity challenges that are not replicated in most other sectors.</p>
+      <p><strong>Legally privileged communications.</strong> Attorney-client privilege protects communications between lawyers and clients from disclosure. That privilege is extraordinarily valuable — and therefore extraordinarily sought after by attackers. A compromised email account at a law firm may expose privileged strategy documents, settlement positions, and commercially sensitive advice that could be worth millions to the right adversary.</p>
+      <p><strong>Large financial transactions.</strong> Real estate transactions, mergers and acquisitions, dispute settlements, and trust distributions all involve large sums of money moving between parties. Law firms routinely send and receive financial instructions — and those communications are prime targets for business email compromise and payment diversion fraud.</p>
+      <p><strong>Complex multi-party communications.</strong> Transactions and disputes involve multiple parties, each communicating by email, exchanging documents, and sharing sensitive information. The more parties and the more email threads, the more opportunities for attackers to monitor, intercept, and manipulate.</p>
+
+      <div class="callout">
+        <p>The SRA's cybercrime and fraud thematic review found that conveyancing and commercial property transactions represent the highest-risk area for cybercrime in the legal sector — with fraudulent payment diversions accounting for the majority of losses. Verification of payment details by telephone before any transfer remains the single most important control.</p>
+      </div>
+
+      <h2>The specific threats legal firms face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Email compromise and payment diversion</h4>
+          <p>Attackers monitor email communications around high-value transactions and substitute genuine client account details with fraudulent ones at the point of completion. A client transfers their settlement, purchase price, or investment to criminals. Law firms have faced professional negligence claims and regulatory action as a result.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Privileged document theft</h4>
+          <p>Sophisticated attackers — commercial rivals, litigation opponents, and nation-state actors — compromise law firm systems specifically to access privileged strategy documents, expert reports, and commercial advice. The data is used in negotiations, litigation, or to provide illegal competitive advantage.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Ransomware on case management systems</h4>
+          <p>Ransomware encrypting a law firm's document management system, case management platform, and email archive creates immediate and severe operational disruption — with court deadlines, filing obligations, and client commitments at risk from the moment systems go down.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Client impersonation and identity fraud</h4>
+          <p>Attackers impersonate clients to redirect funds, change instructions, or extract information. Given that legal matters often involve emotionally and financially stressed clients making urgent requests, the pressure to act quickly without full verification is real and deliberately exploited.</p>
+        </div>
+      </div>
+
+      <h2>SRA obligations and regulatory risk</h2>
+      <p>The Solicitors Regulation Authority has been clear that cybersecurity is a professional conduct matter. SRA Principle 7 requires solicitors to act in the best interests of each client — and failing to protect client data and funds from foreseeable cybercrime risks is a breach of that principle. The SRA has sanctioned firms and individuals for inadequate cybersecurity measures that resulted in client losses.</p>
+      <p>Law firms are also subject to UK GDPR as data controllers of large volumes of sensitive personal and special category data. A data breach triggers ICO notification obligations and potential fines. And Lexcel-accredited firms face specific information security requirements as part of the quality standard.</p>
+
+      <div class="warning">
+        <strong>⚠ Verify every payment instruction by telephone</strong>
+        <p>Any instruction to transfer client funds or change payment details must be verified by telephone — using a number already held on file, not a number provided in the instruction. This applies regardless of how legitimate the email appears, whether it appears to come from the client or a third party, and regardless of time pressure. A two-minute call before a transfer prevents a fraud that could cost the firm its professional indemnity cover and its reputation.</p>
+      </div>
+
+      <h2>Protecting privileged communications</h2>
+      <p>Legally privileged communications warrant the highest level of protection available. The practical controls that provide this protection are achievable for firms of all sizes.</p>
+      <ul>
+        <li><strong>MFA on all email accounts</strong> — the most important single control. A compromised email account exposes every privileged communication it contains.</li>
+        <li><strong>Encrypted email for the most sensitive communications</strong> — standard email is not end-to-end encrypted. For highly sensitive privileged advice, consider encrypted email platforms or secure client portals.</li>
+        <li><strong>Client portals instead of email attachments</strong> — sharing documents through a secure portal rather than email attachments provides better access control, audit trails, and reduces the risk of interception.</li>
+        <li><strong>Document management system access controls</strong> — access to matter files should be restricted to the fee earners and support staff working on that matter.</li>
+        <li><strong>Email monitoring for suspicious forwarding rules</strong> — compromised accounts often have forwarding rules set up to silently copy all emails to an attacker-controlled address. Review these regularly.</li>
+      </ul>
+
+      <h2>Managing the client verification challenge</h2>
+      <p>Legal clients often communicate urgently, under stress, and with time-sensitive instructions. This creates pressure to act quickly — exactly the pressure that attackers design their social engineering attacks around. A clear, consistently applied client verification protocol removes individual judgement from high-pressure moments.</p>
+      <p>Every new client instruction to transfer funds, change account details, or take urgent action should be verified through a channel established at the outset of the retainer — a phone number verified at the initial client onboarding, not one provided in the instruction itself. This protocol should be communicated to clients at the start of every matter, so they expect it and do not experience it as unusual.</p>
+
+      <hr>
+
+      <h2>Legal sector cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all fee earner and support staff email accounts</li>
+        <li>Payment verification protocol in place — telephone confirmation using on-file number for all fund transfers</li>
+        <li>Email accounts checked for unexpected forwarding rules</li>
+        <li>Document management access controls applied by matter</li>
+        <li>Client portal in use for document sharing on sensitive matters</li>
+        <li>DMARC, DKIM, and SPF configured on firm email domain</li>
+        <li>Staff trained on BEC, payment diversion, and client impersonation attacks</li>
+        <li>Cyber incident response plan in place — SRA and ICO notification procedures documented</li>
+        <li>Professional indemnity insurer notified immediately of any potential claim incident</li>
+        <li>Offsite tested backups of all matter files and case management data</li>
+        <li>SRA cybersecurity guidance reviewed annually and controls assessed against it</li>
+      </ul>
+
+      <p>The legal profession's obligations of confidentiality and client care are not new. What is new is the scale and sophistication of the threat to the systems that hold the information those obligations protect. Cybersecurity in the legal sector is not a technology matter — it is a professional conduct matter, and it deserves the same rigour the profession applies to everything else it does.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
