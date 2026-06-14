@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Web Monitoring | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  /* TOOLS TABLE */
+  .tools-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .tools-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .tools-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; font-size: 14px; }
+  .tools-table tr:last-child td { border-bottom: none; }
+  .tools-table td:first-child { font-weight: 500; }
+  .tag-free { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-paid { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .tools-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 14, 2026 &nbsp;·&nbsp; Dark Web</div>
+    <h1>Dark web monitoring — finding out if your data has already been stolen</h1>
+    <p class="post-lead">By the time a data breach makes the news, the stolen data has usually been circulating on dark web markets for weeks or months. Dark web monitoring gives you early warning — before criminals have had time to use your credentials, your customer data, or your employees' details against you.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 5 min read</div>
+    <div class="body">
+
+      <p>The average time between a data breach occurring and the affected organisation discovering it is 194 days. In that window, stolen credentials are sold, customer data is listed on underground markets, and the information is used to launch further attacks. Dark web monitoring shortens that window — alerting you when your data appears in places it should never be, before the damage compounds.</p>
+      <p>For most small businesses, dark web monitoring is not a complex or expensive undertaking. Several free tools cover the most important use cases, and paid services extend coverage significantly for a modest monthly cost.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">24B</div><div class="stat-d">stolen username and password combinations currently circulating on dark web markets</div></div>
+        <div class="stat"><div class="stat-n">194 days</div><div class="stat-d">average time between a breach occurring and the victim organisation discovering it</div></div>
+        <div class="stat"><div class="stat-n">£15</div><div class="stat-d">average price of a complete stolen business identity on dark web markets — cheaper than a lunch</div></div>
+      </div>
+
+      <h2>What the dark web actually is</h2>
+      <p>The dark web is a part of the internet that is not indexed by standard search engines and requires specific software — typically the Tor browser — to access. It hosts both legitimate privacy-focused services and a significant criminal economy including stolen data markets, credential shops, ransomware-as-a-service platforms, and forums where cybercriminals buy, sell, and exchange tools and information.</p>
+      <p>When a company suffers a data breach — whether through a direct attack or through a breach at a supplier — the stolen data frequently ends up on these markets. Credentials are sold by the millions. Customer databases are auctioned. Internal documents appear on ransomware leak sites when organisations refuse to pay.</p>
+
+      <div class="callout">
+        <p>You do not need to access the dark web yourself to monitor it. Reputable monitoring services index dark web markets, forums, and leak sites and alert you when your data appears — without you needing to visit any of those environments directly.</p>
+      </div>
+
+      <h2>What dark web monitoring looks for</h2>
+      <p>Different monitoring services cover different types of exposure. Understanding what you most need to monitor helps you choose the right tools.</p>
+      <ul>
+        <li><strong>Email addresses and credentials</strong> — the most common exposure. Your employees' email addresses and passwords from breached services, ready for use in credential stuffing attacks against your business systems.</li>
+        <li><strong>Domain mentions</strong> — your company domain appearing in criminal forums, leak sites, or data sale listings — an early indicator that your organisation has been targeted or breached.</li>
+        <li><strong>Customer data</strong> — customer email addresses, phone numbers, or payment details appearing in leaked databases, indicating a breach of your own systems or a supplier.</li>
+        <li><strong>Executive personal data</strong> — home addresses, personal email addresses, and phone numbers of senior staff — used in targeted attacks, extortion, and highly personalised phishing.</li>
+        <li><strong>Source code and documents</strong> — internal documents, source code, or credentials appearing on paste sites or leak forums, indicating an insider threat or external breach.</li>
+      </ul>
+
+      <h2>Monitoring tools — free and paid</h2>
+
+      <table class="tools-table">
+        <thead>
+          <tr><th>Tool</th><th>What it monitors</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Have I Been Pwned (HIBP)</td>
+            <td>Email addresses against known breach databases. Domain monitoring alerts you when any address at your domain appears in a new breach.</td>
+            <td><span class="tag-free">Free / £3.50/mo domain</span></td>
+          </tr>
+          <tr>
+            <td>Google Alerts</td>
+            <td>Surface-level mentions of your company name, domain, or key personnel on publicly indexed pages.</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Firefox Monitor</td>
+            <td>Email breach monitoring powered by HIBP data — simple interface for individuals.</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Flare</td>
+            <td>Dark web forums, Telegram channels, leak sites, and paste sites. Business-focused with domain and keyword monitoring.</td>
+            <td><span class="tag-paid">From ~£50/mo</span></td>
+          </tr>
+          <tr>
+            <td>SpyCloud</td>
+            <td>Stolen credential monitoring with recaptured malware logs — alerts when employee credentials are actively being sold.</td>
+            <td><span class="tag-paid">Paid, per user</span></td>
+          </tr>
+          <tr>
+            <td>Recorded Future / Digital Shadows</td>
+            <td>Enterprise-grade threat intelligence including dark web, surface web, and social media monitoring.</td>
+            <td><span class="tag-paid">Enterprise</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>What to do when you get an alert</h2>
+      <p>Receiving a dark web alert does not automatically mean you have been breached. Many alerts relate to credentials stolen from third-party services — LinkedIn, Adobe, or a cloud tool — rather than from your own systems. But every alert warrants a response.</p>
+
+      <ul>
+        <li><strong>Identify the source</strong> — which breach did the data come from? HIBP and most monitoring tools will tell you which known breach the data appeared in.</li>
+        <li><strong>Reset the affected credentials immediately</strong> — even if the password was from a third-party service, if any of your employees reused it on business systems, those systems are now at risk. Change the password, check for unusual activity, and verify MFA is in place.</li>
+        <li><strong>Check for reuse across systems</strong> — credential stuffing works because people reuse passwords. An alert about one account should trigger a review of password hygiene across the business.</li>
+        <li><strong>Investigate if the data relates to your own systems</strong> — if customer data or internal documents appear that could only have come from your systems, treat it as a confirmed breach and begin your incident response process.</li>
+        <li><strong>Notify affected individuals if required</strong> — if personal data has been exposed, GDPR notification obligations may apply.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Start with Have I Been Pwned — right now</strong>
+        <p>Go to haveibeenpwned.com and enter your business email domain. It costs nothing and takes two minutes. If your domain has appeared in known breaches, you will see exactly which breaches and which email addresses were affected. Set up domain monitoring for £3.50 per month to receive automatic alerts when any address at your domain appears in future breaches. This is one of the highest-value, lowest-cost security actions available.</p>
+      </div>
+
+      <h2>Prevention — the best response to a dark web alert</h2>
+      <p>Dark web monitoring is detective, not preventive — it tells you data has already been exposed, not that it is about to be. The controls that prevent credentials from being useful when stolen are MFA (which renders stolen passwords useless without the second factor) and a password manager (which ensures unique passwords so a breach of one service does not compromise others). Monitoring and prevention work together — monitoring tells you when something has gone wrong; MFA and password hygiene limit the damage it can do.</p>
+
+      <hr>
+
+      <h2>Dark web monitoring checklist</h2>
+      <ul class="checklist">
+        <li>Have I Been Pwned checked for your business domain — all breaches reviewed</li>
+        <li>HIBP domain monitoring set up — automatic alerts for future breaches</li>
+        <li>All staff using a password manager — unique passwords across all services</li>
+        <li>MFA enabled on all accounts — stolen passwords useless without second factor</li>
+        <li>Alert response process defined — who acts on alerts and what they do</li>
+        <li>Paid dark web monitoring in place if handling sensitive customer data at scale</li>
+        <li>Customer data breach response process documented — GDPR notification procedure clear</li>
+        <li>Executive personal data monitored — senior staff names and domains included</li>
+      </ul>
+
+      <p>Your data may already be on the dark web. The question is whether you know about it and have acted — or whether you will find out when a criminal uses it. Dark web monitoring does not prevent breaches. It ensures that when your data appears somewhere it should not, you find out first and respond before the window for effective action closes.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
