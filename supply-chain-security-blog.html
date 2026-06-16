@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supply Chain Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 17, 2026 &nbsp;·&nbsp; Supply Chain Security</div>
+    <h1>Supply chain security — your vendors are your risk</h1>
+    <p class="post-lead">Your security is only as strong as the weakest link in your supply chain. Every supplier with access to your systems, your data, or your network is a potential attack vector — and attackers have learned that targeting a trusted supplier is often far easier than attacking you directly.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>The 2020 SolarWinds attack compromised the software update mechanism of a widely used IT monitoring tool, giving attackers access to the networks of thousands of organisations — including government agencies and major corporations — who had done nothing wrong themselves. Their supplier had been compromised, and that supplier's access became the attacker's access.</p>
+      <p>Supply chain attacks have grown significantly because they are efficient. A single compromised supplier can provide access to hundreds or thousands of downstream victims simultaneously. For attackers, the economics are compelling. For businesses, the implication is clear: your security posture depends not only on what you control, but on what your suppliers control.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">62%</div><div class="stat-d">of organisations experienced a data breach caused by a third-party supplier in the past year</div></div>
+        <div class="stat"><div class="stat-n">3×</div><div class="stat-d">supply chain attacks have tripled in the past three years as attackers target weaker links</div></div>
+        <div class="stat"><div class="stat-n">£1.9M</div><div class="stat-d">average cost of a third-party data breach — higher than breaches caused by internal factors</div></div>
+      </div>
+
+      <h2>Understanding your supply chain attack surface</h2>
+      <p>Supply chain risk is not just about software vendors and IT providers. It encompasses every external party that has some form of access to your systems, your data, or your physical premises — and every piece of software or hardware you rely on that is made or managed by a third party.</p>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Type 01</div>
+          <h4>Software supply chain</h4>
+          <p>Compromised software updates, malicious code injected into open-source libraries, or backdoored commercial software. You install what appears to be a legitimate update and the attacker's code runs with the same privileges as the software itself.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Type 02</div>
+          <h4>Managed service providers</h4>
+          <p>IT support companies, managed security providers, and cloud service providers that have administrative access to your systems. A compromised MSP is a master key — their access credentials provide access to every client they manage.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Type 03</div>
+          <h4>SaaS and cloud tool integrations</h4>
+          <p>Every third-party application connected to your Microsoft 365, Google Workspace, or CRM — via OAuth or API — holds some level of access to your data. A compromised third-party app can access everything that connection permits.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Type 04</div>
+          <h4>Physical and operational suppliers</h4>
+          <p>Facilities management companies with building access, HVAC and equipment suppliers with network-connected systems, delivery and logistics partners with access to operational data. Physical supply chain risk increasingly intersects with digital risk.</p>
+        </div>
+      </div>
+
+      <h2>Knowing who has access to what</h2>
+      <p>The foundation of supply chain security is visibility — knowing which suppliers have access to your systems and data, what level of access they have, and whether that access is still necessary. Most businesses discover in a self-audit that the answer to all three questions is murkier than they expected.</p>
+      <p>Start by building a supplier inventory — a list of every external party with any form of system or data access. For each, record: what systems or data they can access, what level of access they have, when the access was last reviewed, and what the business justification is. This register is the foundation of ongoing vendor risk management.</p>
+
+      <div class="callout">
+        <p>The principle of least privilege applies to suppliers as much as to internal staff. Your IT support provider does not need admin access to every system to perform routine maintenance. Your payroll bureau does not need access to your CRM. Third-party access should be scoped to exactly what the engagement requires — and no more.</p>
+      </div>
+
+      <h2>Assessing supplier security</h2>
+      <p>You cannot audit every supplier in depth — but you can apply proportionate scrutiny based on the access they hold and the risk they represent. A supplier with administrative access to your core infrastructure warrants far more scrutiny than a supplier who receives a monthly invoice report by email.</p>
+
+      <ul>
+        <li><strong>For critical suppliers</strong> — those with admin access, access to sensitive data, or whose failure would severely disrupt your operations — conduct annual security assessments. Ask for evidence of Cyber Essentials, ISO 27001, or SOC 2 certification. Review their incident history and their incident response obligations to you.</li>
+        <li><strong>For standard suppliers</strong> — those with limited data access — include security requirements in contracts and conduct periodic reviews rather than deep annual assessments.</li>
+        <li><strong>For all suppliers</strong> — include minimum security obligations, incident notification requirements, and data processing terms in contracts before access is granted.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Check what third-party apps can access right now</strong>
+        <p>In Microsoft 365: Azure Active Directory → Enterprise Applications shows every application that has been granted access to your tenant. In Google Workspace: Admin console → Security → API controls → Third-party app access. Review what each application can access and revoke permissions for anything that is no longer used or whose scope is broader than its function warrants. This is one of the most frequently neglected but consequential supply chain security actions.</p>
+      </div>
+
+      <h2>Contractual protections</h2>
+      <p>Contracts with suppliers who access your data must include specific security obligations. These are not just legal formalities — they set expectations, create accountability, and give you recourse if a supplier's failure causes you harm.</p>
+
+      <ul>
+        <li><strong>Minimum security standards</strong> — specify the controls the supplier must maintain, such as Cyber Essentials or equivalent</li>
+        <li><strong>Incident notification requirements</strong> — require the supplier to notify you within a defined timeframe (typically 24–72 hours) of any security incident that may affect your data or systems</li>
+        <li><strong>Right to audit</strong> — the right to assess the supplier's security controls, either directly or through a third-party audit</li>
+        <li><strong>Data processing agreement</strong> — required under UK GDPR for any supplier that processes personal data on your behalf</li>
+        <li><strong>Access revocation obligations</strong> — the supplier must promptly revoke access when the engagement ends and certify that data has been returned or destroyed</li>
+      </ul>
+
+      <h2>When a supplier is breached</h2>
+      <p>If a supplier notifies you of a breach, or you discover that a supplier has been compromised, the immediate priorities are: assess what access that supplier had to your systems and data; determine whether any of your data or credentials may have been exposed; revoke the supplier's access while the incident is investigated; and assess whether your own systems show any signs of compromise originating from the supplier's access.</p>
+      <p>Do not wait for the supplier to tell you what happened before beginning your own assessment. Their incident timeline and your exposure timeline may diverge significantly.</p>
+
+      <hr>
+
+      <h2>Supply chain security checklist</h2>
+      <ul class="checklist">
+        <li>Supplier inventory maintained — all third parties with system or data access listed</li>
+        <li>Access scoped to minimum necessary for each supplier's role</li>
+        <li>Critical supplier security assessed annually — certifications reviewed</li>
+        <li>Security obligations included in all supplier contracts</li>
+        <li>Incident notification requirements specified in contracts — 24–72hr window</li>
+        <li>Data processing agreements in place for all suppliers handling personal data</li>
+        <li>Third-party app permissions in Microsoft 365 and Google Workspace reviewed</li>
+        <li>Supplier access revoked promptly when engagements end</li>
+        <li>Software updates verified before deployment — particularly from less-known vendors</li>
+        <li>Supplier breach response process defined — your own assessment begins immediately</li>
+      </ul>
+
+      <p>You cannot control what your suppliers do inside their own networks. You can control who you choose as suppliers, what access you give them, what obligations you place on them contractually, and how quickly you detect and respond when something goes wrong. Supply chain security is vendor selection, access control, contract management, and monitoring — applied consistently and reviewed regularly.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
