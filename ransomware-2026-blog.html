@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ransomware — How It Works and How to Survive It | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .phases { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .phase { background: var(--surface); padding: 1.1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .phase-n { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
+  .phase-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .phase-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 16, 2026 &nbsp;·&nbsp; Ransomware</div>
+    <h1>Ransomware — how it works, how to stop it, and how to survive it</h1>
+    <p class="post-lead">Ransomware is the most destructive cyberattack most businesses will ever face. It encrypts your files, shuts down your operations, and demands payment to restore access. Understanding how it works is the first step to preventing it — and surviving it if prevention fails.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 7 min read</div>
+    <div class="body">
+
+      <p>Ransomware attacks cost UK businesses an estimated £2.5 billion in 2025 — a figure that includes ransoms paid, recovery costs, lost revenue, regulatory fines, and reputational damage. Behind that number are hundreds of businesses that lost weeks of operation, customer databases, years of work, and in some cases the business itself.</p>
+      <p>Ransomware is not new, but it has evolved dramatically. Today's attacks are conducted by professional criminal organisations with dedicated development teams, customer service operations for managing ransom negotiations, and sophisticated affiliate programmes that allow other criminals to deploy their malware for a share of the proceeds. Understanding this ecosystem — and the attack chain it uses — is essential for building effective defences.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">£150K</div><div class="stat-d">average total cost of a ransomware attack on a small business — ransom is usually a small fraction of this</div></div>
+        <div class="stat"><div class="stat-n">21 days</div><div class="stat-d">average downtime following a ransomware attack — three working weeks of operational disruption</div></div>
+        <div class="stat"><div class="stat-n">40%</div><div class="stat-d">of businesses that pay a ransom do not fully recover their data — payment does not guarantee restoration</div></div>
+      </div>
+
+      <h2>How a ransomware attack actually works</h2>
+      <p>Modern ransomware attacks are not single events — they are multi-stage campaigns that can take days or weeks from initial access to encryption. Understanding each stage reveals where defences can interrupt the attack.</p>
+
+      <div class="phases">
+        <div class="phase"><div class="phase-n">1</div><div class="phase-body"><h4>Initial access</h4><p>The attacker enters your network — most commonly through a phishing email that delivers malware or steals credentials, through an unpatched vulnerability in an internet-facing system, or through compromised remote access credentials (VPN or RDP). This is the stage where most attacks can be prevented.</p></div></div>
+        <div class="phase"><div class="phase-n">2</div><div class="phase-body"><h4>Persistence and reconnaissance</h4><p>The attacker establishes persistence — ensuring they can maintain access even if the initial entry point is closed. They then spend days or weeks exploring the network, identifying valuable data, mapping backup systems, and escalating privileges. This dwell time is the window in which detection can prevent the worst outcome.</p></div></div>
+        <div class="phase"><div class="phase-n">3</div><div class="phase-body"><h4>Data exfiltration</h4><p>Before encrypting, modern ransomware operators steal a copy of your most sensitive data. This enables double extortion — threatening to publish the data publicly if the ransom is not paid, even if the victim can restore from backups. Good backups no longer fully protect against ransomware.</p></div></div>
+        <div class="phase"><div class="phase-n">4</div><div class="phase-body"><h4>Backup destruction</h4><p>The attacker identifies and destroys or encrypts your backups before deploying the ransomware itself. This is why online backups connected to your network are frequently rendered useless in ransomware attacks — and why offline or immutable backups are essential.</p></div></div>
+        <div class="phase"><div class="phase-n">5</div><div class="phase-body"><h4>Encryption and extortion</h4><p>The ransomware is deployed across the network simultaneously, encrypting files on every reachable system. A ransom note appears. Operations halt. The clock starts on a decision that must be made under maximum pressure with minimum information.</p></div></div>
+      </div>
+
+      <h2>The double extortion problem</h2>
+      <p>Until around 2020, a robust backup strategy was the definitive defence against ransomware — if you could restore from backup, the ransom demand was irrelevant. That calculation has changed fundamentally. Modern ransomware operators exfiltrate data before encrypting — and threaten to publish it on dedicated leak sites if the ransom is not paid.</p>
+      <p>This means that even a business that can restore all its systems from backup still faces the threat of having sensitive customer data, commercially confidential information, or personal data published publicly. The ransom is no longer just about restoring access — it is about preventing disclosure. Backups remain essential. They are no longer sufficient alone.</p>
+
+      <div class="warning">
+        <strong>⚠ Should you pay the ransom?</strong>
+        <p>This decision should never be made unilaterally in the moment. Call your cyber insurer first — they have incident response teams and experience with these decisions. Consider: payment funds criminal activity; does not guarantee data return or non-publication; may breach UK sanctions regulations if the attacker is a designated entity; and does not fix the vulnerability that enabled the attack. Many businesses that pay receive working decryption keys — many do not. Get expert advice before paying.</p>
+      </div>
+
+      <h2>Prevention — closing the doors attackers use</h2>
+      <p>The majority of ransomware attacks enter through a small number of consistently exploited pathways. Closing these pathways does not require sophisticated security tooling — it requires consistent application of basic controls.</p>
+
+      <ul>
+        <li><strong>MFA on all remote access</strong> — VPN, RDP, and remote desktop tools without MFA are among the most common ransomware entry points. No exceptions.</li>
+        <li><strong>Never expose RDP directly to the internet</strong> — Remote Desktop Protocol accessible without a VPN is scanned and attacked constantly. Put it behind a VPN or disable it entirely if not needed.</li>
+        <li><strong>Patch promptly</strong> — the majority of ransomware exploits known vulnerabilities with available patches. Apply critical patches within 14 days; sooner for internet-facing systems.</li>
+        <li><strong>Email filtering and staff awareness</strong> — phishing is the most common initial access vector. Robust filtering and staff who know how to recognise and report suspicious emails significantly reduce this risk.</li>
+        <li><strong>Principle of least privilege</strong> — an account that can only access what it needs for its role cannot encrypt the entire network. Limit access to limit the blast radius.</li>
+      </ul>
+
+      <h2>Backups — your most important resilience control</h2>
+      <p>Tested, offsite, offline backups remain the single most important resilience control against ransomware — even in the era of double extortion. Backups that can be restored quickly and completely transform a potentially existential event into a painful but survivable incident.</p>
+
+      <ul>
+        <li><strong>Follow the 3-2-1-1 rule</strong> — three copies of data, on two different media types, with one offsite, and one offline or immutable (air-gapped or write-once)</li>
+        <li><strong>Test your backups regularly</strong> — a backup you have never successfully restored from is a hypothesis, not a safety net. Test quarterly at minimum.</li>
+        <li><strong>Ensure backup systems cannot be reached from the production network</strong> — online backups that are reachable from infected systems will be encrypted or deleted before the ransomware deploys</li>
+        <li><strong>Know your recovery time objective</strong> — how long would it actually take to restore your systems from backup? Test this before you need the answer under pressure.</li>
+      </ul>
+
+      <div class="callout">
+        <p>Cloud backup services like Veeam, Acronis, and Azure Backup support immutable backup options — storage that cannot be deleted or modified even by an attacker with admin credentials. For businesses without offline tape infrastructure, immutable cloud backup is the most practical alternative.</p>
+      </div>
+
+      <h2>If ransomware strikes — the first hour</h2>
+      <p>The first hour of a ransomware attack is the most critical. The decisions made in that window determine how far the attack spreads, how much data is lost, and how quickly recovery can begin.</p>
+
+      <ul>
+        <li><strong>Isolate affected systems immediately</strong> — disconnect from the network (physically or logically) to stop the ransomware spreading to other systems and to backups</li>
+        <li><strong>Do not turn off affected machines</strong> — powered-off machines may preserve evidence and memory artefacts that are critical for investigation; leave them powered on but isolated</li>
+        <li><strong>Call your cyber insurer</strong> — they have 24/7 incident response teams and need to be notified promptly; your policy may be void if you act without notifying them first</li>
+        <li><strong>Preserve evidence</strong> — photograph ransom notes, document what you observe, do not begin remediation before an incident responder has assessed the scene</li>
+        <li><strong>Do not pay without expert advice</strong> — the decision to pay or not pay should involve your insurer, a legal adviser, and an incident response specialist</li>
+      </ul>
+
+      <hr>
+
+      <h2>Ransomware resilience checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on all remote access — VPN, RDP, and remote desktop tools</li>
+        <li>RDP not exposed directly to the internet</li>
+        <li>Critical patches applied within 14 days — internet-facing systems prioritised</li>
+        <li>Email filtering and phishing awareness training in place</li>
+        <li>Least privilege applied — accounts access only what their role requires</li>
+        <li>3-2-1-1 backup strategy implemented — including offline or immutable copy</li>
+        <li>Backup restore tested successfully in the past 90 days</li>
+        <li>Backup systems isolated from production network</li>
+        <li>Cyber insurer contact number saved offline and accessible during an incident</li>
+        <li>Incident response plan includes ransomware scenario — isolation steps documented</li>
+        <li>Network segmentation in place — limits blast radius if encryption occurs</li>
+      </ul>
+
+      <p>Ransomware is designed to put you in an impossible position — pay criminals or lose your business. The businesses that avoid that choice are those that never let the attack reach the encryption stage. The businesses that survive it even when it does are those with tested backups, a clear plan, and expert support on speed dial. Both outcomes are achievable. Neither happens by accident.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
