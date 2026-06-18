@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .layers { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .layer { background: var(--surface); padding: 1.1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .layer-n { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
+  .layer-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .layer-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 18, 2026 &nbsp;·&nbsp; Network Security</div>
+    <h1>Network security — defending the backbone of your business</h1>
+    <p class="post-lead">Your network connects every device, every user, and every system in your business. It is also the highway that attackers travel once they are inside. Securing it — from the router on the wall to the cloud connections you rely on — limits what any successful attack can reach.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Network security is one of the most misunderstood areas of cybersecurity for small businesses. Many assume it is either too technical to address without specialist help, or already handled by their internet service provider. Neither is true. The most important network security controls for most small businesses are achievable, affordable, and directly actionable — starting with the router that connects the business to the internet.</p>
+      <p>A poorly secured network amplifies the damage of every other security failure. An attacker who gains access through a phishing email or a compromised device can move laterally through an unsegmented network, reaching financial systems, file servers, and backup systems that had nothing to do with the initial compromise. Network security limits that movement.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">61%</div><div class="stat-d">of network intrusions involve lateral movement — attackers spreading from the initial entry point across the network</div></div>
+        <div class="stat"><div class="stat-n">45 days</div><div class="stat-d">average dwell time before detection — the time attackers spend exploring your network before striking</div></div>
+        <div class="stat"><div class="stat-n">£0</div><div class="stat-d">cost of changing default router credentials — the single most overlooked network security action</div></div>
+      </div>
+
+      <h2>The network security stack</h2>
+      <p>Network security is not a single tool or a single control. It is a series of overlapping protections — each addressing a different part of the threat landscape, each supporting the others.</p>
+
+      <div class="layers">
+        <div class="layer"><div class="layer-n">1</div><div class="layer-body"><h4>Firewall</h4><p>The first line of defence — controls what traffic can enter and leave your network. Your router provides basic firewalling. A dedicated firewall appliance provides significantly more control, logging, and application-layer inspection for businesses with higher security needs.</p></div></div>
+        <div class="layer"><div class="layer-n">2</div><div class="layer-body"><h4>Network segmentation</h4><p>Divides the network into separate zones so that a compromise in one zone cannot automatically reach systems in another. Guest Wi-Fi isolated from staff systems. Finance systems isolated from general office network. IoT devices on their own segment.</p></div></div>
+        <div class="layer"><div class="layer-n">3</div><div class="layer-body"><h4>Secure Wi-Fi</h4><p>WPA3 encryption, strong unique passwords, hidden or named SSIDs, separate networks for guests and staff. Wireless is often the least-considered entry point and the easiest to attack from a car park.</p></div></div>
+        <div class="layer"><div class="layer-n">4</div><div class="layer-body"><h4>VPN for remote access</h4><p>Encrypts connections from remote workers to business systems, replacing direct internet exposure of internal resources with authenticated, encrypted tunnels. Essential for any business with staff working outside the office.</p></div></div>
+        <div class="layer"><div class="layer-n">5</div><div class="layer-body"><h4>DNS filtering</h4><p>Blocks connections to known malicious domains at the DNS level — before a malicious site loads, before malware communicates with its command-and-control server. A simple, high-value control that can be applied network-wide by changing DNS settings on the router.</p></div></div>
+        <div class="layer"><div class="layer-n">6</div><div class="layer-body"><h4>Network monitoring</h4><p>Visibility into what is happening on the network — which devices are connected, what traffic is flowing, whether any device is communicating with suspicious destinations. Without monitoring, network intrusions go undetected for weeks or months.</p></div></div>
+      </div>
+
+      <h2>Start with your router — the most overlooked device</h2>
+      <p>For most small businesses, the router is the gateway between the internet and everything inside the business. It is also one of the most consistently unsecured devices in the network. Default administrator credentials are left unchanged, firmware is never updated, remote management is left enabled, and no thought is given to what ports and services are exposed to the internet.</p>
+
+      <ul>
+        <li><strong>Change the default admin password immediately</strong> — and use a strong, unique password stored in a password manager. Default credentials for common routers are published online and scanned for automatically.</li>
+        <li><strong>Update router firmware</strong> — router firmware contains security vulnerabilities that are actively exploited. Check your router manufacturer's site for updates, or enable automatic updates if supported.</li>
+        <li><strong>Disable remote management</strong> — if you do not need to manage your router from outside the office, disable remote access entirely. Exposed remote management interfaces are a frequent attack target.</li>
+        <li><strong>Review what ports are open</strong> — your router should be blocking unsolicited inbound connections. Check your router's port forwarding rules and remove any that are no longer needed.</li>
+        <li><strong>Change DNS servers to a security-focused resolver</strong> — replacing your ISP's default DNS with Quad9 (9.9.9.9) or Cloudflare for Families takes two minutes and provides network-wide malicious domain blocking.</li>
+      </ul>
+
+      <h2>Wi-Fi security</h2>
+      <p>Wireless networks are uniquely vulnerable because they are physically accessible from outside your premises. An attacker in a car park, a café next door, or an adjacent office can attempt to access your Wi-Fi without ever entering your building. Securing it properly is not complex but requires attention to several specific controls.</p>
+
+      <ul>
+        <li><strong>Use WPA3 or WPA2-AES</strong> — older protocols (WEP, WPA, WPA2-TKIP) are broken and should never be used</li>
+        <li><strong>Use a strong, unique Wi-Fi password</strong> — not the default printed on the router, not the business name, not a dictionary word</li>
+        <li><strong>Run separate SSIDs for staff and guests</strong> — guest Wi-Fi on a completely isolated network with no access to any business system</li>
+        <li><strong>Consider disabling SSID broadcast</strong> — prevents casual discovery of your network name, though not a security measure on its own</li>
+        <li><strong>Review devices connected to your network</strong> — most routers show connected devices; an unfamiliar device on your network should be investigated immediately</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Guest Wi-Fi must be truly isolated</strong>
+        <p>Providing guest Wi-Fi that is on the same network as staff systems — or that can reach the same router administration interface — provides guests with an attack path into your business. True isolation means guest devices have internet access only, with no ability to reach any business system, server, printer, or other network device. Test it by connecting to guest Wi-Fi and attempting to reach your router admin page or a file server. If you can, it is not properly isolated.</p>
+      </div>
+
+      <h2>Monitoring — knowing what is on your network</h2>
+      <p>You cannot protect what you cannot see. Basic network monitoring — knowing which devices are connected, what they are doing, and whether anything unusual is occurring — is achievable for small businesses without expensive tools.</p>
+
+      <ul>
+        <li><strong>Check your router's connected device list regularly</strong> — most routers provide a list of currently connected devices; an unknown device should trigger investigation</li>
+        <li><strong>Enable logging on your firewall or router</strong> — even basic connection logs can reveal unusual outbound connections or repeated failed access attempts</li>
+        <li><strong>Consider a network monitoring tool</strong> — tools like Firewalla, Unifi, or Cisco Meraki (for larger businesses) provide visibility into network traffic without requiring a dedicated security team to interpret it</li>
+        <li><strong>Monitor for unusual outbound connections</strong> — a device on your network that is connecting to unusual external addresses at unusual times is a potential indicator of compromise</li>
+      </ul>
+
+      <div class="callout">
+        <p>The Firewalla Gold or Purple device provides small business network monitoring, segmentation, VPN, and DNS filtering in a single affordable appliance — without requiring technical expertise to deploy or manage. It is one of the most practical network security upgrades available for a small business with no dedicated IT staff.</p>
+      </div>
+
+      <hr>
+
+      <h2>Network security checklist</h2>
+      <ul class="checklist">
+        <li>Router admin password changed from default — strong unique password in use</li>
+        <li>Router firmware updated and auto-update enabled if supported</li>
+        <li>Remote management disabled on router</li>
+        <li>DNS servers changed to security-focused resolver — Quad9 or Cloudflare</li>
+        <li>Wi-Fi using WPA3 or WPA2-AES with a strong unique password</li>
+        <li>Guest Wi-Fi on isolated network — confirmed to have no access to business systems</li>
+        <li>Network segmentation in place — finance, IoT, and guest on separate segments</li>
+        <li>VPN deployed for remote worker access to business systems</li>
+        <li>Connected device list reviewed — unfamiliar devices investigated</li>
+        <li>Port forwarding rules reviewed — unnecessary rules removed</li>
+        <li>Basic network monitoring in place — logs reviewed for unusual activity</li>
+      </ul>
+
+      <p>Your network is the foundation everything else runs on. A well-secured network does not prevent every attack — but it limits lateral movement, provides visibility when something goes wrong, and ensures that a compromised device cannot become the launchpad for a much wider incident. These controls are achievable for any business, starting with the router that is probably already on your wall.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
