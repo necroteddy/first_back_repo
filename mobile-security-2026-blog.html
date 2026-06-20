@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 19, 2026 &nbsp;·&nbsp; Mobile Security</div>
+    <h1>Mobile security — protecting the phones in everyone's pocket</h1>
+    <p class="post-lead">The smartphone in your pocket holds more business-sensitive access than most office computers did a decade ago — email, documents, banking, authentication codes, and direct lines to colleagues and clients. Securing it deserves the same seriousness as securing a laptop.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Mobile devices have quietly become one of the most important — and least protected — parts of business IT infrastructure. They hold email, hold the authenticator apps that protect every other account, often store cached documents and credentials, and travel everywhere their owner goes: cafés, airports, client meetings, public transport. The combination of constant connectivity, physical mobility, and high-value access makes them an attractive target that many businesses still treat as an afterthought.</p>
+      <p>For many small businesses, mobile devices fall outside the security policies, monitoring, and controls applied to laptops and desktops — even though they often hold equivalent or greater access to sensitive systems.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">60%</div><div class="stat-d">of digital fraud now originates from mobile devices — overtaking desktop as the primary attack surface</div></div>
+        <div class="stat"><div class="stat-n">1 in 36</div><div class="stat-d">mobile devices have high-risk apps installed without the user's full awareness of what those apps access</div></div>
+        <div class="stat"><div class="stat-n">70K+</div><div class="stat-d">phones reported lost or stolen in London alone every year — many holding active business email and app sessions</div></div>
+      </div>
+
+      <h2>The specific risks mobile devices face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Loss and theft</h4>
+          <p>A lost or stolen phone is the most common physical mobile security incident. Without a passcode and remote wipe capability, a stolen phone provides direct access to email, business apps, saved passwords, and any data cached locally — often without any further authentication required.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Malicious and over-permissioned apps</h4>
+          <p>Apps installed from official stores can still request excessive permissions — access to contacts, location, microphone, and storage that has nothing to do with their core function. Some apps, particularly outside official stores (sideloaded on Android), contain malware designed to steal credentials or monitor activity.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Unsecured public Wi-Fi</h4>
+          <p>Connecting to open Wi-Fi networks in cafés, airports, and hotels exposes traffic to interception unless encrypted. While most apps now use HTTPS, not all do, and connecting to a malicious "evil twin" hotspot impersonating a legitimate network can intercept far more than expected.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>SMS-based attacks and SIM swapping</h4>
+          <p>SMS phishing (smishing) delivers malicious links via text message, exploiting the trust many people place in SMS compared to email. SIM swapping — where an attacker convinces a mobile carrier to transfer a victim's number to a new SIM — can bypass SMS-based MFA entirely, providing access to any account protected by it.</p>
+        </div>
+      </div>
+
+      <h2>The basics — non-negotiable for every business device</h2>
+      <ul>
+        <li><strong>Require a strong passcode or biometric on every device</strong> — a six-digit PIN minimum, biometric (Face ID, fingerprint) where available for convenience without compromising security</li>
+        <li><strong>Enable auto-lock with a short timeout</strong> — 30 seconds to one minute of inactivity before the device locks</li>
+        <li><strong>Enable remote wipe capability</strong> — Find My iPhone, Find My Device (Android), or an MDM platform must be able to remotely wipe a lost or stolen device</li>
+        <li><strong>Keep the operating system updated</strong> — mobile OS updates frequently patch actively exploited vulnerabilities; enable automatic updates</li>
+        <li><strong>Only install apps from official app stores</strong> — sideloading apps from outside the App Store or Google Play significantly increases malware risk</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Move away from SMS-based MFA where possible</strong>
+        <p>SMS-based two-factor authentication is significantly weaker than app-based or hardware-based alternatives because it is vulnerable to SIM swapping — an attacker convincing your mobile carrier to port your number to a SIM they control. Where possible, use an authenticator app (Microsoft Authenticator, Google Authenticator) or a hardware security key instead of SMS for your most critical accounts, particularly email and financial systems.</p>
+      </div>
+
+      <h2>Managing apps and permissions</h2>
+      <p>The apps installed on a business device — and the permissions granted to them — represent a significant and often invisible attack surface. Regularly reviewing what is installed and what it can access is a simple but frequently neglected control.</p>
+
+      <ul>
+        <li><strong>Review app permissions periodically</strong> — on both iOS and Android, settings menus show which apps have access to location, contacts, microphone, camera, and other sensitive data. Revoke permissions that are not necessary for the app's function.</li>
+        <li><strong>Be sceptical of permission requests</strong> — a flashlight app does not need access to your contacts. A request that does not match the app's purpose is a red flag.</li>
+        <li><strong>Limit installation to approved apps where business data is concerned</strong> — through MDM, businesses can restrict which apps can be installed on managed devices or create separate work profiles that isolate business data from personal apps</li>
+        <li><strong>Remove unused apps</strong> — every installed app is a potential vulnerability; apps that are no longer used should be uninstalled, not left dormant with their permissions intact</li>
+      </ul>
+
+      <h2>Mobile Device Management for business devices</h2>
+      <p>For any business with more than a handful of mobile devices accessing business systems, Mobile Device Management provides centralised visibility and control that manual device-by-device management cannot achieve.</p>
+
+      <ul>
+        <li><strong>Enforce security policy</strong> — passcode requirements, encryption, and OS version compliance enforced automatically before a device can access business email or apps</li>
+        <li><strong>Separate work and personal data</strong> — Android Enterprise work profiles and Apple's managed app configurations create a clear boundary between business and personal data on the same device</li>
+        <li><strong>Remote wipe — selective or full</strong> — wipe only the business data and apps on a personal device (preserving personal photos and data), or fully wipe a company-owned device</li>
+        <li><strong>App allowlisting</strong> — control which apps can be installed and which can access business data</li>
+      </ul>
+
+      <div class="callout">
+        <p>Microsoft Intune and Google Endpoint Management both support a "work profile" or "managed app" approach that protects business data on personal devices without giving the business full control over the device — addressing the privacy concerns that often make staff resistant to MDM enrolment on personal phones.</p>
+      </div>
+
+      <h2>Public Wi-Fi and travel security</h2>
+      <p>Staff travelling for business — to conferences, client meetings, or while working remotely from cafés — frequently connect to public Wi-Fi networks of unknown security. A few practical habits significantly reduce the risk this creates.</p>
+
+      <ul>
+        <li><strong>Use a VPN on public networks</strong> — encrypts all traffic regardless of the network's security, protecting against interception even on a compromised or malicious hotspot</li>
+        <li><strong>Disable auto-connect to open Wi-Fi networks</strong> — prevents the device from automatically joining unfamiliar or malicious networks</li>
+        <li><strong>Use mobile data instead of public Wi-Fi where sensitive access is needed</strong> — for accessing financial systems or highly sensitive data, a mobile data connection is generally safer than unknown Wi-Fi</li>
+        <li><strong>Be alert to "evil twin" networks</strong> — a network named identically to a legitimate one (e.g. "Airport_WiFi" vs "Airport_Free_WiFi") may be operated by an attacker; verify the correct network name with venue staff</li>
+      </ul>
+
+      <hr>
+
+      <h2>Mobile security checklist</h2>
+      <ul class="checklist">
+        <li>Strong passcode or biometric required on all business-connected devices</li>
+        <li>Auto-lock enabled with short timeout</li>
+        <li>Remote wipe capability confirmed working — tested if possible</li>
+        <li>OS updates enabled automatically on all devices</li>
+        <li>Apps installed only from official app stores</li>
+        <li>App permissions reviewed periodically — unnecessary access revoked</li>
+        <li>SMS-based MFA replaced with authenticator app or hardware key where possible</li>
+        <li>MDM deployed for business devices — policy enforced, work/personal data separated</li>
+        <li>VPN required on public Wi-Fi networks</li>
+        <li>Staff trained on smishing and evil twin Wi-Fi risks</li>
+        <li>Lost or stolen device reporting process clear and immediate</li>
+      </ul>
+
+      <p>Mobile devices carry as much business risk as any laptop — often more, given how much access they hold and how easily they are lost. The controls that protect them are not complicated. They simply need to be applied with the same consistency and seriousness that businesses already apply to their desktop and laptop fleets.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
