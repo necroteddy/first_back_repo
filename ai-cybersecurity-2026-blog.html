@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI and Cybersecurity | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .split-col { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .split-col h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+  .split-col ul { padding-left: 1.1rem; margin: 0; }
+  .split-col li { font-size: 14px; color: var(--muted); margin-bottom: 0.5rem; line-height: 1.5; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 520px) { .split { grid-template-columns: 1fr; } .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 22, 2026 &nbsp;·&nbsp; AI & Security</div>
+    <h1>AI and cybersecurity — new tools, new risks, and what it means for your business</h1>
+    <p class="post-lead">Artificial intelligence is transforming cybersecurity in both directions simultaneously — giving defenders powerful new tools to detect and respond to threats, while giving attackers the ability to launch more sophisticated, more convincing, and higher-volume attacks than ever before.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>In 2026, AI is no longer an emerging technology in cybersecurity — it is the new normal on both sides of the fence. Security vendors have embedded AI into threat detection, anomaly identification, and incident response. Criminal organisations have embedded AI into phishing campaign generation, voice cloning for fraud, and automated vulnerability scanning. Understanding both sides of this shift is now essential for any business owner thinking about security.</p>
+      <p>The net effect of AI on cybersecurity is not straightforward. It does not simply make security better or worse. It raises the capability ceiling for both attackers and defenders — which means that businesses which invest in AI-enhanced security tools gain significant advantages, while those that do not face a more capable threat without improved defences.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">3×</div><div class="stat-d">faster — the speed at which AI tools can generate convincing phishing emails compared to manually crafted attacks</div></div>
+        <div class="stat"><div class="stat-n">60%</div><div class="stat-d">of security teams now use AI-assisted threat detection — up from 28% two years ago</div></div>
+        <div class="stat"><div class="stat-n">£4M</div><div class="stat-d">average cost reduction in breach containment for organisations using AI in their security programme</div></div>
+      </div>
+
+      <h2>How AI is being used against businesses</h2>
+
+      <p><strong>AI-generated phishing at scale.</strong> Large language models can generate personalised, grammatically perfect phishing emails in any language, tailored to the recipient's role, company, and recent activity — scraped from LinkedIn, company websites, and social media. The traditional advice to "look for bad grammar" is now obsolete. AI-generated phishing is indistinguishable in quality from a carefully crafted manual attack, but produced at industrial scale.</p>
+
+      <p><strong>Voice and video cloning.</strong> AI voice synthesis can replicate a person's voice from as little as a few seconds of audio — enough from a public YouTube video, an earnings call, or a podcast. Deepfake video is increasingly accessible. Both have been used to impersonate executives in audio and video calls to authorise fraudulent transfers. The traditional verification of "I recognise their voice" is no longer a reliable signal.</p>
+
+      <p><strong>Automated vulnerability discovery.</strong> AI tools can analyse software and systems to identify exploitable vulnerabilities significantly faster than human researchers. This compresses the window between vulnerability disclosure and active exploitation — attackers equipped with AI find and exploit weaknesses faster than ever before.</p>
+
+      <p><strong>Personalised social engineering.</strong> AI can process large volumes of publicly available information about a target — their company, their colleagues, their online presence — and generate highly contextualised social engineering attacks that reference real events, real relationships, and real details that make them far more convincing than generic attempts.</p>
+
+      <div class="callout">
+        <p>The most significant near-term impact of AI on business cybersecurity is not sophisticated technical attacks — it is the improvement in the quality and scale of human-layer attacks: phishing, voice fraud, and social engineering. The human defences — verification habits, healthy scepticism, out-of-band confirmation — become more important, not less, as AI raises the quality of the threat.</p>
+      </div>
+
+      <h2>How AI is being used to defend businesses</h2>
+
+      <div class="split">
+        <div class="split-col">
+          <h4>AI for defenders</h4>
+          <ul>
+            <li>Behavioural anomaly detection — identifies unusual patterns that rules-based systems miss</li>
+            <li>Email threat detection — identifies sophisticated phishing that keyword filters cannot</li>
+            <li>Automated incident triage — prioritises alerts and reduces analyst fatigue</li>
+            <li>Faster vulnerability management — AI-assisted scanning and prioritisation</li>
+            <li>Predictive threat intelligence — anticipates attack patterns before they occur</li>
+            <li>Natural language security assistants — accessible security guidance for non-specialists</li>
+          </ul>
+        </div>
+        <div class="split-col">
+          <h4>Available for small businesses</h4>
+          <ul>
+            <li>Microsoft Defender (included in M365) uses AI for email and endpoint threat detection</li>
+            <li>Google Workspace uses AI to detect phishing and malware in Gmail and Drive</li>
+            <li>Darktrace Prevent — AI network anomaly detection for SMBs</li>
+            <li>CrowdStrike Falcon Go — AI-powered endpoint detection</li>
+            <li>Microsoft Copilot for Security — AI-assisted security investigation</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>The new verification challenge</h2>
+      <p>AI-generated voice and video fraud creates a specific and serious problem: the traditional signals used to verify identity in audio and video communication — recognising a voice, seeing a familiar face — are no longer reliable. This has direct implications for how businesses handle financial authorisations, sensitive instructions, and any communication that relies on the other party being who they say they are.</p>
+
+      <ul>
+        <li><strong>Establish codewords or challenge questions</strong> for high-value audio or video instructions — a pre-agreed word that a genuine colleague would know but a deepfake would not</li>
+        <li><strong>Verify high-stakes audio/video requests through a secondary channel</strong> — if someone calls to request an urgent payment, end the call and call back on a number you have on file</li>
+        <li><strong>Do not rely on voice recognition alone</strong> for authorising payments, data access, or system changes</li>
+        <li><strong>Be especially sceptical of urgent requests in audio or video calls</strong> — urgency is a manipulation tactic that AI-generated content exploits just as effectively as human social engineers</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ "I recognise their voice" is no longer sufficient verification</strong>
+        <p>AI voice cloning requires only a few seconds of a person's speech — available from any public video, podcast, or voicemail. A phone call that sounds exactly like your CEO, your bank's fraud team, or a known supplier is no longer proof that it is them. For any instruction involving money, data, or system access delivered by audio or video, treat voice recognition as a starting point for verification, not a conclusion.</p>
+      </div>
+
+      <h2>AI in the tools you already use</h2>
+      <p>AI security capabilities are increasingly embedded in the tools most businesses already pay for. Microsoft 365 Business Premium includes Defender for Office 365, which uses machine learning to detect sophisticated phishing and malware in email and collaboration tools. Google Workspace includes similar AI-powered protection in Gmail and Drive. The question for most businesses is not whether to invest in AI security — it is whether they have enabled and configured the AI security features they already have.</p>
+
+      <h2>The data risk of using AI tools in your business</h2>
+      <p>The flip side of AI adoption is data risk. When staff use AI writing tools, coding assistants, or AI chatbots for work, they may inadvertently input sensitive business data — client details, financial information, confidential strategy — into systems whose data handling and training practices are not fully understood. This creates both privacy risk and potential confidentiality obligations breaches.</p>
+      <p>A clear policy on what data may and may not be entered into external AI tools — implemented before staff begin using them freely, not after — is now an important part of any business data protection framework.</p>
+
+      <hr>
+
+      <h2>AI and cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>AI-enhanced email threat detection enabled in Microsoft 365 or Google Workspace</li>
+        <li>Staff aware that AI-generated phishing looks perfect — grammar is no longer a red flag</li>
+        <li>Voice and video verification policy updated — "I recognise the voice" no longer sufficient alone</li>
+        <li>Codewords or secondary channel verification used for high-value audio/video instructions</li>
+        <li>AI tool usage policy in place — staff know what data cannot be entered into external AI tools</li>
+        <li>AI security features in existing tools reviewed and enabled where not already active</li>
+        <li>Phishing training updated to include AI-generated attack examples</li>
+        <li>Deepfake awareness included in staff security training</li>
+      </ul>
+
+      <p>AI does not change the fundamental nature of cybersecurity — it changes the speed, scale, and sophistication at which both attacks and defences operate. The businesses that navigate this well are those that use AI to improve their defences while updating their human processes and verification habits to account for a world where the most convincing fraud can now be generated by a machine.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
