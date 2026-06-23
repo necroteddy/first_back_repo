@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Backup Strategies | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  /* RULE BOX */
+  .rule-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; }
+  .rule-box h3 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 1rem; }
+  .rule-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-radius: 6px; overflow: hidden; }
+  .rule-item { background: var(--surface); padding: 1rem 0.75rem; text-align: center; }
+  .rule-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1; }
+  .rule-label { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  /* BACKUP TYPES TABLE */
+  .backup-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .backup-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .backup-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; font-size: 14px; }
+  .backup-table tr:last-child td { border-bottom: none; }
+  .backup-table td:first-child { font-weight: 500; }
+  .tag-yes { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-no  { display: inline-block; background: #fef2f2; color: var(--accent); border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .rule-grid { grid-template-columns: 1fr 1fr; } .backup-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 23, 2026 &nbsp;·&nbsp; Data Backup</div>
+    <h1>Data backup strategies — protecting your business against loss and ransomware</h1>
+    <p class="post-lead">Backups are the last line of defence when everything else fails. They are the difference between a serious incident and a business-ending one. Yet most businesses discover their backup strategy has critical gaps only when they are trying to recover from a crisis.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Data loss happens in more ways than most business owners consider: ransomware encrypting files, hardware failure, accidental deletion, a disgruntled employee deleting records, a cloud provider experiencing an outage, or a misconfiguration that overwrites production data. A backup strategy designed only for one of these scenarios will fail the others.</p>
+      <p>Good backup strategy is not about having a backup. It is about having the right backups — verified, accessible, protected, and genuinely restorable in the time your business can afford to wait.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">60%</div><div class="stat-d">of businesses that suffer major data loss shut down within six months</div></div>
+        <div class="stat"><div class="stat-n">96hrs</div><div class="stat-d">average time to restore from backup after a ransomware attack — without prior testing</div></div>
+        <div class="stat"><div class="stat-n">58%</div><div class="stat-d">of backups fail to restore successfully when first tested in a real incident</div></div>
+      </div>
+
+      <h2>The 3-2-1-1 rule — the modern baseline</h2>
+      <p>The traditional 3-2-1 backup rule — three copies of data, on two different media, with one offsite — has been extended to 3-2-1-1 to account for the ransomware threat. The additional 1 is an offline or immutable copy that cannot be reached, modified, or encrypted by an attacker who has compromised your network.</p>
+
+      <div class="rule-box">
+        <h3>The 3-2-1-1 rule</h3>
+        <div class="rule-grid">
+          <div class="rule-item"><div class="rule-num">3</div><div class="rule-label">copies of your data</div></div>
+          <div class="rule-item"><div class="rule-num">2</div><div class="rule-label">different storage media or locations</div></div>
+          <div class="rule-item"><div class="rule-num">1</div><div class="rule-label">copy offsite (cloud or remote)</div></div>
+          <div class="rule-item"><div class="rule-num">1</div><div class="rule-label">copy offline or immutable</div></div>
+        </div>
+      </div>
+
+      <p>The immutable copy is the critical addition. An immutable backup cannot be deleted or modified for a defined retention period — even by an administrator with full credentials. If ransomware encrypts your primary systems and your online backups, the immutable copy remains intact and recoverable.</p>
+
+      <h2>Understanding backup types</h2>
+
+      <table class="backup-table">
+        <thead><tr><th>Type</th><th>What it does</th><th>Survives ransomware?</th></tr></thead>
+        <tbody>
+          <tr><td>Local backup (external drive)</td><td>Fast restore, no internet dependency, physically accessible</td><td><span class="tag-no">Only if disconnected</span></td></tr>
+          <tr><td>Online cloud backup</td><td>Automatic, offsite, accessible anywhere — but reachable from the network</td><td><span class="tag-no">Only if immutable</span></td></tr>
+          <tr><td>Immutable cloud backup</td><td>Write-once storage that cannot be deleted or modified for a set period</td><td><span class="tag-yes">Yes</span></td></tr>
+          <tr><td>Air-gapped / offline</td><td>Physically disconnected from all networks — tape, offline drive, cold storage</td><td><span class="tag-yes">Yes</span></td></tr>
+          <tr><td>Cloud versioning</td><td>Previous versions of files stored for a defined period (OneDrive, Google Drive)</td><td><span class="tag-yes">Partially — check retention</span></td></tr>
+        </tbody>
+      </table>
+
+      <h2>What actually needs backing up</h2>
+      <p>Many businesses back up some data but not all the data that matters. A thorough backup strategy covers every category of data whose loss would cause operational, financial, or regulatory harm.</p>
+      <ul>
+        <li><strong>Business-critical files</strong> — documents, contracts, financial records, client data, intellectual property</li>
+        <li><strong>Email archives</strong> — many businesses do not back up email separately; Microsoft 365 and Google Workspace have retention policies that are not the same as backups</li>
+        <li><strong>Databases</strong> — CRM, accounting, ERP, custom applications; database backups require specific configuration, not just file-level backup</li>
+        <li><strong>System configurations</strong> — server configurations, firewall rules, application settings; enables faster recovery of infrastructure, not just data</li>
+        <li><strong>SaaS data</strong> — data held in cloud applications (Salesforce, Xero, HubSpot) is not automatically backed up by the provider; third-party SaaS backup tools fill this gap</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Microsoft 365 and Google Workspace are not backups</strong>
+        <p>Many businesses assume that because their data is in Microsoft 365 or Google Workspace, it is backed up. It is not — at least not in the sense that matters. Both platforms provide version history and recycle bins, but these have time limits, can be deleted by a compromised account, and do not protect against all data loss scenarios. Third-party backup tools for Microsoft 365 (Veeam, Acronis, Backupify) and Google Workspace provide genuine backup protection that the native platforms do not.</p>
+      </div>
+
+      <h2>The test that most businesses skip</h2>
+      <p>A backup that has never been successfully restored from is a hypothesis, not a safety net. The 58% failure rate on first real-world restore attempts reflects a consistent pattern: backups are configured, backups run, backups are never tested — and the gaps, errors, and misconfiguration are only discovered under the worst possible conditions.</p>
+      <p>Test your backups quarterly. A restore test does not need to be a full disaster recovery exercise — it can be as simple as restoring a sample of files to a clean location and verifying they are intact and readable. For databases, restore to a test environment and verify the data is consistent. Document the time taken — this is your real recovery time, not the theoretical one.</p>
+
+      <div class="callout">
+        <p>Know your Recovery Time Objective (RTO) — how long you can afford to be without critical systems — and your Recovery Point Objective (RPO) — how much data loss you can accept. If your RTO is four hours but a full restore takes 96 hours, your backup strategy does not match your business requirement. Test reveals this gap before it matters.</p>
+      </div>
+
+      <h2>Recommended backup tools for small businesses</h2>
+      <ul>
+        <li><strong>Veeam Backup for Microsoft 365</strong> — backs up Exchange, SharePoint, Teams, and OneDrive independently of Microsoft's retention policies</li>
+        <li><strong>Acronis Cyber Backup</strong> — comprehensive backup for endpoints, servers, and Microsoft 365 with ransomware detection built in</li>
+        <li><strong>Backblaze B2</strong> — low-cost cloud backup storage (~£5/TB/month) with immutable backup support</li>
+        <li><strong>Azure Backup / AWS Backup</strong> — native cloud backup with immutable vault options for businesses already on Microsoft or AWS infrastructure</li>
+        <li><strong>Time Machine (Mac) + offsite</strong> — covers local Mac backups; pair with Backblaze or similar for offsite and immutable copy</li>
+      </ul>
+
+      <hr>
+
+      <h2>Data backup checklist</h2>
+      <ul class="checklist">
+        <li>3-2-1-1 backup strategy implemented — three copies, two media, one offsite, one immutable</li>
+        <li>All critical data categories identified and included — files, email, databases, SaaS</li>
+        <li>Microsoft 365 and Google Workspace backed up with a third-party tool</li>
+        <li>Immutable or air-gapped backup in place — survives ransomware on production systems</li>
+        <li>Backup systems isolated from production network — ransomware cannot reach them</li>
+        <li>Backup restore tested successfully in the past 90 days</li>
+        <li>Recovery time documented — actual restore time known, not assumed</li>
+        <li>RTO and RPO defined — backup strategy matches business recovery requirements</li>
+        <li>Backup alerts monitored — failed backup jobs investigated promptly</li>
+        <li>Backup retention period defined — data retained long enough to cover delayed discovery</li>
+      </ul>
+
+      <p>Backups are not a technical detail — they are a business continuity decision. The question is not whether you have a backup. It is whether you have a backup you could actually restore your business from, in the time you could actually afford to wait, covering all the data you actually need. The only way to know the answer is to test it.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
