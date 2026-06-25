@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Securing Remote Access | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 25, 2026 &nbsp;·&nbsp; Remote Access</div>
+    <h1>Securing remote access — VPNs, RDP, and safe connections to your business</h1>
+    <p class="post-lead">Remote access to business systems is a necessity for almost every modern organisation. It is also one of the most consistently attacked entry points in the threat landscape. Getting the configuration right is the difference between a useful tool and an open door.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>The ability to connect to business systems from outside the office — to access files, manage servers, support colleagues, or work from home — is an operational necessity that most businesses cannot function without. It is also, when implemented carelessly, one of the most reliable ways for attackers to gain access to an organisation's network.</p>
+      <p>Remote access attacks are not sophisticated. They involve scanning the internet for exposed services, testing stolen or default credentials, and walking through the door that has been left open. The defences are equally straightforward — but they require consistent application of controls that many businesses have never properly implemented.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">90%</div><div class="stat-d">of ransomware incidents in 2025 involved compromised remote access as either the initial entry point or a facilitating factor</div></div>
+        <div class="stat"><div class="stat-n">4.8M</div><div class="stat-d">RDP ports exposed directly to the internet globally — scanned and attacked within seconds of exposure</div></div>
+        <div class="stat"><div class="stat-n">£0</div><div class="stat-d">cost of disabling direct RDP internet exposure — the single highest-impact remote access security action</div></div>
+      </div>
+
+      <h2>The three main remote access technologies — and their risks</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Technology 01</div>
+          <h4>Remote Desktop Protocol (RDP)</h4>
+          <p>RDP is Microsoft's built-in remote desktop technology — widely used for server management, IT support, and remote work. When exposed directly to the internet on port 3389, it is one of the most heavily attacked services in existence. Credential stuffing, brute force, and exploitation of RDP vulnerabilities are among the most common ransomware entry points. RDP should never be exposed directly to the internet.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Technology 02</div>
+          <h4>VPN (Virtual Private Network)</h4>
+          <p>A VPN creates an encrypted tunnel between a remote device and the business network, allowing access to internal resources as if the device were on-site. When properly configured with MFA, VPNs are a secure remote access solution. However, VPN appliances themselves are frequent vulnerability targets — many high-profile breaches have exploited unpatched VPN vulnerabilities. VPN firmware must be kept current.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Technology 03</div>
+          <h4>Remote support tools</h4>
+          <p>TeamViewer, AnyDesk, ConnectWise, and similar tools are widely used by IT support providers for remote maintenance. When left enabled permanently, using default or shared credentials, without audit logging, they provide a persistent and often overlooked remote access pathway that attackers actively seek out.</p>
+        </div>
+      </div>
+
+      <h2>RDP — the most dangerous misconfiguration</h2>
+      <p>Exposing RDP directly to the internet on port 3389 is one of the highest-risk configurations a business can have. Internet-facing RDP is scanned by automated tools within seconds of becoming exposed, and attacked continuously. The attacks are fully automated — credential stuffing from breached password lists, brute force, and exploitation of known vulnerabilities.</p>
+      <p>The fix is not to add a strong password to RDP. The fix is to remove RDP from direct internet exposure entirely. Place it behind a VPN — only users who have successfully authenticated to the VPN can reach the RDP service at all. This removes the exposed service from the attack surface completely.</p>
+
+      <div class="warning">
+        <strong>⚠ Check right now whether RDP is internet-facing</strong>
+        <p>Go to shodan.io and search for your business's public IP address. If you see port 3389 open, your RDP is exposed to the internet and is being scanned and attacked. Block port 3389 at your firewall immediately and configure VPN access instead. If you are unsure of your public IP, search for "what is my IP" and use that address. This takes five minutes and is one of the most important security checks you can do.</p>
+      </div>
+
+      <h2>Essential controls for any remote access method</h2>
+      <p>Regardless of which remote access technology you use, four controls are non-negotiable:</p>
+
+      <ul>
+        <li><strong>Multi-factor authentication</strong> — MFA on every remote access method, without exception. A stolen password with no second factor is a complete remote access compromise. MFA makes stolen credentials significantly less useful to an attacker.</li>
+        <li><strong>Patching and updates</strong> — VPN appliances, remote desktop gateways, and remote support tools all have vulnerabilities that are actively exploited. Keep firmware and software current; set up alerts for vendor security advisories.</li>
+        <li><strong>Audit logging</strong> — every remote access session should be logged — who connected, from where, at what time, and for how long. Logs should be reviewed regularly and retained for an appropriate period.</li>
+        <li><strong>Access revocation</strong> — remote access credentials and configurations must be revoked promptly when staff leave or change roles. Persistent remote access by former employees or suppliers is a consistently exploited risk.</li>
+      </ul>
+
+      <h2>VPN best practices</h2>
+      <ul>
+        <li><strong>Choose a business-grade VPN</strong> — consumer VPN services are not appropriate for business remote access; use a business VPN solution with proper access controls and logging</li>
+        <li><strong>Apply split tunnelling thoughtfully</strong> — split tunnelling routes only business traffic through the VPN, improving performance, but requires careful configuration to avoid creating security gaps</li>
+        <li><strong>Limit which resources VPN users can reach</strong> — VPN access should not automatically grant access to every system; apply least privilege to VPN-connected users just as you would to on-site staff</li>
+        <li><strong>Monitor for unusual VPN activity</strong> — logins from unusual locations, at unusual times, or with unusual data transfer volumes warrant investigation</li>
+        <li><strong>Keep VPN firmware updated</strong> — critical VPN vulnerabilities (Fortinet, Cisco, Palo Alto, Pulse Secure) have been exploited at scale in recent years; firmware currency is essential</li>
+      </ul>
+
+      <h2>Zero Trust Network Access — the modern alternative</h2>
+      <p>Traditional VPNs grant network-level access — once connected, a user can reach everything on the network segment they are connected to. Zero Trust Network Access (ZTNA) takes a different approach: access is granted to specific applications and resources rather than the network, every access request is verified regardless of whether the user is on VPN, and device compliance is continuously evaluated.</p>
+      <p>Solutions like Cloudflare Zero Trust (free tier available), Microsoft Entra Private Access, and Zscaler Private Access provide ZTNA capabilities that are increasingly accessible to smaller businesses. For organisations with significant remote workforces or sensitive internal systems, ZTNA provides meaningfully stronger protection than a traditional VPN.</p>
+
+      <div class="callout">
+        <p>Cloudflare Zero Trust offers a generous free tier that allows small businesses to implement application-level access controls, replacing direct VPN with verified, per-application access. It is worth evaluating alongside or instead of a traditional VPN for any business setting up remote access from scratch.</p>
+      </div>
+
+      <h2>Managing third-party and IT supplier remote access</h2>
+      <p>IT support providers, managed service providers, and software vendors often need remote access to your systems for maintenance and support. This access must be managed with the same rigour as staff remote access — ideally more, given the privileged nature of the access typically required.</p>
+      <ul>
+        <li>Use a dedicated, audited remote access solution rather than ad hoc tools</li>
+        <li>Require MFA from all third-party remote access sessions</li>
+        <li>Enable access only when a support session is active — disable it when not in use</li>
+        <li>Log all third-party sessions and review them periodically</li>
+        <li>Revoke third-party access promptly when an engagement ends</li>
+      </ul>
+
+      <hr>
+
+      <h2>Remote access security checklist</h2>
+      <ul class="checklist">
+        <li>RDP not exposed directly to the internet — placed behind VPN or disabled</li>
+        <li>MFA enabled on all remote access methods — VPN, RDP gateway, remote support tools</li>
+        <li>VPN firmware current — vendor security advisories monitored</li>
+        <li>Remote access audit logs enabled and retained</li>
+        <li>Least privilege applied to VPN-connected users — not full network access</li>
+        <li>Remote support tools disabled when not in active use</li>
+        <li>Third-party remote access managed, logged, and session-limited</li>
+        <li>Remote access credentials revoked promptly on staff departure</li>
+        <li>Shodan check completed — no unexpected open ports on business IP</li>
+        <li>ZTNA evaluated as an alternative or supplement to traditional VPN</li>
+      </ul>
+
+      <p>Remote access is not inherently risky — it is necessary and, when properly secured, safe. The risk comes from the gaps: RDP left open to the internet, VPN without MFA, support tools never disabled, accounts never revoked. Closing those gaps methodically and keeping them closed as configurations change is what separates a secure remote access programme from an open door.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
