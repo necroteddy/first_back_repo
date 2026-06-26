@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing — Recognising and Stopping the Most Common Attack | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .types { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .type { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .type-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .type h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .type p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 26, 2026 &nbsp;·&nbsp; Phishing</div>
+    <h1>Phishing — recognising and stopping the most common attack</h1>
+    <p class="post-lead">More than ninety percent of successful cyberattacks begin with a phishing email. Not because phishing is the most sophisticated attack available — but because it is the most reliable. Understanding how it works, how it has evolved, and how to defend against it is foundational to any business security programme.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Phishing is the practice of sending fraudulent communications — most commonly email — that deceive recipients into revealing credentials, clicking malicious links, opening infected attachments, or taking actions that benefit the attacker. It has been the dominant attack vector in cybercrime for two decades, and in 2026 it remains so — not despite improvements in email security, but in part because of them. As technical defences have improved, phishing has evolved to bypass them through increasingly sophisticated deception rather than technical exploits.</p>
+      <p>The most important thing to understand about phishing in 2026 is that the traditional advice — look for bad grammar, check for spelling errors, be suspicious of generic greetings — is significantly less reliable than it was. AI-generated phishing is grammatically perfect, contextually aware, and personalised. The tells that used to signal a phishing attempt have largely disappeared.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">3.4B</div><div class="stat-d">phishing emails sent every day — more than the total number of legitimate emails sent globally</div></div>
+        <div class="stat"><div class="stat-n">60 sec</div><div class="stat-d">median time before the first person clicks a phishing link after a campaign is launched</div></div>
+        <div class="stat"><div class="stat-n">94%</div><div class="stat-d">of malware is delivered via email — making phishing the primary malware delivery mechanism</div></div>
+      </div>
+
+      <h2>The modern phishing landscape</h2>
+
+      <div class="types">
+        <div class="type">
+          <div class="type-label">Type 01</div>
+          <h4>Bulk phishing</h4>
+          <p>Mass-sent emails impersonating well-known brands — banks, delivery services, HMRC, Microsoft, Amazon — targeting millions of recipients simultaneously. Low sophistication, high volume. Relies on a small percentage of recipients taking the bait. Typically caught by good spam filtering.</p>
+        </div>
+        <div class="type">
+          <div class="type-label">Type 02</div>
+          <h4>Spear phishing</h4>
+          <p>Targeted attacks on specific individuals or organisations — referencing real names, real colleagues, real projects, and real context researched from LinkedIn, company websites, and social media. Significantly more convincing than bulk phishing and far harder for automated filters to detect. This is where AI is having the most impact.</p>
+        </div>
+        <div class="type">
+          <div class="type-label">Type 03</div>
+          <h4>Whaling</h4>
+          <p>Spear phishing targeting senior executives — CEOs, CFOs, board members — whose authority and access make them particularly valuable targets. Attacks are extensively researched and highly personalised, often impersonating trusted advisers, clients, or regulatory bodies.</p>
+        </div>
+        <div class="type">
+          <div class="type-label">Type 04</div>
+          <h4>Smishing and vishing</h4>
+          <p>Phishing via SMS (smishing) and voice calls (vishing) — exploiting the higher trust many people place in phone communication compared to email. AI voice cloning has made vishing significantly more convincing, allowing attackers to impersonate known individuals in real time.</p>
+        </div>
+        <div class="type">
+          <div class="type-label">Type 05</div>
+          <h4>QR code phishing (quishing)</h4>
+          <p>Phishing links embedded in QR codes, often in printed materials or attached images — bypassing email security tools that scan URLs in email bodies but cannot scan QR codes. Growing rapidly as QR code use has increased in everyday life.</p>
+        </div>
+      </div>
+
+      <h2>How phishing attacks are structured</h2>
+      <p>Understanding the structure of a phishing attack helps in recognising its components — and knowing where defences can interrupt it.</p>
+      <p>A typical phishing campaign involves: a convincing sender identity (spoofed domain, compromised account, or lookalike address); a compelling pretext that creates urgency, authority, or fear; a call to action that requires the recipient to click a link, open an attachment, or reply with information; and a payload — a credential-harvesting fake login page, a malware-laden document, or a fraudulent payment request.</p>
+      <p>Each of these elements represents a point where technical controls or human awareness can interrupt the attack. Technical controls primarily address the delivery — filtering, domain authentication, safe link scanning. Human awareness addresses the response — whether the recipient acts on the pretext or pauses to verify.</p>
+
+      <h2>What to look for — the signals that still work</h2>
+      <p>While AI has eliminated many of the traditional tells, several reliable signals remain:</p>
+
+      <ul>
+        <li><strong>Examine the sender address carefully</strong> — not the display name, but the actual email address. Display names can say anything; the sending address reveals the domain. <em>support@microsoft-helpdesk.com</em> is not Microsoft.</li>
+        <li><strong>Hover over links before clicking</strong> — the URL that appears in the status bar when you hover over a link often differs from the visible link text. A link labelled "Click here to verify your account" pointing to <em>login.accounts-microsoft.xyz</em> is a phishing attempt.</li>
+        <li><strong>Be alert to urgency and pressure</strong> — "Your account will be suspended in 24 hours", "Immediate action required", "Confidential — do not discuss". Legitimate communications from reputable organisations rarely demand immediate action under threat of serious consequences.</li>
+        <li><strong>Unexpected requests are a red flag</strong> — an invoice you were not expecting, a password reset you did not request, a delivery notification for something you did not order. Phishing relies on contextual plausibility; unexpected contact from a familiar name warrants verification.</li>
+        <li><strong>Requests for credentials or payment details</strong> — legitimate services will not ask you to enter your password by clicking an email link. Any email requesting credentials, payment information, or sensitive data warrants immediate scepticism.</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Do not trust the padlock alone</strong>
+        <p>Phishing sites routinely use HTTPS with a valid TLS certificate — giving them the padlock that users were taught to look for as a safety signal. A padlock confirms the connection is encrypted. It says nothing about whether the site is legitimate. Check the full domain carefully, not just the padlock.</p>
+      </div>
+
+      <h2>Technical defences</h2>
+      <ul>
+        <li><strong>SPF, DKIM, and DMARC on your domain</strong> — prevents your domain being spoofed in phishing emails targeting your customers and partners</li>
+        <li><strong>Email filtering and anti-phishing</strong> — Microsoft Defender for Office 365 and Google Workspace's advanced protection use AI to detect sophisticated phishing that keyword filters miss</li>
+        <li><strong>Safe links</strong> — scans URLs at click time, not just at delivery, catching links that become malicious after the email arrives</li>
+        <li><strong>External email banners</strong> — visually flags emails from outside the organisation, helping staff identify potential impersonation attempts</li>
+        <li><strong>MFA on all accounts</strong> — the most important backstop; even when credentials are stolen through phishing, MFA prevents the attacker using them</li>
+      </ul>
+
+      <h2>Simulated phishing and training</h2>
+      <p>Regular simulated phishing tests — sending realistic fake phishing emails to your own staff and measuring who clicks — are one of the most effective ways to build phishing recognition skills and identify where additional training is needed. The key is to use the results constructively — as a training trigger, not a punishment — so that staff report suspicious emails rather than concealing mistakes out of fear.</p>
+      <p>NCSC's Exercise in a Box includes phishing simulation exercises. Microsoft Attack Simulator (included in Microsoft 365 Defender) and Proofpoint Security Awareness Training are widely used commercial options.</p>
+
+      <hr>
+
+      <h2>Phishing defence checklist</h2>
+      <ul class="checklist">
+        <li>SPF, DKIM, and DMARC configured and enforcing on your email domain</li>
+        <li>Anti-phishing filtering enabled — Microsoft Defender or Google Workspace advanced protection</li>
+        <li>Safe links enabled — URLs scanned at click time</li>
+        <li>External email banners enabled</li>
+        <li>MFA on all accounts — stolen credentials cannot be used without the second factor</li>
+        <li>Staff trained to examine sender addresses, not just display names</li>
+        <li>Staff know to hover over links before clicking</li>
+        <li>Simulated phishing tests run quarterly — results used for training, not punishment</li>
+        <li>Clear reporting process — staff know how and where to report suspicious emails</li>
+        <li>No-blame culture for clicking — early reporting is more valuable than concealment</li>
+      </ul>
+
+      <p>Phishing cannot be eliminated — it will always find some percentage of recipients who are in a hurry, distracted, or presented with a sufficiently convincing pretext. The goal is to make that percentage as small as possible through technical defences that catch what they can, and human awareness that catches the rest. Together, they transform phishing from the reliably successful attack vector it is by default into a significantly harder problem for the attacker to solve.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
