@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Awareness Training | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  /* PRINCIPLES */
+  .principles { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .principle { background: var(--surface); padding: 1.1rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .p-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--faint); flex-shrink: 0; line-height: 1.3; min-width: 24px; }
+  .p-body h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .p-body p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  /* TOOLS TABLE */
+  .tools-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 14px; }
+  .tools-table th { background: var(--surface2); padding: 0.75rem 1rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  .tools-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); vertical-align: top; line-height: 1.5; font-size: 14px; }
+  .tools-table tr:last-child td { border-bottom: none; }
+  .tools-table td:first-child { font-weight: 500; }
+  .tag-free { display: inline-block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .tag-paid { display: inline-block; background: #fffbeb; color: #d97706; border: 1px solid #fde68a; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 1px 7px; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .tools-table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 28, 2026 &nbsp;·&nbsp; Security Training</div>
+    <h1>Security awareness training — building a human firewall</h1>
+    <p class="post-lead">Technology can block a remarkable proportion of cyberattacks. But every technical control eventually reaches the edge of what it can catch — and that is where human judgement takes over. Security awareness training is what determines what happens at that edge.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>The human layer of security has always mattered. But in 2026, it matters more than ever. AI-generated phishing is indistinguishable from genuine email. Social engineering attacks are more personalised and more convincing than at any previous point. And as technical defences have improved, attackers have increasingly shifted their focus to the one component that no software patch can fix: people.</p>
+      <p>Security awareness training is not a compliance checkbox. Done well, it is a genuine risk reduction programme that changes habits, builds recognition skills, and creates a culture where security is everyone's responsibility rather than IT's problem. Done poorly — a single annual slide deck followed by a quiz — it is a waste of time that provides a false sense of security.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">82%</div><div class="stat-d">of breaches involve a human element — a person who was tricked, manipulated, or made a mistake</div></div>
+        <div class="stat"><div class="stat-n">70%</div><div class="stat-d">reduction in phishing click rates achievable through regular, well-designed security awareness training</div></div>
+        <div class="stat"><div class="stat-n">£0</div><div class="stat-d">cost of the NCSC's free Exercise in a Box — a ready-made awareness and simulation programme</div></div>
+      </div>
+
+      <h2>What good security awareness training actually looks like</h2>
+      <p>Most organisations that do security awareness training do it wrong. An annual module delivered in a single session, covering everything from password policy to GDPR in 45 minutes, produces compliance records but not behaviour change. Research consistently shows that security awareness training only changes behaviour when it is frequent, focused, relevant, and reinforced.</p>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="p-num">1</div>
+          <div class="p-body">
+            <h4>Frequent and short rather than annual and long</h4>
+            <p>Monthly five-minute modules outperform annual hour-long sessions for behaviour change. Short, focused content is retained and acted on. Long, infrequent training is completed, forgotten, and repeated the following year.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">2</div>
+          <div class="p-body">
+            <h4>Relevant to the actual threats your people face</h4>
+            <p>Training on threats your team never encounters wastes attention. Training on phishing, CEO fraud, BEC, and social engineering — the attacks that actually target your sector and role — builds genuine recognition skills.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">3</div>
+          <div class="p-body">
+            <h4>Simulated and tested, not just theoretical</h4>
+            <p>Simulated phishing tests — sending realistic fake phishing emails and measuring who clicks — build recognition skills that theoretical training alone cannot. The moment of clicking a simulated phishing link is one of the most effective teachable moments available.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">4</div>
+          <div class="p-body">
+            <h4>No-blame and psychologically safe</h4>
+            <p>Training in an environment where mistakes are punished produces people who hide mistakes rather than report them. A no-blame culture — where clicking a simulated phishing link triggers a teaching moment, not a disciplinary action — produces a team that reports real incidents early, which is far more valuable.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">5</div>
+          <div class="p-body">
+            <h4>Role-specific and contextual</h4>
+            <p>A finance team needs detailed training on payment fraud and BEC. An HR team needs training on recruitment-based malware delivery and payroll diversion. Generic training that treats everyone the same is less effective than targeted training that addresses the specific risks of each role.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Core topics every business should cover</h2>
+      <ul>
+        <li><strong>Phishing recognition</strong> — how to identify phishing emails, what to look for in sender addresses and URLs, how to report suspicious emails</li>
+        <li><strong>Social engineering</strong> — the psychological triggers attackers exploit (urgency, authority, fear), how to pause and verify before acting</li>
+        <li><strong>Password hygiene</strong> — using a password manager, why password reuse is dangerous, how to create strong passphrases</li>
+        <li><strong>Safe device use</strong> — locking screens when unattended, not connecting unknown USB devices, keeping software updated</li>
+        <li><strong>Safe remote working</strong> — using VPN on public Wi-Fi, being aware of physical shoulder-surfing, securing home router</li>
+        <li><strong>Incident reporting</strong> — who to contact, how to report, what information to preserve, that reporting is always the right action regardless of whether a mistake was made</li>
+        <li><strong>AI-enhanced attacks</strong> — that AI-generated phishing looks perfect, that voice cloning exists, that verification through a separate channel is essential</li>
+      </ul>
+
+      <div class="callout">
+        <p>The most valuable behaviour change a security awareness programme can achieve is not that no one ever clicks a phishing link — it is that when someone does click, they immediately report it rather than hoping no one noticed. Early reporting enables containment. Concealment enables catastrophe.</p>
+      </div>
+
+      <h2>Training tools — free and paid</h2>
+
+      <table class="tools-table">
+        <thead><tr><th>Tool</th><th>What it offers</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>NCSC Exercise in a Box</td>
+            <td>Free tabletop exercises and simulated incident scenarios — including phishing simulations — designed for businesses of all sizes</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>NCSC Cyber Aware</td>
+            <td>Free staff awareness resources and guidance on the most important security behaviours</td>
+            <td><span class="tag-free">Free</span></td>
+          </tr>
+          <tr>
+            <td>Microsoft Attack Simulator</td>
+            <td>Phishing simulation built into Microsoft 365 Defender — sends realistic test phishing to staff and tracks results</td>
+            <td><span class="tag-free">Included in M365 Defender</span></td>
+          </tr>
+          <tr>
+            <td>KnowBe4</td>
+            <td>Comprehensive security awareness platform — training modules, phishing simulation, reporting, and role-based learning paths</td>
+            <td><span class="tag-paid">Paid, per user</span></td>
+          </tr>
+          <tr>
+            <td>Proofpoint Security Awareness</td>
+            <td>Training content library, phishing simulations, threat intelligence-driven content updates</td>
+            <td><span class="tag-paid">Paid, per user</span></td>
+          </tr>
+          <tr>
+            <td>Usecure</td>
+            <td>Automated microlearning with phishing simulation — popular with MSPs serving small businesses</td>
+            <td><span class="tag-paid">~£2/user/mo</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Measuring the impact of training</h2>
+      <p>Security awareness training should be measured, not just delivered. The key metrics are the phishing simulation click rate (what percentage of staff click in simulated tests), the reporting rate (what percentage of staff who receive a simulated phishing email report it), and the time to report (how quickly incidents are flagged after they occur).</p>
+      <p>Track these metrics over time. A declining click rate combined with an increasing reporting rate indicates that training is genuinely changing behaviour — not just improving quiz scores. These metrics also identify which teams or roles need additional targeted training.</p>
+
+      <div class="warning">
+        <strong>⚠ Never use simulation results for punishment</strong>
+        <p>If staff who click in simulated phishing tests are named, embarrassed, or disciplined, the programme will backfire. People who fear punishment for mistakes will hide real incidents rather than report them. The explicit message — communicated before simulations begin — must be that clicking is a learning opportunity, not a performance failure. The goal is a team that reports everything, not a team that is afraid to admit they clicked.</p>
+      </div>
+
+      <hr>
+
+      <h2>Security awareness training checklist</h2>
+      <ul class="checklist">
+        <li>Security awareness training programme in place — not just an annual one-off</li>
+        <li>Training frequency at least monthly — short modules, not long annual sessions</li>
+        <li>Core topics covered — phishing, social engineering, passwords, incident reporting, AI threats</li>
+        <li>Role-specific training for high-risk roles — finance, HR, senior executives</li>
+        <li>Simulated phishing tests run quarterly — results used for training, not punishment</li>
+        <li>No-blame culture established and communicated clearly before simulations begin</li>
+        <li>Clear incident reporting process — staff know who to contact and how</li>
+        <li>Phishing click rate and reporting rate tracked over time</li>
+        <li>New staff training included in onboarding — not delayed until the next scheduled session</li>
+        <li>Training updated to reflect current threats — AI-generated phishing, voice cloning, QR phishing</li>
+      </ul>
+
+      <p>The human firewall is the layer of security that catches what every technical control misses. Building it requires not just training people in what to do, but creating an environment where they feel safe to report when something goes wrong — because that reporting, early and without fear, is what turns a potential catastrophe into a contained incident.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
