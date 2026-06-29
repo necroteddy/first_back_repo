@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero Trust Security | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  /* PRINCIPLES */
+  .principles { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .principle { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .p-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .principle h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .principle p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 29, 2026 &nbsp;·&nbsp; Zero Trust</div>
+    <h1>Zero trust security — never trust, always verify</h1>
+    <p class="post-lead">Zero trust is not a product you buy or a configuration you apply once. It is a security philosophy that has become the defining approach for organisations that have recognised a fundamental truth: the traditional model of trusting everything inside the network is no longer viable.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>The traditional security model assumed a trusted interior and an untrusted exterior. Build strong walls around the network, and everything inside can be trusted. This model worked when staff worked from a single office, on company-owned devices, connecting to on-premise systems. It has not worked for some years — and for most businesses, it is now entirely obsolete.</p>
+      <p>Staff work from home, from cafés, from client sites. They use personal devices, cloud services, and applications that live entirely outside the corporate network. An attacker who compromises any one of these entry points — a phishing email, a stolen credential, a compromised home router — finds themselves "inside" a network that then trusts them implicitly. Zero trust is the answer to this problem: stop trusting location, and start verifying identity, device, and context for every access request.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">72%</div><div class="stat-d">of organisations have adopted or are actively implementing zero trust principles — up from 24% four years ago</div></div>
+        <div class="stat"><div class="stat-n">50%</div><div class="stat-d">lower average breach cost for organisations with a mature zero trust architecture</div></div>
+        <div class="stat"><div class="stat-n">£0</div><div class="stat-d">cost of starting a zero trust journey — MFA and least privilege are the foundation, and both are free to enable</div></div>
+      </div>
+
+      <h2>The three core principles of zero trust</h2>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="p-label">Principle 01</div>
+          <h4>Verify explicitly</h4>
+          <p>Every access request — regardless of where it comes from, who it appears to be from, or what network it is on — must be authenticated and authorised. Being on the corporate network, using a familiar device, or connecting from a known location does not automatically grant access. Every request is verified every time, using all available signals: identity, device health, location, time, and behaviour.</p>
+        </div>
+        <div class="principle">
+          <div class="p-label">Principle 02</div>
+          <h4>Use least privilege access</h4>
+          <p>Access is granted to the minimum necessary for the specific task at hand — not to the entire network, not to all data, not permanently. Just-in-time and just-enough access, scoped to what is actually needed, means that a compromised account has a strictly limited blast radius.</p>
+        </div>
+        <div class="principle">
+          <div class="p-label">Principle 03</div>
+          <h4>Assume breach</h4>
+          <p>Design and operate as if a breach has already occurred or will occur. Segment access so that a compromised account or device cannot move freely. Monitor all activity for anomalies. Have containment and response plans ready. Do not depend on the assumption that the perimeter will hold — because it will not always hold.</p>
+        </div>
+      </div>
+
+      <h2>Zero trust is a journey, not a product</h2>
+      <p>Zero trust is frequently marketed as a technology you can buy and deploy. It is not. It is a set of principles that you implement progressively through a combination of existing tools, configuration changes, and architectural decisions. A business that has never implemented zero trust does not start by buying a zero trust platform — it starts by implementing the controls that zero trust principles demand.</p>
+      <p>The good news is that if you have been following good security practice — enabling MFA, applying least privilege, keeping software patched, monitoring access — you have already begun implementing zero trust principles, even if you have never called it that.</p>
+
+      <div class="callout">
+        <p>NCSC's zero trust architecture guidance explicitly states that zero trust is not about buying new tools — it is about applying a set of principles. Most organisations can make significant progress toward zero trust using tools they already have, configured more carefully than before.</p>
+      </div>
+
+      <h2>Practical zero trust controls for any business</h2>
+      <p>Zero trust does not require enterprise-grade infrastructure to begin. These controls represent the most accessible and highest-impact starting points for any business.</p>
+
+      <ul>
+        <li><strong>Strong MFA on every account</strong> — the most fundamental zero trust control. Verifying identity explicitly, with a second factor, before granting any access. Start here.</li>
+        <li><strong>Conditional access policies</strong> — grant access based on context, not just credentials. Require MFA from unfamiliar locations. Block access from non-compliant devices. Restrict access to sensitive applications to managed devices only. Microsoft Entra ID and Google Workspace both support conditional access.</li>
+        <li><strong>Device compliance enforcement</strong> — before a device can access business systems, verify it meets defined security requirements: up-to-date OS, endpoint protection installed, disk encryption enabled. MDM platforms enforce this automatically.</li>
+        <li><strong>Least privilege access controls</strong> — every user, every service account, every application has only the minimum access its role requires. No broad admin rights, no excessive sharing permissions, no legacy access that was never revoked.</li>
+        <li><strong>Network segmentation</strong> — divide the network so that a compromised device in one segment cannot freely reach systems in another. The principle of assume breach demands that lateral movement is restricted.</li>
+        <li><strong>Continuous monitoring and anomaly detection</strong> — log all access, monitor for unusual patterns, and alert on deviations from normal behaviour. A zero trust architecture assumes breach — monitoring is how you detect it.</li>
+      </ul>
+
+      <h2>Zero Trust Network Access — the modern replacement for VPN</h2>
+      <p>Traditional VPNs grant network-level access — a connected user can reach everything on the network segment. Zero Trust Network Access (ZTNA) replaces this with application-level access: a user is granted access to specific applications, not the network, and each access request is verified independently.</p>
+      <p>Cloudflare Zero Trust has a generous free tier. Microsoft Entra Private Access and Zscaler Private Access are enterprise-grade options. For businesses with significant remote workforces or sensitive internal applications, ZTNA provides meaningfully stronger security than a traditional VPN at comparable or lower cost.</p>
+
+      <div class="warning">
+        <strong>⚠ Zero trust does not mean zero convenience</strong>
+        <p>A common objection to zero trust is that it will create friction for staff — requiring additional authentication steps, blocking access from personal devices, and adding verification to previously seamless workflows. Well-implemented zero trust minimises this friction through intelligent policy: trusted devices on known networks authenticate seamlessly, while unfamiliar conditions trigger additional verification. The goal is to make security invisible when conditions are normal and visible only when something is unusual.</p>
+      </div>
+
+      <h2>Where to start</h2>
+      <p>The most common barrier to zero trust adoption is not cost or complexity — it is not knowing where to begin. The answer is the same for almost every business: start with identity.</p>
+      <p>Enable MFA on every account. Configure conditional access policies to enforce device compliance and restrict access based on risk signals. Apply least privilege to all roles. These three steps implement the core of zero trust's "verify explicitly" and "least privilege access" principles — and they are achievable for any business with a Microsoft 365 or Google Workspace subscription.</p>
+
+      <hr>
+
+      <h2>Zero trust checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on every account — the foundation of "verify explicitly"</li>
+        <li>Conditional access policies configured — access based on identity, device, location, and risk</li>
+        <li>Device compliance enforced before business system access is granted</li>
+        <li>Least privilege applied to all users, service accounts, and applications</li>
+        <li>Network segmentation in place — lateral movement restricted</li>
+        <li>Access logging enabled on all systems — anomalies monitored and alerted</li>
+        <li>Just-in-time access used for privileged operations where possible</li>
+        <li>ZTNA evaluated as a replacement or supplement to traditional VPN</li>
+        <li>Assume breach mindset applied — containment and response plans ready</li>
+        <li>Zero trust principles applied to suppliers and third parties — not just internal users</li>
+      </ul>
+
+      <p>Zero trust is not a destination — it is a direction. No organisation fully achieves it, and the threat landscape it responds to never stops evolving. But every step toward it — every additional verification, every least-privilege configuration, every assumption that the perimeter may already be breached — makes the business meaningfully harder to attack and meaningfully faster to recover from when an attack succeeds.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
