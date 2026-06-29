@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Retail | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">June 30, 2026 &nbsp;·&nbsp; Retail Security</div>
+    <h1>Cybersecurity for retail — protecting payments, customers, and your reputation</h1>
+    <p class="post-lead">Retail businesses process payment cards constantly, hold customer data at scale, and operate systems that connect the shop floor to the back office and beyond. Each of these creates obligations, risks, and opportunities for attackers that are specific to the sector.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Retail has always been a target-rich environment for cybercrime. The combination of high-volume payment card transactions, customer databases containing personal and purchasing data, and the operational complexity of managing stock, suppliers, and multiple sales channels creates exactly the kind of attack surface that criminal organisations are structured to exploit.</p>
+      <p>For independent retailers and small retail chains, the risk is real and the consequences severe. A payment card breach triggers PCI DSS investigation, potential fines from card schemes, and the cost of re-issuing compromised cards — often passed back to the merchant. A customer data breach triggers ICO notification obligations and reputational damage in communities where word travels fast.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">24%</div><div class="stat-d">of all data breaches target the retail sector — the third most targeted sector globally</div></div>
+        <div class="stat"><div class="stat-n">£47K</div><div class="stat-d">average cost of a data breach for a small retail business — including investigation, notification, and lost customers</div></div>
+        <div class="stat"><div class="stat-n">166</div><div class="stat-d">days — average time a retail breach goes undetected, during which attackers harvest card data from every transaction</div></div>
+      </div>
+
+      <h2>The specific threats retail businesses face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Point-of-sale malware</h4>
+          <p>Malware installed on payment terminals or the systems connected to them captures card data from every transaction — silently, continuously, for weeks or months before detection. Entry is typically through phishing email, compromised remote access, or a supplier's systems. The 166-day average detection time means attackers harvest tens of thousands of card numbers before discovery.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>E-commerce skimming (Magecart attacks)</h4>
+          <p>Malicious code injected into an e-commerce website's checkout page captures card details as customers type them — before they are ever sent to the payment processor. The customer's browser is the point of compromise, not the retailer's server, making these attacks particularly hard to detect through normal monitoring. Regular integrity checks on checkout page code are the primary defence.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Ransomware disrupting operations</h4>
+          <p>Ransomware encrypting stock management, EPOS systems, and back-office operations can halt retail operations entirely — on the shop floor and online simultaneously. For retail businesses with time-sensitive stock turnover, seasonal trading periods, and tight margins, even a few days of disruption can cause disproportionate financial harm.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Customer loyalty database theft</h4>
+          <p>Customer databases — email addresses, purchase history, stored payment methods, loyalty points — are valuable targets for both direct fraud and for sale on dark web markets. A breach of customer data damages the trust relationship that loyalty programmes are designed to build.</p>
+        </div>
+      </div>
+
+      <h2>PCI DSS — what retail businesses actually need to do</h2>
+      <p>Any retail business that accepts card payments is subject to PCI DSS — the Payment Card Industry Data Security Standard. Non-compliance can result in fines from card schemes, increased transaction fees, and ultimately the loss of the ability to accept card payments.</p>
+      <p>The most important PCI principle for small retailers is scope reduction: the fewer systems and processes that touch card data, the smaller the compliance burden. Using a payment terminal that handles card processing entirely (where card data never enters your network), and a hosted payment page for online sales (where card entry happens on the payment provider's page, not yours), can reduce PCI scope dramatically — potentially to just a short self-assessment questionnaire rather than a full audit.</p>
+
+      <div class="callout">
+        <p>Never store full card numbers, CVV codes, or magnetic stripe data. There is no legitimate reason for a retail business to store this data beyond the transaction moment. If your EPOS system or e-commerce platform stores card data, contact your provider about tokenisation — replacing stored card data with a token that enables repeat transactions without holding the actual card details.</p>
+      </div>
+
+      <h2>E-commerce security — protecting your online checkout</h2>
+      <p>Magecart-style skimming attacks — where malicious code is injected into e-commerce checkout pages — have compromised thousands of online retailers, often without the retailer's knowledge for months. The attack does not target the retailer's servers directly; it targets the JavaScript that runs in the customer's browser at checkout.</p>
+
+      <ul>
+        <li><strong>Use a hosted payment page</strong> rather than collecting card data directly on your site — if card entry happens on your payment provider's page (Stripe, PayPal, Shopify Payments), your checkout page cannot be skimmed because it never touches card data</li>
+        <li><strong>Keep your e-commerce platform and plugins updated</strong> — Magecart attacks frequently exploit vulnerabilities in outdated plugins on WooCommerce, Magento, and similar platforms</li>
+        <li><strong>Enable a Content Security Policy</strong> on your website — a properly configured CSP restricts which external scripts can load on your checkout page, significantly limiting the damage of a skimming injection</li>
+        <li><strong>Monitor your checkout page for unauthorised changes</strong> — regular integrity checks of checkout page code can detect injected skimming scripts before they harvest significant card data</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Plugins and themes are the most common entry point</strong>
+        <p>If your e-commerce site runs on WooCommerce, Magento, PrestaShop, or a similar platform, outdated plugins and themes are the most common route for attackers to inject skimming code. Enable automatic updates where available, remove unused plugins entirely (deactivated plugins can still be exploited), and check that your hosting provider alerts you to security vulnerabilities in your installed plugins.</p>
+      </div>
+
+      <h2>EPOS and network security in physical retail</h2>
+      <p>Physical retail security requires the same network segmentation principles as any other sector — but with particular attention to the unique topology of a retail environment, where customer-facing systems, payment terminals, stock management, and potentially public Wi-Fi all coexist.</p>
+
+      <ul>
+        <li><strong>EPOS terminals on an isolated network segment</strong> — payment systems must not be on the same network as general office computers, customer Wi-Fi, or internet-connected devices</li>
+        <li><strong>Customer Wi-Fi completely isolated</strong> — no path from customer network to any back-office or payment system</li>
+        <li><strong>Default credentials changed on all equipment</strong> — routers, EPOS systems, back-office computers, and any network-connected device must have default passwords replaced</li>
+        <li><strong>Remote access to EPOS systems via VPN with MFA only</strong> — supplier remote maintenance sessions must be controlled, logged, and time-limited</li>
+      </ul>
+
+      <hr>
+
+      <h2>Retail cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>PCI DSS self-assessment questionnaire completed annually</li>
+        <li>Card data never stored — tokenisation used for repeat payments</li>
+        <li>Hosted payment page used for online sales — card entry off your servers</li>
+        <li>EPOS terminals on an isolated network segment</li>
+        <li>E-commerce platform and all plugins kept up to date — automatic updates enabled</li>
+        <li>Unused plugins removed from e-commerce platform entirely</li>
+        <li>Content Security Policy configured on checkout pages</li>
+        <li>Checkout page integrity monitoring in place</li>
+        <li>Customer Wi-Fi completely isolated from all business systems</li>
+        <li>Remote access to EPOS via VPN with MFA only — sessions logged</li>
+        <li>Staff trained on phishing and safe device use</li>
+        <li>Offsite tested backups of stock, customer, and transaction data</li>
+      </ul>
+
+      <p>Retail cybersecurity is fundamentally about protecting the trust that customers place in a business every time they hand over a card or enter their details online. A payment card breach or customer data theft is not just a regulatory incident — it is a direct breach of the relationship between a retailer and the people who choose to shop with them. The controls that prevent it are achievable, and the investment is a fraction of the reputational cost of getting it wrong.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
