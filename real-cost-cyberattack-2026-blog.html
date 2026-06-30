@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Real Cost of a Cyberattack | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  /* COST BREAKDOWN */
+  .costs { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .cost { background: var(--surface); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .cost-name { font-size: 14px; font-weight: 500; color: var(--ink); flex: 1; }
+  .cost-desc { font-size: 13px; color: var(--muted); flex: 2; line-height: 1.5; }
+  .cost-tag { font-size: 12px; font-weight: 700; color: var(--accent); flex-shrink: 0; white-space: nowrap; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } .cost { flex-direction: column; gap: 4px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">July 1, 2026 &nbsp;·&nbsp; Small Business</div>
+    <h1>The real cost of a cyberattack — what businesses actually pay beyond the ransom</h1>
+    <p class="post-lead">When a business is hit by a cyberattack, the ransom demand — if there is one — is usually the smallest part of what it costs. The true financial impact unfolds over months and reaches into categories that most business owners never anticipated when they assessed their risk.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Business owners often think about cybersecurity risk in terms of a ransom payment — a concrete, negotiable number that represents the worst case. This framing is dangerously incomplete. The ransom, when paid, is typically a fraction of the total cost of a serious incident. The majority of the financial impact comes from categories that are harder to anticipate, harder to insure against, and in some cases, impossible to fully recover from.</p>
+      <p>Understanding the full cost of a cyberattack is not an exercise in fear — it is the foundation of a rational investment case for security. When the cost of prevention is compared against the realistic total cost of a serious incident, the economics of security investment become clear.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">£150K</div><div class="stat-d">average total cost of a cyberattack on a small business — the ransom is typically 10–15% of this figure</div></div>
+        <div class="stat"><div class="stat-n">60%</div><div class="stat-d">of small businesses that suffer a significant cyberattack close within six months</div></div>
+        <div class="stat"><div class="stat-n">21 days</div><div class="stat-d">average operational downtime following a serious ransomware attack — three working weeks offline</div></div>
+      </div>
+
+      <h2>The full cost breakdown — what businesses actually pay</h2>
+
+      <div class="costs">
+        <div class="cost">
+          <div class="cost-name">Ransom payment</div>
+          <div class="cost-desc">If paid — and many businesses choose not to. Payment does not guarantee data recovery or non-publication of stolen data.</div>
+          <div class="cost-tag">Visible</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Incident response</div>
+          <div class="cost-desc">Forensic investigation, cybersecurity specialists, legal advice during the incident. Day rates for experienced incident response firms start at £1,500–£3,000.</div>
+          <div class="cost-tag">Immediate</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Business interruption</div>
+          <div class="cost-desc">Lost revenue during downtime — the single largest cost component for most businesses. Three weeks offline at full trading capacity can exceed the ransom many times over.</div>
+          <div class="cost-tag">Largest cost</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">System rebuilding</div>
+          <div class="cost-desc">Rebuilding servers, workstations, and infrastructure from scratch. Hardware replacement, software re-licensing, and configuration — often more expensive than anticipated.</div>
+          <div class="cost-tag">Significant</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Data recovery</div>
+          <div class="cost-desc">Attempting to recover data not covered by backups — data recovery specialists, reconstruction of records, and in many cases, permanent data loss.</div>
+          <div class="cost-tag">Variable</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Regulatory fines</div>
+          <div class="cost-desc">ICO fines for GDPR breaches, PCI DSS fines from card schemes, sector-specific regulatory penalties. Can be substantial depending on the nature of data involved.</div>
+          <div class="cost-tag">Regulatory</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Legal costs</div>
+          <div class="cost-desc">Legal advice, potential litigation from affected customers or partners, contractual penalty exposure for failure to deliver.</div>
+          <div class="cost-tag">Ongoing</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Notification costs</div>
+          <div class="cost-desc">Notifying affected customers and regulators — letters, call centre support, credit monitoring services for affected individuals, PR agency fees.</div>
+          <div class="cost-tag">Significant</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Reputational damage</div>
+          <div class="cost-desc">Lost customers, cancelled contracts, reduced tender success, damaged supplier relationships. The hardest to quantify and often the longest-lasting impact.</div>
+          <div class="cost-tag">Hidden &amp; lasting</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Staff productivity loss</div>
+          <div class="cost-desc">Staff time diverted to incident response, system rebuilding, and customer communications — at the expense of revenue-generating activities.</div>
+          <div class="cost-tag">Hidden</div>
+        </div>
+        <div class="cost">
+          <div class="cost-name">Increased insurance premiums</div>
+          <div class="cost-desc">Following a claim, cyber insurance premiums typically increase significantly at renewal — sometimes to the point where cover becomes unaffordable.</div>
+          <div class="cost-tag">Multi-year</div>
+        </div>
+      </div>
+
+      <h2>The hidden costs that businesses underestimate</h2>
+      <p>Three cost categories consistently surprise business owners in the aftermath of a serious incident.</p>
+      <p><strong>The true cost of downtime.</strong> Most business owners think about downtime in terms of their margin — if we are down for a week, we lose a week's profit. The actual cost is significantly higher, because fixed costs continue regardless of whether the business is trading. Staff must be paid. Rent is due. Loan repayments continue. The cost of a week's downtime is a week's revenue minus no costs at all.</p>
+      <p><strong>The cost of customer loss.</strong> Customers who experience or hear about a breach make choices — to move their business, to not renew contracts, to recommend a competitor. This revenue impact extends over months and years, long after the incident itself is resolved. Research consistently finds that a significant proportion of customers affected by a data breach do not return.</p>
+      <p><strong>The personal cost to the business owner.</strong> Cybersecurity incidents are profoundly stressful. The uncertainty of the first days — not knowing what has been compromised, who has been affected, or what will happen next — combined with the operational chaos of a downed business, takes a significant personal toll that rarely features in cost calculations but is very real.</p>
+
+      <div class="callout">
+        <p>The NCSC's Cyber Breaches Survey consistently finds that businesses significantly underestimate the cost of incidents before they experience one. The actual costs, when businesses are asked to calculate them honestly in the aftermath, are typically two to five times higher than their pre-incident estimate.</p>
+      </div>
+
+      <h2>The investment case for security</h2>
+      <p>When the realistic total cost of a serious incident — £150,000 on average, potentially much more — is compared against the cost of the controls that would have prevented it, the economics of security investment become straightforward.</p>
+      <p>The annual cost of the controls that prevent the majority of serious incidents for a small business — password manager, endpoint protection, MFA, tested backups, basic staff training, Cyber Essentials certification — is typically £800 to £2,000. The probability of a serious incident without these controls is not trivial. The expected value of the investment in prevention is strongly positive.</p>
+      <p>This is not the most sophisticated risk calculation. It is the most important one.</p>
+
+      <div class="warning">
+        <strong>⚠ Cyber insurance covers a fraction of the real cost</strong>
+        <p>Cyber insurance is valuable, but it does not cover everything. Regulatory fines are frequently excluded. Reputational damage is uninsurable. Business interruption coverage typically has a waiting period and a sub-limit. The most important thing a cyber insurance policy does is fund the incident response in the critical first hours and days — which is genuinely valuable. But it does not make a business whole after a serious incident. Prevention remains far cheaper than recovery, even with insurance.</p>
+      </div>
+
+      <hr>
+
+      <h2>Understanding your risk — a simple exercise</h2>
+      <ul class="checklist">
+        <li>Calculate your daily revenue — multiply by 21 to estimate downtime exposure</li>
+        <li>Identify your most sensitive customer data — estimate notification and regulatory cost if breached</li>
+        <li>List your key contracts — identify which include penalties or termination rights for security incidents</li>
+        <li>Review your cyber insurance policy — identify exclusions, sub-limits, and waiting periods</li>
+        <li>Total your current annual security spend — compare against the realistic incident cost</li>
+        <li>Identify the three controls most likely to prevent a serious incident — MFA, tested backups, patching</li>
+        <li>Estimate the cost of implementing those controls — it is almost certainly less than a single day's downtime</li>
+      </ul>
+
+      <p>The real cost of a cyberattack is not the ransom. It is the weeks of downtime, the customers who do not come back, the regulatory investigation, the staff time diverted from the business, and the lasting damage to the reputation that took years to build. Understanding this — before an incident, not after — is what makes the investment case for security not just rational but obvious.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
