@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity for Accountants | CyberSense Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #1a1d24; --muted: #52576a; --faint: #9aa0b4; --bg: #eef0f4; --surface: #f7f8fa; --surface2: #e5e8ee; --border: #d4d8e2; --accent: #dc2626; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .site-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); text-decoration: none; display: block; margin-bottom: 4px; }
+  .site-name span { color: var(--accent); }
+  .site-tagline { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+  nav a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; margin-bottom: 2rem; }
+  .post-eyebrow { font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+  .post-lead { font-size: 18px; line-height: 1.7; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .post-meta { font-size: 13px; color: var(--faint); padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .body p { font-size: 17px; line-height: 1.85; color: var(--ink); margin-bottom: 1.25rem; }
+  .body h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin: 2.5rem 0 0.75rem; }
+  .body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .body li { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 0.5rem; }
+  .callout { background: var(--surface2); border-left: 3px solid var(--border); padding: 1rem 1.25rem; margin: 1.75rem 0; border-radius: 0 6px 6px 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7; }
+  .warning { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.75rem 0; }
+  .warning strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.4rem; }
+  .warning p { margin: 0; font-size: 15px; color: #7f1d1d; line-height: 1.65; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .stat { background: var(--surface2); padding: 1.25rem 1rem; text-align: center; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .risks { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.75rem 0; }
+  .risk { background: var(--surface); padding: 1.25rem 1.5rem; }
+  .risk-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 0.4rem; }
+  .risk h4 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .risk p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .checklist { list-style: none; padding: 0; margin: 1.75rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--ink); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: #166534; font-weight: 700; flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+  footer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 13px; color: var(--faint); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  footer strong { color: var(--muted); }
+  @media (max-width: 500px) { .stats { grid-template-columns: 1fr; } .article-card { padding: 1.5rem 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="site-name">Cyber<span>Sense</span></a>
+    <p class="site-tagline">Plain-language cybersecurity for business owners</p>
+    <nav><a href="index.html">← All posts</a></nav>
+  </header>
+  <div class="article-card">
+  <article>
+    <div class="post-eyebrow">July 2, 2026 &nbsp;·&nbsp; Professional Services</div>
+    <h1>Cybersecurity for accountants — protecting financial data, client trust, and professional standing</h1>
+    <p class="post-lead">Accountants hold the financial secrets of their clients' lives and businesses — tax records, payroll, bank account details, and commercially sensitive figures that their clients share in confidence. That data has significant value to criminals and serious consequences when compromised.</p>
+    <div class="post-meta">CyberSense Editorial &nbsp;·&nbsp; 6 min read</div>
+    <div class="body">
+
+      <p>Accounting practices occupy a unique position in the threat landscape. They hold detailed financial data on dozens or hundreds of client businesses and individuals — the kind of information that enables fraud, identity theft, and targeted social engineering at scale. A single compromised accounting practice can expose the financial details of every client on its books simultaneously.</p>
+      <p>At the same time, accountants operate under significant professional and regulatory obligations — to HMRC, to the FRC, to their professional body, and to their clients — that make cybersecurity not just a business risk but a professional conduct matter. A breach that exposes client financial data is not just a data protection incident; it is potentially a professional disciplinary one.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">68%</div><div class="stat-d">of accounting practices experienced a phishing attack or social engineering attempt in the past year</div></div>
+        <div class="stat"><div class="stat-n">£85K</div><div class="stat-d">average direct cost of a data breach for a small accounting practice — excluding regulatory action and client loss</div></div>
+        <div class="stat"><div class="stat-n">3×</div><div class="stat-d">more likely than average to be targeted by tax refund fraud and payroll diversion attacks</div></div>
+      </div>
+
+      <h2>What makes accounting practices high-value targets</h2>
+      <p>Criminals who compromise an accounting practice gain access to a remarkably rich dataset. PAYE records reveal employee names, National Insurance numbers, home addresses, and salary details — everything needed for identity fraud. Corporation tax returns reveal detailed financial performance data. VAT records show turnover and supplier relationships. Bank account details for payroll processing enable direct payment fraud.</p>
+      <p>For criminals, a compromised accounting practice is not one target — it is a gateway to every client. The economics of attacking a practice versus attacking individual clients strongly favour the practice.</p>
+
+      <div class="callout">
+        <p>HMRC's Agent Services Account and the Online Agent Authorisation system give accountants significant access to client tax affairs. Compromise of these credentials gives an attacker the ability to submit fraudulent returns, redirect repayments, and access detailed client financial data — all under the accountant's trusted identity.</p>
+      </div>
+
+      <h2>The specific threats accounting practices face</h2>
+
+      <div class="risks">
+        <div class="risk">
+          <div class="risk-label">Risk 01</div>
+          <h4>Tax refund and payroll fraud via compromised credentials</h4>
+          <p>Attackers who gain access to HMRC agent accounts can redirect tax repayments, submit fraudulent claims, and access client records. Given the direct financial value of this access, HMRC agent credentials are a specific and high-value target. MFA on HMRC Government Gateway is non-negotiable.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 02</div>
+          <h4>Client impersonation and payment diversion</h4>
+          <p>Emails appearing to come from a client requesting changes to payroll bank accounts, supplier payment details, or direct debit mandates — exploiting the trust relationship and the routine nature of financial instruction processing. Accountants receive and act on financial instructions constantly; this makes the attack surface large and the need for verification procedures acute.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 03</div>
+          <h4>Ransomware on accounting and practice management software</h4>
+          <p>Ransomware encrypting client files, bookkeeping data, and practice management systems during a tax deadline period creates maximum pressure to pay — attackers time attacks to coincide with self-assessment deadlines, year-end periods, and VAT quarters. The operational and reputational consequences of missing client deadlines under a ransomware attack are severe.</p>
+        </div>
+        <div class="risk">
+          <div class="risk-label">Risk 04</div>
+          <h4>Phishing targeting cloud accounting platforms</h4>
+          <p>Credential phishing specifically targeting Xero, QuickBooks, Sage, and FreeAgent logins — providing access to live client financial data, the ability to create fraudulent transactions, and a base for further social engineering of the practice's clients.</p>
+        </div>
+      </div>
+
+      <h2>HMRC credentials — the highest-priority protection</h2>
+      <p>HMRC's agent services provide significant access to client financial affairs. The credentials used to access Government Gateway, Making Tax Digital platforms, and HMRC's Agent Services Account must be protected with the highest available controls.</p>
+
+      <ul>
+        <li><strong>Enable MFA on HMRC Government Gateway</strong> — HMRC now supports and strongly recommends MFA for agent accounts; enable it immediately if not already active</li>
+        <li><strong>Use dedicated email addresses for HMRC agent registration</strong> — not personal email addresses that may be compromised through unrelated breaches</li>
+        <li><strong>Monitor for unexpected activity</strong> — HMRC agent accounts should be checked regularly for unauthorised access attempts or unfamiliar actions</li>
+        <li><strong>Report compromises immediately to HMRC</strong> — HMRC has a specific process for reporting agent credential compromise; know it before you need it</li>
+      </ul>
+
+      <h2>Protecting client financial data</h2>
+      <p>Client financial data must be protected with access controls, encryption, and retention policies that match its sensitivity. The minimum requirements under UK GDPR — appropriate technical and organisational measures — demand more than a shared network folder with no access controls.</p>
+
+      <ul>
+        <li><strong>Use a dedicated, access-controlled practice management system</strong> rather than general file shares for client data</li>
+        <li><strong>Apply role-based access</strong> — staff should access only the client files relevant to their work, not all client data across the practice</li>
+        <li><strong>Encrypt sensitive client files</strong> at rest and in transit — never email unencrypted tax returns, accounts, or payroll files</li>
+        <li><strong>Use a secure client portal</strong> for document exchange — email is not appropriate for the sensitivity of the documents routinely exchanged between accountants and clients</li>
+        <li><strong>Apply a clear data retention policy</strong> — client records must be retained for defined statutory periods, then securely deleted</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠ Email is not appropriate for tax returns and accounts</strong>
+        <p>The routine practice of emailing draft accounts, tax returns, and payroll summaries as unencrypted PDF attachments is inconsistent with the sensitivity of the data and the obligations under UK GDPR. Secure client portals — available through most practice management systems and standalone services like Liscio, SuiteFiles, or Karbon — provide a significantly more appropriate channel for client document exchange.</p>
+      </div>
+
+      <h2>Professional body and regulatory obligations</h2>
+      <p>Accounting practices authorised by ICAEW, ACCA, CIMA, AAT, or ICAS operate under professional conduct requirements that include appropriate data protection. ICAEW and ACCA have both issued specific guidance on cybersecurity for member firms. A data breach that results in client financial harm or regulatory investigation is not just a business risk — it is a matter that professional bodies take seriously in their own right.</p>
+      <p>Anti-money laundering obligations also create specific data handling requirements — the identity verification documents collected for AML purposes are highly sensitive and must be stored securely, with access appropriately restricted and retention periods respected.</p>
+
+      <hr>
+
+      <h2>Accountancy cybersecurity checklist</h2>
+      <ul class="checklist">
+        <li>MFA enabled on HMRC Government Gateway and all agent accounts</li>
+        <li>MFA enabled on Xero, QuickBooks, Sage, and all cloud accounting platforms</li>
+        <li>Dedicated email address used for HMRC agent registration</li>
+        <li>Client financial data stored in access-controlled practice management system</li>
+        <li>Role-based access applied — staff access only their own client files</li>
+        <li>Secure client portal in use for document exchange — not plain email</li>
+        <li>Client financial files encrypted at rest and in transit</li>
+        <li>Payment instruction verification procedure in place — verbal confirmation for bank detail changes</li>
+        <li>AML identity documents stored securely with appropriate access controls</li>
+        <li>Data retention policy documented and applied — statutory periods respected, then deleted</li>
+        <li>Staff trained on phishing, client impersonation, and payroll diversion</li>
+        <li>HMRC credential compromise reporting process known in advance</li>
+      </ul>
+
+      <p>The data accountants hold is not theirs — it is their clients'. The obligation to protect it is fiduciary as much as regulatory. A practice that takes cybersecurity seriously is one that takes its professional obligations seriously. And in a sector built entirely on trust, protecting client data is not just a compliance requirement — it is the foundation of the professional relationship.</p>
+
+    </div>
+  </article>
+  </div>
+  <footer>
+    <strong>CyberSense</strong> — Cybersecurity for Business Owners
+    <span>© 2026</span>
+  </footer>
+</div>
+</body>
+</html>
